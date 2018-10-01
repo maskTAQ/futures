@@ -60,4 +60,5 @@ Object.assign(eslintrc.rules, {
   'react/no-multi-comp': 0,
   'react/prefer-es6-class': 0,
 });
+const a=1;
 module.exports = eslintrc;
