@@ -7,7 +7,7 @@ import {
 import { YellowBox } from "react-native";
 import { Icon } from "components";
 
-import {Login} from "pages";
+import {Login,Home} from "pages";
 
 
 /* eslint-disable */
@@ -60,8 +60,10 @@ const TabNavigator = createBottomTabNavigator(createTabNavigatorParams(), {
 });
 
 const AppRouteConfigs = {
+  Login,
+  Home,
   TabNavigator,
-  Login
+  
 };
 // 创建一级导航
 const StackNavigator = createStackNavigator(AppRouteConfigs, {

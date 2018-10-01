@@ -3,7 +3,6 @@ import _ from "lodash";
 import { NavigationActions } from "react-navigation";
 //import { createNavigationReducer } from "react-navigation-redux-helpers";
 
-console.log
 import AppNavigator from "src/Router";
 //import {  } from "apis/base";
 const isLogin =true;
@@ -19,7 +18,7 @@ const preloadedStateForLoadong = {};
 const preloadedState = {
   loading: preloadedStateForLoadong,
   nav: AppNavigator.router.getStateForAction(
-    AppNavigator.router.getActionForPathAndParams("TabNavigator")
+    AppNavigator.router.getActionForPathAndParams("Home")
   )
 };
 
