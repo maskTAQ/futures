@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { View, ActivityIndicator } from "react-native";
 import PropTypes from "prop-types";
 
-import { Button } from '../index';
-import createStyle from './style';
+import { Button } from "../index";
+import createStyle from "./style";
 let styles = null;
 export default class CodeButton extends Component {
     static propTypes = {
@@ -11,24 +11,26 @@ export default class CodeButton extends Component {
         onValidateError: PropTypes.func,
         requestGetCode: PropTypes.func,
         style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-        textStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+        textStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
     };
     static contextTypes = {
         theme: PropTypes.object
-      };
+    };
     static defaultProps = {
-        onValidateError(error) { },
-        requestGetCode(mobile) { return Promise.reject('请传入props:requestGetCode') },//return promise
-    }
+        onValidateError(error) {},
+        requestGetCode(mobile) {
+            return Promise.reject("请传入props:requestGetCode");
+        } //return promise
+    };
     state = {
         isRequestSmscode: false,
         isCan: true,
         prevTimetInterval: 61
     };
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.verificationMobile();
     }
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.verificationMobile(nextProps);
     }
     componentWillUnmount() {
@@ -60,8 +62,8 @@ export default class CodeButton extends Component {
         };
     };
     /**
-    *通过组件 ref来 重置验证码或者限制时间
-    **/
+     *通过组件 ref来 重置验证码或者限制时间
+     **/
     reset = () => {
         clearInterval(this.intervalId);
         this.isGetCode = false;
@@ -87,9 +89,9 @@ export default class CodeButton extends Component {
                     return onValidateError("请输入手机号");
             }
         }
+        return "";
     }
     getCode = () => {
-
         const { isCan } = this.state;
         const { mobile, requestGetCode } = this.props;
         if (isCan && this.isThroughTheVerification) {
@@ -115,12 +117,15 @@ export default class CodeButton extends Component {
     };
     render() {
         const { isCan, prevTimetInterval, isRequestSmscode } = this.state;
-        const { style,textStyle } = this.props;
+        const { style, textStyle } = this.props;
         styles = createStyle(this.context.theme);
         if (isRequestSmscode) {
             return (
                 <View style={[styles.pending, style]}>
-                    <ActivityIndicator size="small" color={styles.pendingColor} />
+                    <ActivityIndicator
+                        size="small"
+                        color={styles.pendingColor}
+                    />
                 </View>
             );
         }
@@ -128,7 +133,7 @@ export default class CodeButton extends Component {
         return (
             <Button
                 style={[styles.codeButton, style]}
-                textStyle={[styles.codeButtonText,textStyle]}
+                textStyle={[styles.codeButtonText, textStyle]}
                 onPress={this.getCode}
             >
                 {isCan ? "获取验证码" : prevTimetInterval + "s"}

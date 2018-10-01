@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
-console.log(createStore,'createStore')
+console.log(createStore, "createStore");
 import rootReducer, { preloadedState } from "../reducers/index";
 
 const sagaMiddleware = createSagaMiddleware({});
@@ -24,16 +24,16 @@ const sagaMiddleware = createSagaMiddleware({});
 
 // Note: createReactNavigationReduxMiddleware must be run before reduxifyNavigator
 const navigationMiddleware = createReactNavigationReduxMiddleware(
-  "root",
-  state => state.nav
+    "root",
+    state => state.nav
 );
 
 const store = {
-  ...createStore(
-    rootReducer,
-    preloadedState,
-    applyMiddleware(sagaMiddleware, navigationMiddleware)
-  ),
-  runSaga: sagaMiddleware.run
+    ...createStore(
+        rootReducer,
+        preloadedState,
+        applyMiddleware(sagaMiddleware, navigationMiddleware)
+    ),
+    runSaga: sagaMiddleware.run
 };
 export default store;

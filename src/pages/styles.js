@@ -1,10 +1,7 @@
-
 const login = {
     container: {
         borderWidth: 1,
-        borderColor: 'red;',
+        borderColor: "red;"
     }
 };
-export {
-    login
-}
+export { login };

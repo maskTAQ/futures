@@ -1,33 +1,38 @@
-import theme from '../theme';
+import theme from "../theme";
 
-const {thBG,thBorderColor,thTextColor,tdBG,tdTextColor,footerWrapperBG,footerHintTextColor,emptyTextColor} = theme.scrollTable;
+const {
+    thBG,
+    thBorderColor,
+    thTextColor,
+    tdBG,
+    tdTextColor,
+    footerWrapperBG,
+    footerHintTextColor,
+    emptyTextColor
+} = theme.scrollTable;
 
 export default {
     container: {
-        flex: 1,
+        flex: 1
     },
-    header:{
-        flexDirection:'row',
+    header: {
+        flexDirection: "row"
     },
     content: {
         flex: 1,
-        flexDirection: 'row',
-        overflow: 'hidden',
+        flexDirection: "row",
+        overflow: "hidden"
     },
-    fixedContainer: {
-
-    },
+    fixedContainer: {},
     scrollContainer: {
         flex: 1,
-        overflow: 'hidden',
+        overflow: "hidden"
     },
     headerContainer: {
-        flexDirection: 'row',
-
+        flexDirection: "row"
     },
     row: {
-        flexDirection: 'row',
-
+        flexDirection: "row"
     },
     th: {
         height: 50,
@@ -36,43 +41,43 @@ export default {
         alignItems: "flex-start",
         justifyContent: "center",
         borderBottomWidth: 0.6,
-        borderColor:thBorderColor,
+        borderColor: thBorderColor,
         paddingLeft: 10
     },
     thText: {
         fontSize: 16,
-        color:thTextColor 
+        color: thTextColor
     },
     td: {
         height: 50,
         width: 120,
-        backgroundColor:tdBG,
+        backgroundColor: tdBG,
         alignItems: "flex-start",
         justifyContent: "center",
         paddingLeft: 10
     },
     tdText: {
         fontSize: 14,
-        color:tdTextColor,
+        color: tdTextColor
     },
     ListEmptyComponent: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop:20,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingTop: 20
     },
     ListEmptyComponentText: {
         fontSize: 14,
-        color: emptyTextColor,
+        color: emptyTextColor
     },
     footerWrapper: {
         height: 40,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor:footerWrapperBG,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: footerWrapperBG
     },
     footerHintText: {
         fontSize: 12,
-        color:footerHintTextColor,
+        color: footerHintTextColor
     }
-}
+};

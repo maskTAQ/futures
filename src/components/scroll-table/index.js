@@ -1,9 +1,17 @@
 import React, { Component } from "react";
-import { View, Text, ScrollView, Dimensions, TouchableWithoutFeedback, RefreshControl, ActivityIndicator, Platform } from "react-native";
+import {
+    View,
+    Text,
+    ScrollView,
+    Dimensions,
+    TouchableWithoutFeedback,
+    RefreshControl,
+    ActivityIndicator
+} from "react-native";
 import PropTypes from "prop-types";
 
 import styles from "./style";
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 export default class ScrollTable extends Component {
     static defaultProps = {
         getData(i) {
@@ -36,7 +44,7 @@ export default class ScrollTable extends Component {
         //固定列的dataIndex集合
         fixedColums: [],
         //行点击事件
-        onItemPress() { },
+        onItemPress() {},
         //允许触发下拉加载的时间间隔
         pulldownLoadMoreInterval: 500,
         style: {
@@ -51,7 +59,7 @@ export default class ScrollTable extends Component {
             //表格行单元格容器样式
             td: {},
             //表格行单元格文本样式
-            tdText: {},
+            tdText: {}
         },
         //是否通过dataSource注入数据
         injectData: false,
@@ -60,9 +68,9 @@ export default class ScrollTable extends Component {
         //注入数据的下拉加载状态
         isLoadingMore: false,
         //loading的颜色
-        loadingColor: '#666',
+        loadingColor: "#666",
         //key
-        keyIndex: ''
+        keyIndex: ""
     };
     static contextTypes = {
         theme: PropTypes.object
@@ -80,25 +88,28 @@ export default class ScrollTable extends Component {
         refreshing: PropTypes.bool,
         isLoadingMore: PropTypes.bool,
         keyExtractor: PropTypes.func,
-        key: PropTypes.string
+        key: PropTypes.string,
+        style: PropTypes.object,
+        keyIndex: PropTypes.number,
+        ListEmptyComponent: PropTypes.any,
+        loadingColor: PropTypes.string
     };
     state = {
         fixed: {
             columns: [],
-            dataSource: [],
+            dataSource: []
         },
         scroll: {
             columns: [],
-            dataSource: [],
+            dataSource: []
         },
         refreshing: false,
         isLoadingMore: false,
-        isXScroll:false,
+        isXScroll: false,
         //下拉数据是否加载完毕
-        loaded: false,
-        
+        loaded: false
     };
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         const { dataSource, injectData } = this.props;
         this.splitOriginalData(dataSource);
 
@@ -107,7 +118,7 @@ export default class ScrollTable extends Component {
             this.onRefresh();
         }
     }
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const { dataSource, injectData, refreshing, isLoadingMore } = nextProps;
         if (injectData) {
             this.splitOriginalData(dataSource);
@@ -118,11 +129,9 @@ export default class ScrollTable extends Component {
         }
     }
     /**
-    *根据columns中的dataIndex存储对应列的渲染规则
-    **/
-    renderRowRule = {
-
-    }
+     *根据columns中的dataIndex存储对应列的渲染规则
+     **/
+    renderRowRule = {};
     //传入getData的数据索引 用作分页
     currentDataIndex = 1;
 
@@ -135,28 +144,28 @@ export default class ScrollTable extends Component {
     params array:d 原始的数据源 
     **/
     splitOriginalData(d, HowTrigger) {
-        const { columns: originalColumns, hasSameIndex } = this.props;
-        const originalDataSource = this.originalDataSource = d || this.props.dataSource;
+        const { columns: originalColumns } = this.props;
+        const originalDataSource = (this.originalDataSource =
+            d || this.props.dataSource);
 
         let { fixedColums } = this.props;
         //将key转换为字符串 用户传入的dataIndex是number datasource对应行的键为string造成错误
         fixedColums = fixedColums.map(dataIndex => String(dataIndex));
 
         const fixed = {
-            columns: [],
-            dataSource: [],
-        }, scroll = {
-            columns: [],
-            dataSource: [],
-        };
+                columns: [],
+                dataSource: []
+            },
+            scroll = {
+                columns: [],
+                dataSource: []
+            };
 
         originalDataSource.forEach((item, i) => {
             for (const dataIndex in item) {
-
                 if (fixedColums.includes(dataIndex)) {
                     fixed.dataSource[i] = fixed.dataSource[i] || {};
                     fixed.dataSource[i][dataIndex] = item[dataIndex];
-
                 } else {
                     scroll.dataSource[i] = scroll.dataSource[i] || {};
                     scroll.dataSource[i][dataIndex] = item[dataIndex];
@@ -168,12 +177,15 @@ export default class ScrollTable extends Component {
             const { dataIndex } = item;
             if (fixedColums.includes(String(dataIndex))) {
                 fixed.columns.push(item);
-
             } else {
                 scroll.columns.push(item);
             }
         });
-        this.setState({ fixed, scroll, ...(HowTrigger ? { [HowTrigger]: false } : {}) })
+        this.setState({
+            fixed,
+            scroll,
+            ...(HowTrigger ? { [HowTrigger]: false } : {})
+        });
     }
     getData() {
         const { getData } = this.props;
@@ -183,10 +195,10 @@ export default class ScrollTable extends Component {
             .then(dataSource => {
                 this.currentDataIndex += 1;
                 if (dataSource.length === 0 && !loaded) {
-                    this.setState({ loaded: true })
-                } 
+                    this.setState({ loaded: true });
+                }
                 if (dataSource.length) {
-                    loaded && this.setState({ loaded: false })
+                    loaded && this.setState({ loaded: false });
                 }
                 return dataSource;
             })
@@ -195,9 +207,9 @@ export default class ScrollTable extends Component {
                 if (refreshing) {
                     return this.state.dataSource;
                 } else {
-                    return []
+                    return [];
                 }
-            })
+            });
     }
     onRefresh = () => {
         const { injectData } = this.props;
@@ -213,22 +225,17 @@ export default class ScrollTable extends Component {
                     //重置数据索引
                     this.currentDataIndex = 1;
                     const dataSource = await this.getData();
-                    this.splitOriginalData(dataSource, 'refreshing')
+                    this.splitOriginalData(dataSource, "refreshing");
                 });
             }
         }
-    }
+    };
     pulldownLoadMore = () => {
         const { isLoadingMore, refreshing, loaded } = this.state;
         const prevDataSource = this.originalDataSource;
         const { isPulldownLoadMore, injectData } = this.props;
         //当 不在刷新 加载更多 允许加载更多 未加载完毕 时
-        if (
-            !isLoadingMore &&
-            !refreshing &&
-            isPulldownLoadMore &&
-            !loaded
-        ) {
+        if (!isLoadingMore && !refreshing && isPulldownLoadMore && !loaded) {
             if (injectData) {
                 //重置数据索引
                 this.currentDataIndex = 1;
@@ -236,23 +243,26 @@ export default class ScrollTable extends Component {
             } else {
                 this.setState({ isLoadingMore: true }, async () => {
                     const nextDataSource = await this.getData();
-                    this.splitOriginalData([].concat(prevDataSource, nextDataSource), 'isLoadingMore')
+                    this.splitOriginalData(
+                        [].concat(prevDataSource, nextDataSource),
+                        "isLoadingMore"
+                    );
                 });
             }
-
-
         }
     };
-    compatibilityPullDown = (event) => {
+    compatibilityPullDown = event => {
         const { pulldownLoadMoreInterval } = this.props;
 
-
         const now = Date.now();
-        if (now - this.prevCalledPulldownLoadMoreTimes > pulldownLoadMoreInterval) {
+        if (
+            now - this.prevCalledPulldownLoadMoreTimes >
+            pulldownLoadMoreInterval
+        ) {
             const y = event.nativeEvent.contentOffset.y;
             const height = event.nativeEvent.layoutMeasurement.height;
             const contentHeight = event.nativeEvent.contentSize.height;
-            const { refreshing } = this.state;
+            //const { refreshing } = this.state;
             //在y轴偏移度加上高度等于内容的高度并且y轴偏移值为正值时
             //？在android下并不会像ios有默认的缓动区域 所以并不能产生 在y轴偏移度加上高度大于内容的高度 的情况
             //>= 大于适用于ios ===适用于android
@@ -261,56 +271,93 @@ export default class ScrollTable extends Component {
                 this.pulldownLoadMore();
             }
         }
+    };
 
-    }
-    
-    
     //placeholder占位符来切换渲染俩组表头 实现同步浮动右侧滚动列并且固定表头
     renderHeader(type, placeholder) {
-
         const { style: customStyle = {} } = this.props;
-        const { fixed: { columns: fixedColumns }, scroll: { columns: scrollColumns } } = this.state;
-        const columns = type === 'fixed' ? fixedColumns : scrollColumns;
+        const {
+            fixed: { columns: fixedColumns },
+            scroll: { columns: scrollColumns }
+        } = this.state;
+        const columns = type === "fixed" ? fixedColumns : scrollColumns;
         return (
             <View style={[styles.headerContainer, customStyle.thead]}>
                 {columns.map((column, i) => {
-                    const { title, dataIndex, render, style, tdStyle, thStyle } = column;
+                    const {
+                        title,
+                        dataIndex,
+                        render,
+                        style,
+                        tdStyle,
+                        thStyle
+                    } = column;
                     this.renderRowRule[dataIndex] = {
                         index: i,
                         render,
                         style,
                         tdStyle
                     };
-                    return placeholder && (
-                        <View
-                            style={[styles.th, customStyle.th, style, thStyle]}
-                            key={dataIndex}
-                        >
-                            <Text style={[styles.thText, customStyle.thText]}>{title}</Text>
-                        </View>
+                    return (
+                        placeholder && (
+                            <View
+                                style={[
+                                    styles.th,
+                                    customStyle.th,
+                                    style,
+                                    thStyle
+                                ]}
+                                key={dataIndex}
+                            >
+                                <Text
+                                    style={[styles.thText, customStyle.thText]}
+                                >
+                                    {title}
+                                </Text>
+                            </View>
+                        )
                     );
                 })}
             </View>
         );
     }
     renderRow = (row, i) => {
-        const { onItemPress = () => { }, style: customStyle = {}, keyIndex } = this.props;
+        const {
+            onItemPress = () => {},
+            style: customStyle = {},
+            keyIndex
+        } = this.props;
         const children = [],
             { renderRowRule } = this,
             defaultRenderTd = (row, value, index) => {
-                return <Text style={[styles.tdText, customStyle.tdText]}>{value}</Text>;
+                return (
+                    <Text style={[styles.tdText, customStyle.tdText]}>
+                        {value}
+                    </Text>
+                );
             };
 
         for (const item in row) {
             if (!renderRowRule[item]) {
                 continue;
             }
-            const { index, render = defaultRenderTd, style, tdStyle } = renderRowRule[
-                item
-            ];
+            const {
+                index,
+                render = defaultRenderTd,
+                style,
+                tdStyle
+            } = renderRowRule[item];
             children[index] = (
-                <View style={[styles.td, customStyle.td, style, tdStyle]} key={item}>
-                    {render(this.originalDataSource[i], row[item], index, styles.tdText)}
+                <View
+                    style={[styles.td, customStyle.td, style, tdStyle]}
+                    key={item}
+                >
+                    {render(
+                        this.originalDataSource[i],
+                        row[item],
+                        index,
+                        styles.tdText
+                    )}
                 </View>
             );
         }
@@ -319,7 +366,11 @@ export default class ScrollTable extends Component {
                 onPress={() => {
                     onItemPress(this.originalDataSource[i]);
                 }}
-                key={keyIndex ? this.originalDataSource[i][keyIndex] : JSON.stringify(this.originalDataSource[i])}
+                key={
+                    keyIndex
+                        ? this.originalDataSource[i][keyIndex]
+                        : JSON.stringify(this.originalDataSource[i])
+                }
             >
                 <View style={styles.row}>{children}</View>
             </TouchableWithoutFeedback>
@@ -327,13 +378,15 @@ export default class ScrollTable extends Component {
     };
     renderBody(type) {
         const { style: customStyle = {} } = this.props;
-        const { fixed: { dataSource: fixedDataSource }, scroll: { dataSource: scrollDataSource } } = this.state;
-        const dataSource = type === 'fixed' ? fixedDataSource : scrollDataSource;
+        const {
+            fixed: { dataSource: fixedDataSource },
+            scroll: { dataSource: scrollDataSource }
+        } = this.state;
+        const dataSource =
+            type === "fixed" ? fixedDataSource : scrollDataSource;
         return (
             <View style={[styles.tbody, customStyle.tbody]}>
-                {
-                    dataSource.map(this.renderRow)
-                }
+                {dataSource.map(this.renderRow)}
             </View>
         );
     }
@@ -345,8 +398,18 @@ export default class ScrollTable extends Component {
         switch (true) {
             case isLoadingMore:
                 footerContent = [
-                    <ActivityIndicator color="#333" size="small" key="ActivityIndicator" />,
-                    <Text key="label" style={[styles.footerHintText, { marginLeft: 6, }]}>正在加载数据中...</Text>];
+                    <ActivityIndicator
+                        color="#333"
+                        size="small"
+                        key="ActivityIndicator"
+                    />,
+                    <Text
+                        key="label"
+                        style={[styles.footerHintText, { marginLeft: 6 }]}
+                    >
+                        正在加载数据中...
+                    </Text>
+                ];
                 break;
             case !isPulldownLoadMore:
                 footerContent = null;
@@ -369,17 +432,15 @@ export default class ScrollTable extends Component {
                 );
         }
 
-        return footerContent && (
-            <View style={styles.footerWrapper}>
-                {footerContent}
-            </View>
-        )
-    }
+        return (
+            footerContent && (
+                <View style={styles.footerWrapper}>{footerContent}</View>
+            )
+        );
+    };
     renderListEmptyComponent() {
-        const { refreshing, dataSource } = this.state;
+        const { refreshing } = this.state;
         const {
-            ItemSeparatorComponent,
-            renderItem,
             isPulldownLoadMore,
             isPullupRefresh,
             ListEmptyComponent
@@ -389,47 +450,53 @@ export default class ScrollTable extends Component {
         isPullupRefresh && hint.push("上拉");
 
         if (this.originalDataSource.length) {
-            return null
+            return null;
         }
         if (ListEmptyComponent) {
-            return <ListEmptyComponent />
+            return <ListEmptyComponent />;
         }
         if (refreshing) {
             return (
                 <View style={styles.ListEmptyComponent}>
                     <Text style={styles.ListEmptyComponentText}>
                         获取数据中...
-</Text>
+                    </Text>
                 </View>
             );
         } else {
             return (
                 <View style={styles.ListEmptyComponent}>
                     <Text style={styles.ListEmptyComponentText}>
-                        没有数据哦{hint.length
-                            ? `尝试${hint.join("或者")}试试吧~`
-                            : "!"}
+                        没有数据哦
+                        {hint.length ? `尝试${hint.join("或者")}试试吧~` : "!"}
                     </Text>
                 </View>
             );
         }
     }
     render() {
-        const { refreshing, fixed: { columns }, isXScroll } = this.state;
+        const {
+            refreshing,
+            fixed: { columns },
+            isXScroll
+        } = this.state;
         const { loadingColor } = this.props;
 
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
-                    {this.renderHeader('fixed', !isXScroll)}
+                    {this.renderHeader("fixed", !isXScroll)}
                     <ScrollView
                         scrollEventThrottle={10}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
-                        style={{ width: width - columns.length * styles.th.width, height: '100%' }}
-                        ref={e => this.headerScrollContainer = e}
+                        style={{
+                            width: width - columns.length * styles.th.width,
+                            height: "100%"
+                        }}
+                        ref={e => (this.headerScrollContainer = e)}
                     >
-                        {this.renderHeader('scroll', !isXScroll)}
+                        {this.renderHeader("scroll", !isXScroll)}
                     </ScrollView>
                 </View>
                 <ScrollView
@@ -444,43 +511,41 @@ export default class ScrollTable extends Component {
                             progressBackgroundColor="#fff"
                         />
                     }
-
                     onScrollBeginDrag={(...p) => {
-                        this.state.isXScroll && this.setState({
-                            isXScroll: false,
-                        });
+                        this.state.isXScroll &&
+                            this.setState({
+                                isXScroll: false
+                            });
                         this.compatibilityPullDown(...p);
                     }}
                     scrollEventThrottle={100}
                 >
                     <View style={styles.content}>
                         <View style={[styles.fixedContainer]}>
-                            {this.renderHeader('fixed', isXScroll)}
-                            {this.renderBody('fixed')}
+                            {this.renderHeader("fixed", isXScroll)}
+                            {this.renderBody("fixed")}
                         </View>
                         <ScrollView
                             horizontal={true}
                             onScroll={() => {
-                                !this.state.isXScroll && this.setState({
-                                    isXScroll: true,
-                                });
+                                !this.state.isXScroll &&
+                                    this.setState({
+                                        isXScroll: true
+                                    });
                             }}
-                            scrollEventThrottle={10}
-                            ref={e => this.contentScrollContainer = e}
+                            ref={e => (this.contentScrollContainer = e)}
                             scrollEventThrottle={100}
-
                         >
                             <View style={styles.scrollContainer}>
-                                {this.renderHeader('scroll', isXScroll)}
-                                {this.renderBody('scroll')}
+                                {this.renderHeader("scroll", isXScroll)}
+                                {this.renderBody("scroll")}
                             </View>
                         </ScrollView>
-
                     </View>
                     {this.renderListEmptyComponent()}
                     {this.renderFooter()}
                 </ScrollView>
             </View>
-        )
+        );
     }
 }

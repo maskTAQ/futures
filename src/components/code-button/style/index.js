@@ -1,4 +1,4 @@
-import defaultTheme from '../../theme';
+import defaultTheme from "../../theme";
 export default (theme = {}) => {
     theme = Object.assign({}, defaultTheme, theme);
     const { color, pendingColor } = theme.codeButton;
@@ -8,7 +8,7 @@ export default (theme = {}) => {
             //height: "100%",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: 'transparent'
+            backgroundColor: "transparent"
         },
         codeButtonText: {
             fontSize: 14,
@@ -20,4 +20,4 @@ export default (theme = {}) => {
         },
         pendingColor
     };
-}
+};

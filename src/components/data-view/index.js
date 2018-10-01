@@ -15,9 +15,7 @@ export default class DataView extends Component {
             });
         },
         //视图改变时触发
-        onViewChange(dataSource) {
-
-        },
+        onViewChange(dataSource) {},
         //是否下拉加载更多
         isPulldownLoadMore: true,
         //是否上拉刷新
@@ -36,7 +34,7 @@ export default class DataView extends Component {
         //注入数据的刷新状态
         refreshing: false,
         //注入数据的下拉加载状态
-        isLoadingMore: false,
+        isLoadingMore: false
     };
     static contextTypes = {
         theme: PropTypes.object
@@ -66,21 +64,24 @@ export default class DataView extends Component {
         //数据是否加载完毕
         loaded: false
     };
-    componentWillMount(){
+    UNSAFE_componentWillMount() {
         const { dataSource, injectData } = this.props;
         //如果是注入数据并且存在数据
         if (dataSource && dataSource.length && injectData) {
-            this.setState({
-                dataSource
-            }, () => {
-                this.props.onViewChange(dataSource);
-            });
+            this.setState(
+                {
+                    dataSource
+                },
+                () => {
+                    this.props.onViewChange(dataSource);
+                }
+            );
         } else {
             //触发更新
             this.onRefresh();
         }
-    };
-    componentWillReceiveProps(nextProps) {
+    }
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const { dataSource, injectData, refreshing, isLoadingMore } = nextProps;
         if (injectData) {
             this.setState({
@@ -126,7 +127,7 @@ export default class DataView extends Component {
     }
     onRefresh = () => {
         const { injectData } = this.props;
-        const { isLoadingMore,refreshing } = this.state;
+        const { isLoadingMore, refreshing } = this.state;
 
         if (!isLoadingMore && !refreshing) {
             if (injectData) {
@@ -138,13 +139,16 @@ export default class DataView extends Component {
                     //重置数据索引
                     this.store.currentDataIndex = 1;
                     const dataSource = await this.getData();
-                    this.setState({
-                        dataSource,
-                        refreshing: false,
-                        loaded: false
-                    }, () => {
-                        this.props.onViewChange(dataSource);
-                    });
+                    this.setState(
+                        {
+                            dataSource,
+                            refreshing: false,
+                            loaded: false
+                        },
+                        () => {
+                            this.props.onViewChange(dataSource);
+                        }
+                    );
                 });
             }
         }
@@ -159,7 +163,7 @@ export default class DataView extends Component {
             dataSource: prevDataSource,
             loaded
         } = this.state;
-        const { isPulldownLoadMore } = this.props;
+        const { isPulldownLoadMore, injectData } = this.props;
         //当 不在刷新 加载更多 允许加载更多 未加载完毕 时
         if (!isLoadingMore && !refreshing && isPulldownLoadMore && !loaded) {
             if (injectData) {
@@ -169,13 +173,22 @@ export default class DataView extends Component {
             } else {
                 this.setState({ isLoadingMore: true }, async () => {
                     const nextDataSource = await this.getData();
-                    const dataSource = [].concat(prevDataSource, nextDataSource);
-                    this.setState({
-                        dataSource: [].concat(prevDataSource, nextDataSource),
-                        isLoadingMore: false
-                    }, () => {
-                        this.props.onViewChange(dataSource);
-                    });
+                    const dataSource = [].concat(
+                        prevDataSource,
+                        nextDataSource
+                    );
+                    this.setState(
+                        {
+                            dataSource: [].concat(
+                                prevDataSource,
+                                nextDataSource
+                            ),
+                            isLoadingMore: false
+                        },
+                        () => {
+                            this.props.onViewChange(dataSource);
+                        }
+                    );
                 });
             }
         }
@@ -191,7 +204,10 @@ export default class DataView extends Component {
         const contentHeight = event.nativeEvent.contentSize.height;
         const now = Date.now();
 
-        if (now - this.prevCalledPulldownLoadMoreTimes > pulldownLoadMoreInterval) {
+        if (
+            now - this.prevCalledPulldownLoadMoreTimes >
+            pulldownLoadMoreInterval
+        ) {
             //在y轴偏移度加上高度等于内容的高度并且y轴偏移值为正值时
             //？在android下并不会像ios有默认的缓动区域 所以并不能产生 在y轴偏移度加上高度大于内容的高度 的情况
             //>= 大于适用于ios ===适用于android
@@ -215,7 +231,7 @@ export default class DataView extends Component {
                     />,
                     <Text key="label" style={[styles.text, { marginLeft: 6 }]}>
                         正在加载数据中...
-                     </Text>
+                    </Text>
                 ];
                 break;
             case !isPulldownLoadMore:
@@ -241,7 +257,7 @@ export default class DataView extends Component {
         return <View style={styles.footerWrapper}>{footerContent}</View>;
     };
     render() {
-        const { refreshing, dataSource =[] } = this.state;
+        const { refreshing, dataSource = [] } = this.state;
         const {
             ItemSeparatorComponent,
             renderItem,
@@ -271,17 +287,28 @@ export default class DataView extends Component {
                             if (refreshing) {
                                 return (
                                     <View style={styles.ListEmptyComponent}>
-                                        <Text style={styles.ListEmptyComponentText}>
+                                        <Text
+                                            style={
+                                                styles.ListEmptyComponentText
+                                            }
+                                        >
                                             获取数据中...
-                    </Text>
+                                        </Text>
                                     </View>
                                 );
                             } else {
                                 return (
                                     <View style={styles.ListEmptyComponent}>
-                                        <Text style={styles.ListEmptyComponentText}>
-                                            没有数据哦{hint.length
-                                                ? `尝试${hint.join("或者")}试试吧~`
+                                        <Text
+                                            style={
+                                                styles.ListEmptyComponentText
+                                            }
+                                        >
+                                            没有数据哦
+                                            {hint.length
+                                                ? `尝试${hint.join(
+                                                      "或者"
+                                                  )}试试吧~`
                                                 : "!"}
                                         </Text>
                                     </View>

@@ -1,26 +1,25 @@
-import { Component, Children } from 'react'
-import PropTypes from 'prop-types'
+import { Component, Children } from "react";
+import PropTypes from "prop-types";
 
 export function createProvider() {
     class Provider extends Component {
         static propTypes = {
             theme: PropTypes.object,
-            children: PropTypes.element.isRequired,
-        }
+            children: PropTypes.element.isRequired
+        };
         static childContextTypes = {
-            theme: PropTypes.object,
-        }
+            theme: PropTypes.object
+        };
         getChildContext() {
-            return { theme: this.props.theme }
+            return { theme: this.props.theme };
         }
-
 
         render() {
-            return Children.only(this.props.children)
+            return Children.only(this.props.children);
         }
     }
 
-    return Provider
+    return Provider;
 }
 
-export default createProvider()
+export default createProvider();
