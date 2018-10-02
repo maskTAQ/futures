@@ -3,7 +3,7 @@ import { Tip } from "commons";
 
 const baseURL = "http://106.14.186.2:8088/";
 
-const token = "";
+const token = "13";
 /**
  * 请求拦截器
  * */

@@ -7,7 +7,7 @@ export default class Login extends PureComponent {
     render() {
         return (
             <View style={styles.container}>
-                <Text>登录页</Text>
+                <Text>登录页1212</Text>
             </View>
         );
     }

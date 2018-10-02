@@ -10,3 +10,4 @@ export { default as HXAlert } from "./alert";
 export { default as ThemeProvider } from "./theme-provider";
 export { default as Loading } from "./loading";
 export { default as Input } from "./input";
+export { default as TabBar } from "./tabbar";

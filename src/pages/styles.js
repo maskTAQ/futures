@@ -18,12 +18,13 @@ const login = {
     },
     radius: {
         width: "100%",
-        marginTop: -30
+        marginTop: -36
     },
     user: {
         container: {
-            padding: 28,
-            paddingTop: 31
+            padding: 20,
+            paddingTop: 31,
+            paddingBottom: 0
         },
         box: {
             height: 170,
@@ -94,12 +95,12 @@ const login = {
             justifyContent: "center"
         },
         itemBorder: {
-            width: 1,
+            width: 0.5,
             height: "80%",
             backgroundColor: "#eee"
         },
         itemBorderBottom: {
-            borderBottomWidth: 1,
+            borderBottomWidth: 0.3,
             borderColor: "#eee"
         },
         itemText: {
@@ -115,6 +116,91 @@ const login = {
             width: 20,
             height: 23
         }
+    },
+    list: {
+        marginTop: 6,
+        height: 102,
+        backgroundColor: "#fff"
+    },
+    item: {
+        height: 102,
+        flexDirection: "row",
+        paddingTop: 11,
+        paddingBottom: 11,
+        paddingLeft: 16,
+        paddingRight: 16
+    },
+    itemContent: {
+        flex: 1,
+        paddingLeft: 11,
+        paddingTop: 2
+    },
+    itemTop: {
+        //flex: 1,
+        height: 24,
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+    buyButton: {
+        width: 64,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 32,
+        backgroundColor: "#fa4f75"
+    },
+    buyButtonText: {
+        fontSize: 12
+    },
+    itemCenter: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+    itemTitleText: {
+        fontSize: 16,
+        color: "#333"
+    },
+    statusText: {
+        fontSize: 14,
+        color: "#FD4C73"
+    },
+    itemPercentageText: {
+        fontSize: 14,
+        color: "#333"
+    },
+    itemDetail: {
+        // alignSelf:'flex-end',
+        fontSize: 12,
+        color: "#999"
+    },
+    store: {
+        flex: 1,
+        backgroundColor: "#fff"
+    },
+    storeHeader: {
+        height: 40,
+        flexDirection: "row",
+        alignItems: "center",
+        paddingLeft: 10,
+        paddingRight: 10,
+        justifyContent: "space-between",
+        backgroundColor: "#f7f7f7"
+    },
+    storeTitle: {
+        flexDirection: "row"
+    },
+    storeTitleText: {
+        fontSize: 16,
+        color: "#333"
+    },
+    storeTitleIcon: {
+        width: 2,
+        height: 19,
+        marginRight: 6
+    },
+    countDownText: {
+        fontSize: 12,
+        color: "#999"
     }
 };
 export { login };

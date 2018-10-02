@@ -4,7 +4,7 @@ import {
     createBottomTabNavigator,
     createStackNavigator
 } from "react-navigation";
-import { Icon } from "components";
+import { Icon, TabBar } from "components";
 
 import { Login, Home } from "pages";
 
@@ -16,11 +16,12 @@ TabBarIcon.propTypes = {
     focused: PropTypes.boolean
 };
 
+const homeIcon = require("./tabImg/home.png");
 const tabPageConfig = [
-    ["Choice", Login, "自选", TabBarIcon(0)],
-    ["Quotation", Login, "行情", TabBarIcon(1)],
-    ["Trade", Login, "交易", TabBarIcon(2)],
-    ["Mine", Login, "我的", TabBarIcon(3)]
+    ["Home", Home, "主页", <Icon size={24} source={homeIcon} />],
+    ["Quotation", Home, "钱包", TabBarIcon(1)],
+    ["Trade", Home, "团队", TabBarIcon(2)],
+    ["Mine", Home, "个人", TabBarIcon(3)]
 ];
 
 const createTabNavigatorParams = () => {
@@ -40,12 +41,12 @@ const createTabNavigatorParams = () => {
 };
 // 创建TAB导航
 const TabNavigator = createBottomTabNavigator(createTabNavigatorParams(), {
-    initialRouteName: "Quotation",
+    initialRouteName: "Home",
     tabBarOptions: {
-        activeTintColor: "#fb0e2d",
+        activeTintColor: "#fa4f75",
         inactiveTintColor: "#919191",
         style: {
-            backgroundColor: "#1e1e20",
+            backgroundColor: "#fff",
             height: 50
         },
         labelStyle: {
@@ -53,13 +54,14 @@ const TabNavigator = createBottomTabNavigator(createTabNavigatorParams(), {
             margin: 0,
             padding: 0
         }
-    }
+    },
+    tabBarComponent: TabBar
 });
 
 const AppRouteConfigs = {
+    TabNavigator,
     Login,
-    Home,
-    TabNavigator
+    Home
 };
 // 创建一级导航
 const StackNavigator = createStackNavigator(AppRouteConfigs, {

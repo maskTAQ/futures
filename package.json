@@ -47,8 +47,8 @@
   },
   "lint-staged": {
     "src/**/*.js": [
-      "eslint $@",
-      "prettier --write",
+      "prettier --tab-width 4 --write",
+      "eslint --fix",
       "git add"
     ]
   }
