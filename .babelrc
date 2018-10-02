@@ -13,6 +13,7 @@
           "commons":"./src/commons"
         }
       }
-    ]
+    ],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }]
   ]
 }

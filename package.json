@@ -24,6 +24,7 @@
     "redux-saga": "^0.16.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.1.2",
     "babel-eslint": "^8.2.3",
     "babel-jest": "23.6.0",
     "babel-plugin-module-resolver": "^3.1.1",
