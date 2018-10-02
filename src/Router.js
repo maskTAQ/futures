@@ -8,20 +8,44 @@ import { Icon, TabBar } from "components";
 
 import { Login, Home } from "pages";
 
+const homeIcon = require("./tabImg/home.png");
+const activeHomeIcon = require("./tabImg/active_home.png");
+const walletIcon = require("./tabImg/wallet.png");
+const activeWalletIcon = require("./tabImg/active_wallet.png");
+const teamIcon = require("./tabImg/team.png");
+const activeTeamIcon = require("./tabImg/active_team.png");
+const meIcon = require("./tabImg/me.png");
+const activeMeIcon = require("./tabImg/active_me.png");
 /* eslint-disable */
 const TabBarIcon = type => ({ focused }) => {
-    return <Icon size={24} />;
+    switch (true) {
+        case type === "Home" && !focused:
+            return <Icon size={24} source={homeIcon} />;
+        case type === "Home" && focused:
+            return <Icon size={24} source={activeHomeIcon} />;
+        case type === "Wallet" && !focused:
+            return <Icon size={24} source={walletIcon} />;
+        case type === "Wallet" && focused:
+            return <Icon size={24} source={activeWalletIcon} />;
+        case type === "Team" && !focused:
+            return <Icon size={24} source={teamIcon} />;
+        case type === "Team" && focused:
+            return <Icon size={24} source={activeTeamIcon} />;
+        case type === "Mine" && !focused:
+            return <Icon size={24} source={meIcon} />;
+        case type === "Mine" && focused:
+            return <Icon size={24} source={activeMeIcon} />;
+    }
 };
 TabBarIcon.propTypes = {
     focused: PropTypes.boolean
 };
 
-const homeIcon = require("./tabImg/home.png");
 const tabPageConfig = [
-    ["Home", Home, "主页", <Icon size={24} source={homeIcon} />],
-    ["Quotation", Home, "钱包", TabBarIcon(1)],
-    ["Trade", Home, "团队", TabBarIcon(2)],
-    ["Mine", Home, "个人", TabBarIcon(3)]
+    ["Home", Home, "主页", TabBarIcon("Home")],
+    ["Wallet", Home, "钱包", TabBarIcon("Wallet")],
+    ["Team", Home, "团队", TabBarIcon("Team")],
+    ["Mine", Home, "个人", TabBarIcon("Mine")]
 ];
 
 const createTabNavigatorParams = () => {

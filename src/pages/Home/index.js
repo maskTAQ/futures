@@ -1,5 +1,11 @@
 import React, { PureComponent } from "react";
-import { View, Image, Text } from "react-native";
+import {
+    View,
+    Image,
+    Text,
+    Modal,
+    TouchableWithoutFeedback
+} from "react-native";
 import { connect } from "react-redux";
 
 import { login as styles } from "../styles";
@@ -9,6 +15,7 @@ import User from "./User";
 //背景图片
 const bg = require("./img/bg.png");
 const radius = require("./img/radius.png");
+const rect = require("./img/rect.png");
 //花
 const flowerIcon = require("./img/flower.png");
 const shapeIcon = require("./img/shape.png");
@@ -19,7 +26,9 @@ const shapeIcon = require("./img/shape.png");
     quotation: quotation.all || {}
 }))
 export default class Home extends PureComponent {
-    state = {};
+    state = {
+        isModalVisible: false
+    };
     renderItem = ({ content }) => {
         return (
             <View style={styles.item}>
@@ -69,6 +78,7 @@ export default class Home extends PureComponent {
         );
     };
     render() {
+        const { isModalVisible } = this.state;
         return (
             <View style={styles.container}>
                 <View style={styles.bgContainer}>
@@ -79,7 +89,17 @@ export default class Home extends PureComponent {
                         resizeMode="stretch"
                     />
                 </View>
-                <User username={"张某某"} lv={2} repositoryNum={2333.4} />
+                <User
+                    requestShowNotif={() => {
+                        console.log("111");
+                        this.setState({
+                            isModalVisible: true
+                        });
+                    }}
+                    username={"张某某"}
+                    lv={2}
+                    repositoryNum={2333.4}
+                />
                 <View style={styles.list}>
                     <DataView
                         injectData={true}
@@ -120,6 +140,42 @@ export default class Home extends PureComponent {
                         renderItem={this.renderItemT}
                     />
                 </View>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={isModalVisible}
+                    onRequestClose={() => {
+                        //alert("Modal has been closed.");
+                    }}
+                >
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            this.setState({
+                                isModalVisible: false
+                            });
+                        }}
+                    >
+                        <View style={styles.modalContainer}>
+                            <View style={styles.notif}>
+                                <Image
+                                    source={rect}
+                                    style={styles.notifBg}
+                                    resizeMode="stretch"
+                                />
+                                <View style={styles.notifBox}>
+                                    <Text style={styles.notifTitleText}>
+                                        公告:
+                                    </Text>
+                                    <Text style={styles.notifContentText}>
+                                        使用搜狗输入法,输入“版权”二字进行选择;
+                                        使用搜狗输入
+                                        法,输入“f”,选择“6.更多特殊字符”进入字符大全进行选择
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </Modal>
             </View>
         );
     }

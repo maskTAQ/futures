@@ -117,6 +117,43 @@ const login = {
             height: 23
         }
     },
+    modalContainer: {
+        flex: 1,
+        position: "relative",
+        backgroundColor: "rgba(0,0,0,0.3)"
+    },
+    notif: {
+        position: "absolute",
+        top: 64,
+        left: 8,
+        right: 8,
+        height: 144,
+        flexDirection: "row"
+    },
+    notifBg: {
+        width: "100%"
+        //height:
+    },
+    notifBox: {
+        position: "absolute",
+        top: 20,
+        left: 4,
+        right: 4,
+        bottom: 4,
+        padding: 20,
+        paddingTop: 10
+    },
+    notifTitleText: {
+        fontSize: 14,
+        color: "#333"
+    },
+    notifContentText: {
+        paddingTop: 10,
+        fontSize: 12,
+        lineHeight: 20,
+        color: "#999"
+    },
+
     list: {
         marginTop: 6,
         height: 102,

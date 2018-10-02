@@ -11,7 +11,12 @@ const vipIcon = require("./img/vip.png");
 const emailIcon = require("./img/email.png");
 const orderIcon = require("./img/order.png");
 const transferIcon = require("./img/transfer.png");
-const User = ({ username = "张某某", lv = 2, repositoryNum = 2333.4 }) => {
+const User = ({
+    username = "张某某",
+    lv = 2,
+    repositoryNum = 2333.4,
+    requestShowNotif
+}) => {
     const detailList = [
         [
             {
@@ -57,7 +62,7 @@ const User = ({ username = "张某某", lv = 2, repositoryNum = 2333.4 }) => {
                                 </View>
                                 <Icon source={vipIcon} size={14} />
                             </View>
-                            <Button style={{}}>
+                            <Button onPress={requestShowNotif}>
                                 <Icon
                                     source={emailIcon}
                                     style={{ width: 20, height: 17 }}
@@ -143,7 +148,8 @@ const User = ({ username = "张某某", lv = 2, repositoryNum = 2333.4 }) => {
 User.propTypes = {
     username: PropTypes.string,
     lv: PropTypes.number,
-    repositoryNum: PropTypes.number
+    repositoryNum: PropTypes.number,
+    requestShowNotif: PropTypes.func
 };
 
 export default User;
