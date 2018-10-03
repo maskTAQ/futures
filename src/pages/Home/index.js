@@ -4,7 +4,8 @@ import {
     Image,
     Modal,
     TouchableWithoutFeedback,
-    StatusBar
+    StatusBar,
+    Platform
 } from "react-native";
 import { connect } from "react-redux";
 
@@ -73,7 +74,7 @@ export default class Home extends PureComponent {
         return (
             <View style={styles.container}>
                 <StatusBar
-                    hide={true}
+                    hide={Platform.OS === "android"}
                     translucent={true}
                     barStyle="light-content"
                 />

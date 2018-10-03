@@ -557,4 +557,86 @@ const wallet = {
         color: "#333333"
     }
 };
-export { home, mine, team, wallet };
+
+const inviteList = {
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+        paddingLeft: scale(10),
+        paddingRight: scale(10)
+    },
+    item: {
+        //flex:1,
+        flexDirection: "row",
+        alignItems: "center",
+        //height: scale(60),
+        paddingTop: scale(10),
+        paddingBottom: scale(10),
+        borderTopWidth: 1,
+        borderColor: "#F2F2F2"
+    },
+    itemContent: {
+        paddingLeft: scale(18),
+        flex: 1
+    },
+    itemContentItem: {
+        flex: 1,
+        height: "100%"
+    },
+    itemContentTop: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-start"
+    },
+    itemContentBottom: {
+        flexDirection: "row",
+        alignItems: "flex-end"
+    },
+    username: {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    usernameText: {
+        width: scale(40),
+        fontSize: scale(16),
+        color: "#333",
+        fontFamily: "PingFangSC-Regular"
+    },
+    lv: {
+        //marginLeft: scale(16),
+        height: scale(14),
+        paddingLeft: scale(8),
+        paddingRight: scale(8),
+
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: scale(6),
+        backgroundColor: "#fa4f75"
+    },
+    lvText: {
+        color: "#fff",
+        fontSize: scale(12),
+        lineHeight: scale(16)
+    },
+    timeText: {
+        fontSize: scale(13),
+        color: "#666"
+    },
+    agree: {
+        backgroundColor: "#fa4f75",
+        width: scale(41),
+        height: scale(23),
+        borderRadius: scale(4),
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    agreeText: {
+        fontSize: scale(11),
+        color: "#fff"
+    },
+    hasArgee: {
+        color: "#B1B1B1",
+        fontSize: scale(11)
+    }
+};
+export { home, mine, team, wallet, inviteList };
