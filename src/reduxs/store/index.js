@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
-console.log(createStore, "createStore");
+
 import rootReducer, { preloadedState } from "../reducers/index";
 
 const sagaMiddleware = createSagaMiddleware({});

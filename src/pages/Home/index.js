@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
-import { login as styles } from "../styles";
+import { home as styles } from "../styles";
 import { DataView, Icon, Button } from "components";
 import User from "./User";
 

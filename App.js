@@ -18,9 +18,9 @@ import { ThemeProvider, Page } from "components";
 import { reduxifyNavigator } from "react-navigation-redux-helpers";
 import { connect } from "react-redux";
 
- import store from "reduxs/store/index.js";
- import { back } from "reduxs/actions";
- import sage from "reduxs/effects/index.js";
+import store from "reduxs/store/index.js";
+import { back } from "reduxs/actions";
+import sage from "reduxs/effects/index.js";
 
 //import Loading from "./loading";
 import Router from "./src/Router";
@@ -35,11 +35,11 @@ const AppWithNavigationState = connect(mapStateToProps)(Navigation);
 /* eslint-disable */
 if (!__DEV__) {
   global.console = {
-    info: () => {},
-    log: () => {},
-    warn: () => {},
-    debug: () => {},
-    error: () => {}
+    info: () => { },
+    log: () => { },
+    warn: () => { },
+    debug: () => { },
+    error: () => { }
   };
 }
 
@@ -67,7 +67,7 @@ export default class App extends Component {
   //   }
   // }
 
-  
+
   handleAppStateChange = nextAppState => {
     switch (nextAppState) {
       case "active":
@@ -105,18 +105,9 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <ThemeProvider
-          theme={{
-            header: {
-              containerBG: "#1e1e20",
-              titleColor: "#fff"
-            }
-          }}
-        >
-          <View style={{ flex: 1 }}>
-            <AppWithNavigationState />
-          </View>
-        </ThemeProvider>
+        <View style={{ flex: 1 }}>
+          <AppWithNavigationState />
+        </View>
       </Provider>
     );
   }

@@ -6,7 +6,7 @@ export default {
         tintColor: "red"
     },
     header: {
-        containerBG: "#D00004",
+        containerBG: "#fa4f75",
         titleColor: "#fff"
     },
     alert: {

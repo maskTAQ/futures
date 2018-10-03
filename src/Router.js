@@ -4,9 +4,17 @@ import {
     createBottomTabNavigator,
     createStackNavigator
 } from "react-navigation";
+import { YellowBox } from "react-native";
 import { Icon, TabBar } from "components";
 
-import { Login, Home } from "pages";
+import { Login, Home, Mine } from "pages";
+
+YellowBox.ignoreWarnings([
+    "Warning: isMounted(...) is deprecated",
+    "Module RCTImageLoader",
+    "Class RCTCxxModule",
+    "Remote"
+]);
 
 const homeIcon = require("./tabImg/home.png");
 const activeHomeIcon = require("./tabImg/active_home.png");
@@ -45,7 +53,7 @@ const tabPageConfig = [
     ["Home", Home, "主页", TabBarIcon("Home")],
     ["Wallet", Home, "钱包", TabBarIcon("Wallet")],
     ["Team", Home, "团队", TabBarIcon("Team")],
-    ["Mine", Home, "个人", TabBarIcon("Mine")]
+    ["Mine", Mine, "个人", TabBarIcon("Mine")]
 ];
 
 const createTabNavigatorParams = () => {

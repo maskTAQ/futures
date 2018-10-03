@@ -1,4 +1,5 @@
-const login = {
+import { scale } from "commons";
+const home = {
     container: {
         flex: 1,
         flexDirection: "column",
@@ -14,11 +15,11 @@ const login = {
     },
     bg: {
         width: "100%",
-        height: 200
+        height: scale(200)
     },
     radius: {
         width: "100%",
-        marginTop: -36
+        marginTop: scale(-36)
     },
     user: {
         container: {
@@ -124,10 +125,10 @@ const login = {
     },
     notif: {
         position: "absolute",
-        top: 64,
-        left: 8,
-        right: 8,
-        height: 144,
+        top: scale(64),
+        left: scale(8),
+        right: scale(8),
+        height: scale(144),
         flexDirection: "row"
     },
     notifBg: {
@@ -136,57 +137,57 @@ const login = {
     },
     notifBox: {
         position: "absolute",
-        top: 20,
-        left: 4,
-        right: 4,
-        bottom: 4,
-        padding: 20,
-        paddingTop: 10
+        top: scale(20),
+        left: scale(4),
+        right: scale(4),
+        bottom: scale(4),
+        padding: scale(20),
+        paddingTop: scale(10)
     },
     notifTitleText: {
-        fontSize: 14,
+        fontSize: scale(14),
         color: "#333"
     },
     notifContentText: {
-        paddingTop: 10,
-        fontSize: 12,
-        lineHeight: 20,
+        paddingTop: scale(10),
+        fontSize: scale(12),
+        lineHeight: scale(20),
         color: "#999"
     },
 
     list: {
-        marginTop: 6,
-        height: 102,
+        marginTop: scale(6),
+        height: scale(102),
         backgroundColor: "#fff"
     },
     item: {
-        height: 102,
+        height: scale(102),
         flexDirection: "row",
-        paddingTop: 11,
-        paddingBottom: 11,
-        paddingLeft: 16,
-        paddingRight: 16
+        paddingTop: scale(11),
+        paddingBottom: scale(11),
+        paddingLeft: scale(16),
+        paddingRight: scale(16)
     },
     itemContent: {
         flex: 1,
-        paddingLeft: 11,
-        paddingTop: 2
+        paddingLeft: scale(11),
+        paddingTop: scale(2)
     },
     itemTop: {
         //flex: 1,
-        height: 24,
+        height: scale(24),
         flexDirection: "row",
         justifyContent: "space-between"
     },
     buyButton: {
-        width: 64,
+        width: scale(64),
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: 32,
+        borderRadius: scale(32),
         backgroundColor: "#fa4f75"
     },
     buyButtonText: {
-        fontSize: 12
+        fontSize: scale(12)
     },
     itemCenter: {
         flex: 1,
@@ -194,20 +195,20 @@ const login = {
         justifyContent: "space-between"
     },
     itemTitleText: {
-        fontSize: 16,
+        fontSize: scale(16),
         color: "#333"
     },
     statusText: {
-        fontSize: 14,
+        fontSize: scale(14),
         color: "#FD4C73"
     },
     itemPercentageText: {
-        fontSize: 14,
+        fontSize: scale(14),
         color: "#333"
     },
     itemDetail: {
         // alignSelf:'flex-end',
-        fontSize: 12,
+        fontSize: scale(12),
         color: "#999"
     },
     store: {
@@ -215,11 +216,11 @@ const login = {
         backgroundColor: "#fff"
     },
     storeHeader: {
-        height: 40,
+        height: scale(40),
         flexDirection: "row",
         alignItems: "center",
-        paddingLeft: 10,
-        paddingRight: 10,
+        paddingLeft: scale(10),
+        paddingRight: scale(10),
         justifyContent: "space-between",
         backgroundColor: "#f7f7f7"
     },
@@ -227,17 +228,24 @@ const login = {
         flexDirection: "row"
     },
     storeTitleText: {
-        fontSize: 16,
+        fontSize: scale(16),
         color: "#333"
     },
     storeTitleIcon: {
-        width: 2,
-        height: 19,
-        marginRight: 6
+        width: scale(2),
+        height: scale(19),
+        marginRight: scale(6)
     },
     countDownText: {
-        fontSize: 12,
+        fontSize: scale(12),
         color: "#999"
     }
 };
-export { login };
+const mine = {
+    container: {
+        flex: 1,
+        flexDirection: "column",
+        position: "relative"
+    }
+};
+export { home, mine };

@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
 
-import { login as loginStyles } from "../styles";
+import { home as homeStyles } from "../styles";
 import { Icon, Button } from "components";
 
-const styles = loginStyles.user;
+const styles = homeStyles.user;
 const defaultPortrait = require("./img/portrait.png");
 const vipIcon = require("./img/vip.png");
 const emailIcon = require("./img/email.png");
