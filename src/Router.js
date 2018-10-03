@@ -73,7 +73,7 @@ const createTabNavigatorParams = () => {
 };
 // 创建TAB导航
 const TabNavigator = createBottomTabNavigator(createTabNavigatorParams(), {
-    initialRouteName: "Home",
+    initialRouteName: "Mine",
     tabBarOptions: {
         activeTintColor: "#fa4f75",
         inactiveTintColor: "#919191",

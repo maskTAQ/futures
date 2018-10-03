@@ -10,7 +10,8 @@
           "components":"./src/components",
           "reduxs":"./src/reduxs",
           "apis":"./src/apis",
-          "commons":"./src/commons"
+          "commons":"./src/commons",
+          "images":"./src/assets/img"
         }
       }
     ],

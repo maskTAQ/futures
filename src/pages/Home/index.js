@@ -1,15 +1,9 @@
 import React, { PureComponent } from "react";
-import {
-    View,
-    Image,
-    Text,
-    Modal,
-    TouchableWithoutFeedback
-} from "react-native";
+import { View, Image, Modal, TouchableWithoutFeedback } from "react-native";
 import { connect } from "react-redux";
 
 import { home as styles } from "../styles";
-import { DataView, Icon, Button } from "components";
+import { DataView, Icon, Text, Button } from "components";
 import User from "./User";
 
 //背景图片

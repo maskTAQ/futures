@@ -1,13 +1,12 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import PropTypes from "prop-types";
 
 import { home as homeStyles } from "../styles";
-import { Icon, Button } from "components";
+import { Icon, Button, Text } from "components";
+import { iconSource } from "commons";
 
 const styles = homeStyles.user;
-const defaultPortrait = require("./img/portrait.png");
-const vipIcon = require("./img/vip.png");
 const emailIcon = require("./img/email.png");
 const orderIcon = require("./img/order.png");
 const transferIcon = require("./img/transfer.png");
@@ -45,7 +44,7 @@ const User = ({
         <View style={styles.container}>
             <View style={styles.box}>
                 <View style={styles.header}>
-                    <Icon source={defaultPortrait} size={44} />
+                    <Icon source={iconSource.defaultPortrait} size={44} />
                     <View style={styles.headerContent}>
                         <View
                             style={[
@@ -60,7 +59,7 @@ const User = ({
                                 <View style={styles.lv}>
                                     <Text style={styles.lvText}>v{lv}</Text>
                                 </View>
-                                <Icon source={vipIcon} size={14} />
+                                <Icon source={iconSource.vipIcon} size={14} />
                             </View>
                             <Button onPress={requestShowNotif}>
                                 <Icon

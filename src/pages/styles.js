@@ -73,12 +73,16 @@ const home = {
             height: 14,
             paddingLeft: 8,
             paddingRight: 8,
+
+            justifyContent: "center",
+            alignItems: "center",
             borderRadius: 6,
             backgroundColor: "#fa4f75"
         },
         lvText: {
             color: "#fff",
-            fontSize: 12
+            fontSize: 12,
+            lineHeight: 16
         },
         repositoryNumText: {
             fontSize: 13,
