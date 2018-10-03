@@ -7,3 +7,4 @@ export { default as InviteList } from "./InviteList";
 export { default as Feedback } from "./Feedback";
 export { default as ChangeDealPassword } from "./ChangeDealPassword";
 export { default as About } from "./About";
+export { default as AccountInfo } from "./AccountInfo";

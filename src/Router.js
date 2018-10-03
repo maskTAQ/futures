@@ -16,7 +16,8 @@ import {
     InviteList,
     Feedback,
     ChangeDealPassword,
-    About
+    About,
+    AccountInfo
 } from "pages";
 
 YellowBox.ignoreWarnings([
@@ -108,7 +109,8 @@ const AppRouteConfigs = {
     InviteList,
     Feedback,
     ChangeDealPassword,
-    About
+    About,
+    AccountInfo
 };
 // 创建一级导航
 const StackNavigator = createStackNavigator(AppRouteConfigs, {

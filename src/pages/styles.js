@@ -699,15 +699,19 @@ const changeDealPassword = {
         paddingLeft: scale(15),
         paddingRight: scale(15)
     },
+    group: {
+        borderBottomWidth: scale(4),
+        borderColor: "#F2F2F2"
+    },
     item: {
-        height: scale(70),
+        height: scale(50),
         flexDirection: "row",
         alignItems: "center",
         borderBottomWidth: 1,
         borderColor: "#F2F2F2"
     },
     itemLabelText: {
-        width: scale(80),
+        //width: scale(86),
         fontSize: scale(16),
         color: "#333"
     },
