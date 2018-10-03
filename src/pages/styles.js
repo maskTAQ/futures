@@ -741,4 +741,59 @@ const changeDealPassword = {
         color: "#fff"
     }
 };
-export { home, mine, team, wallet, inviteList, feedback, changeDealPassword };
+
+const about = {
+    container: {
+        flex: 1,
+        backgroundColor: "#f2f2f2",
+        paddingTop: scale(10),
+        paddingLeft: scale(15),
+        paddingRight: scale(15)
+    },
+    content: {
+        flex: 1,
+        paddingLeft: scale(10),
+        paddingRight: scale(10),
+        backgroundColor: "#fff"
+    },
+    titleText: {
+        fontSize: scale(18),
+        lineHeight: scale(60),
+        color: "#363636",
+        textAlign: "center"
+    },
+    subTitleText: {
+        fontSize: scale(13),
+        lineHeight: scale(20),
+        color: "#363636",
+        textAlign: "center"
+    },
+    contentText: {
+        fontSize: scale(13),
+        lineHeight: scale(30),
+        color: "#363636"
+    },
+    submit: {
+        marginTop: scale(20),
+        marginBottom: scale(20),
+        height: scale(40),
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: scale(4),
+        backgroundColor: "#fa4f75"
+    },
+    submitText: {
+        fontSize: scale(22),
+        color: "#fff"
+    }
+};
+export {
+    home,
+    mine,
+    team,
+    wallet,
+    inviteList,
+    feedback,
+    changeDealPassword,
+    about
+};
