@@ -23,26 +23,26 @@ const home = {
     },
     user: {
         container: {
-            padding: 20,
-            paddingTop: 31,
+            padding: scale(20),
+            paddingTop: scale(31),
             paddingBottom: 0
         },
         box: {
-            height: 170,
+            height: scale(170),
             backgroundColor: "#fff",
-            padding: 18,
+            padding: scale(18),
             paddingBottom: 0,
-            borderWidth: 1,
+            borderWidth: scale(1),
             borderColor: "#f7f7f7",
-            borderRadius: 5
+            borderRadius: scale(5)
         },
         header: {
             //flex:1,
             flexDirection: "row",
-            height: 44
+            height: scale(44)
         },
         headerContent: {
-            paddingLeft: 18,
+            paddingLeft: scale(18),
             flex: 1
         },
         headerContentItem: {
@@ -63,29 +63,29 @@ const home = {
             alignItems: "center"
         },
         usernameText: {
-            fontSize: 16,
+            fontSize: scale(16),
             color: "#333",
             fontFamily: "PingFangSC-Regular"
         },
         lv: {
-            marginLeft: 6,
-            marginRight: 6,
-            height: 14,
-            paddingLeft: 8,
-            paddingRight: 8,
+            marginLeft: scale(6),
+            marginRight: scale(6),
+            height: scale(14),
+            paddingLeft: scale(8),
+            paddingRight: scale(8),
 
             justifyContent: "center",
             alignItems: "center",
-            borderRadius: 6,
+            borderRadius: scale(6),
             backgroundColor: "#fa4f75"
         },
         lvText: {
             color: "#fff",
-            fontSize: 12,
-            lineHeight: 16
+            fontSize: scale(12),
+            lineHeight: scale(16)
         },
         repositoryNumText: {
-            fontSize: 13,
+            fontSize: scale(13),
             color: "#666"
         },
         detail: {
@@ -110,17 +110,17 @@ const home = {
             borderColor: "#eee"
         },
         itemText: {
-            fontSize: 12,
+            fontSize: scale(12),
             color: "#999",
             marginTop: 6
         },
         itemValue: {
-            fontSize: 14,
+            fontSize: scale(14),
             color: "#333"
         },
         itemIcon: {
-            width: 20,
-            height: 23
+            width: scale(20),
+            height: scale(23)
         }
     },
     modalContainer: {
@@ -250,7 +250,89 @@ const mine = {
     container: {
         flex: 1,
         flexDirection: "column",
-        position: "relative"
+        backgroundColor: "#f2f2f2"
+    },
+    header: {
+        container: {
+            padding: scale(20),
+            flexDirection: "row",
+            height: scale(84),
+            backgroundColor: "#fff"
+        },
+        headerContent: {
+            paddingLeft: scale(18),
+            flex: 1
+        },
+        headerContentItem: {
+            flex: 1,
+            height: "100%"
+        },
+        headerContentTop: {
+            flexDirection: "row",
+            alignItems: "flex-start"
+        },
+        headerContentBottom: {
+            flexDirection: "row",
+            alignItems: "flex-end"
+        },
+        username: {
+            flexDirection: "row",
+            alignItems: "center"
+        },
+        usernameText: {
+            fontSize: scale(16),
+            color: "#333",
+            fontFamily: "PingFangSC-Regular"
+        },
+        lv: {
+            marginLeft: scale(6),
+            marginRight: scale(6),
+            height: scale(14),
+            paddingLeft: scale(8),
+            paddingRight: scale(8),
+
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: scale(6),
+            backgroundColor: "#fa4f75"
+        },
+        lvText: {
+            color: "#fff",
+            fontSize: scale(12),
+            lineHeight: scale(16)
+        },
+        right: {
+            justifyContent: "center"
+        },
+        closeIcon: {
+            width: scale(22),
+            height: scale(19)
+        }
+    },
+    list: {
+        flex: 1,
+        marginTop: scale(13),
+        marginBottom: scale(4),
+        paddingLeft: scale(14),
+        paddingRight: scale(14),
+        backgroundColor: "#fff"
+    },
+    group: {
+        //flex: 1,
+        borderBottomWidth: scale(5),
+        borderColor: "#f2f2f2"
+    },
+    item: {
+        height: scale(50),
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderBottomWidth: 1,
+        borderColor: "#f2f2f2"
+    },
+    itemText: {
+        fontSize: scale(16),
+        color: "#333"
     }
 };
 export { home, mine };
