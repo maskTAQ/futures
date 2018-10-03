@@ -639,4 +639,56 @@ const inviteList = {
         fontSize: scale(11)
     }
 };
-export { home, mine, team, wallet, inviteList };
+const feedback = {
+    container: {
+        flex: 1,
+        paddingLeft: scale(15),
+        paddingRight: scale(15),
+        backgroundColor: "#ebebeb"
+    },
+    title: {
+        fontSize: scale(16),
+        lineHeight: scale(70),
+        color: "#FD4C73"
+    },
+    inputTitleBox: {
+        height: scale(40),
+        borderRadius: scale(4),
+        backgroundColor: "#fff"
+    },
+    inputTitle: {
+        flex: 1,
+        fontSize: scale(15),
+        color: "#A7A7A7",
+        paddingLeft: scale(10)
+    },
+    inputContentBox: {
+        marginTop: scale(20),
+        height: scale(165),
+        borderRadius: scale(4),
+        backgroundColor: "#fff"
+    },
+    hintText: {
+        marginTop: scale(10),
+        fontSize: scale(11),
+        lineHeight: scale(20),
+        color: "#979696"
+    },
+    importantText: {
+        fontSize: scale(11),
+        color: "#FD4C73"
+    },
+    submit: {
+        marginTop: scale(40),
+        height: scale(40),
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: scale(4),
+        backgroundColor: "#fa4f75"
+    },
+    submitText: {
+        fontSize: scale(22),
+        color: "#fff"
+    }
+};
+export { home, mine, team, wallet, inviteList, feedback };
