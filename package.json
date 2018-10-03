@@ -16,7 +16,6 @@
     "lodash": "^4.17.10",
     "react": "16.5.0",
     "react-native": "0.57.1",
-    "react-native-splash-screen": "~3.0.9",
     "react-navigation": "~2.3.1",
     "react-navigation-redux-helpers": "~2.0.2",
     "react-redux": "^5.0.7",
@@ -50,6 +49,11 @@
       "prettier --tab-width 4 --write",
       "eslint --fix",
       "git add"
+    ]
+  },
+  "rnpm": {
+    "assets": [
+      "./src/assets/fonts"
     ]
   }
 }

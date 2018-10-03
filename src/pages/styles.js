@@ -64,7 +64,8 @@ const home = {
         },
         usernameText: {
             fontSize: 16,
-            color: "#333"
+            color: "#333",
+            fontFamily: "PingFangSC-Regular"
         },
         lv: {
             marginLeft: 6,
