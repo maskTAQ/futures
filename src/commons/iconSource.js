@@ -7,5 +7,8 @@ export default {
     line: require("images/line.png"),
     search: require("images/search.png"),
     invite: require("images/invite.png"),
-    right: require("images/right.png")
+    right: require("images/right.png"),
+    bg: require("images/bg.png"),
+    message: require("images/message.png"),
+    radius: require("images/radius.png")
 };

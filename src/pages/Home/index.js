@@ -5,20 +5,13 @@ import { connect } from "react-redux";
 import { home as styles } from "../styles";
 import { DataView, Icon, Text, Button } from "components";
 import User from "./User";
+import { iconSource } from "commons";
 
-//背景图片
-const bg = require("./img/bg.png");
-const radius = require("./img/radius.png");
-const rect = require("./img/rect.png");
 //花
 const flowerIcon = require("./img/flower.png");
 const shapeIcon = require("./img/shape.png");
 
-@connect(({ stock, loading, quotation }) => ({
-    choiceAll: stock.choice || [],
-    choiceAllLoading: loading.stock.choice.loading,
-    quotation: quotation.all || {}
-}))
+@connect()
 export default class Home extends PureComponent {
     state = {
         isModalVisible: false
@@ -76,9 +69,13 @@ export default class Home extends PureComponent {
         return (
             <View style={styles.container}>
                 <View style={styles.bgContainer}>
-                    <Image source={bg} style={styles.bg} resizeMode="stretch" />
                     <Image
-                        source={radius}
+                        source={iconSource.bg}
+                        style={styles.bg}
+                        resizeMode="stretch"
+                    />
+                    <Image
+                        source={iconSource.radius}
                         style={styles.radius}
                         resizeMode="stretch"
                     />
@@ -152,7 +149,7 @@ export default class Home extends PureComponent {
                         <View style={styles.modalContainer}>
                             <View style={styles.notif}>
                                 <Image
-                                    source={rect}
+                                    source={iconSource.message}
                                     style={styles.notifBg}
                                     resizeMode="stretch"
                                 />

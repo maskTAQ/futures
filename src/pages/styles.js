@@ -474,4 +474,87 @@ const team = {
         color: "#fa4f75"
     }
 };
-export { home, mine, team };
+const wallet = {
+    container: {
+        flex: 1,
+        flexDirection: "column",
+        position: "relative"
+    },
+    bgContainer: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#f7f7f7"
+    },
+    bg: {
+        width: "100%",
+        height: scale(200)
+    },
+    radius: {
+        width: "100%",
+        marginTop: scale(-80)
+    },
+    card: {
+        container: {
+            padding: scale(20),
+            paddingTop: scale(31),
+            paddingBottom: 0
+        },
+        box: {
+            height: scale(125),
+            backgroundColor: "#fff",
+            padding: scale(18),
+            paddingBottom: 0,
+            borderWidth: scale(1),
+            borderColor: "#f7f7f7",
+            borderRadius: scale(5)
+        },
+        repoText: {
+            textAlign: "center",
+            fontSize: scale(18),
+            color: "#FD4C73"
+        },
+        list: {
+            marginTop: 10,
+            flexDirection: "row"
+        },
+        item: {
+            flex: 1,
+            height: scale(50),
+            alignItems: "center"
+        },
+        itemBorderRight: {
+            borderRightWidth: 0.5,
+            borderColor: "#eee"
+        },
+        itemText: {
+            fontSize: scale(12),
+            color: "#999",
+            marginTop: 6
+        },
+        itemValue: {
+            fontSize: scale(14),
+            color: "#333"
+        }
+    },
+    group: {
+        backgroundColor: "#fff"
+    },
+    item: {
+        height: scale(50),
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingLeft: scale(20),
+        paddingRight: scale(20),
+        borderBottomWidth: 1,
+        borderColor: "#f7f7f7"
+    },
+    itemText: {
+        fontSize: scale(16),
+        color: "#333333"
+    }
+};
+export { home, mine, team, wallet };
