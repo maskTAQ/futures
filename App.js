@@ -16,9 +16,9 @@ import { reduxifyNavigator } from "react-navigation-redux-helpers";
 import { connect } from "react-redux";
 
 import {iconSource} from 'commons';
-import store from "reduxs/store/index.js";
-import { back } from "reduxs/actions";
-import sage from "reduxs/effects/index.js";
+import store from "store/index.js";
+import { back } from "actions";
+import sage from "effects/index.js";
 
 //import Loading from "./loading";
 import Router from "./src/Router";

@@ -28,6 +28,7 @@ export default class Wallet extends PureComponent {
             <View style={styles.container}>
                 <StatusBar
                     //backgroundColor="#1a98e0"
+                    hidden={true}
                     translucent={true}
                     barStyle="light-content"
                 />

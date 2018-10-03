@@ -13,8 +13,6 @@ import { DataView, Icon, Text, Button } from "components";
 import User from "./User";
 import { iconSource } from "commons";
 
-//花
-const flowerIcon = require("./img/flower.png");
 const shapeIcon = require("./img/shape.png");
 
 @connect()
@@ -22,10 +20,10 @@ export default class Home extends PureComponent {
     state = {
         isModalVisible: false
     };
-    renderItem = ({ content }) => {
+    renderItem = ({ content = "成长时间：2018/09/02   23:12:00" }) => {
         return (
             <View style={styles.item}>
-                <Icon source={flowerIcon} size={80} />
+                <Icon source={iconSource.mudan} size={80} />
                 <View style={styles.itemContent}>
                     <View style={styles.itemTop}>
                         <Text style={styles.itemTitleText}>牡丹花</Text>
@@ -45,11 +43,6 @@ export default class Home extends PureComponent {
     }) => {
         return (
             <View style={styles.item}>
-                <StatusBar
-                    backgroundColor="#1a98e0"
-                    translucent={true}
-                    barStyle="light-content"
-                />
                 <Icon source={iconSource[type]} size={80} />
                 <View style={styles.itemContent}>
                     <View style={styles.itemTop}>
@@ -79,6 +72,11 @@ export default class Home extends PureComponent {
         const { isModalVisible } = this.state;
         return (
             <View style={styles.container}>
+                <StatusBar
+                    hide={true}
+                    translucent={true}
+                    barStyle="light-content"
+                />
                 <View style={styles.bgContainer}>
                     <Image
                         source={iconSource.bg}

@@ -7,7 +7,7 @@ import {
 import { YellowBox } from "react-native";
 import { Icon, TabBar } from "components";
 
-import { Login, Home, Mine, Team, Wallet } from "pages";
+import { Login, Home, Mine, Team, Wallet, InviteList } from "pages";
 
 YellowBox.ignoreWarnings([
     "Warning: isMounted(...) is deprecated",
@@ -94,7 +94,8 @@ const TabNavigator = createBottomTabNavigator(createTabNavigatorParams(), {
 const AppRouteConfigs = {
     TabNavigator,
     Login,
-    Home
+    Home,
+    InviteList
 };
 // 创建一级导航
 const StackNavigator = createStackNavigator(AppRouteConfigs, {

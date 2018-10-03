@@ -1,5 +1,5 @@
 import Axios from "axios";
-import store from "reduxs/store";
+import store from "store";
 
 function getBaseURL() {
     return "11";

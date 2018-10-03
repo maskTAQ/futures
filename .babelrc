@@ -8,10 +8,13 @@
           "src":"./src",
           "pages":"./src/pages",
           "components":"./src/components",
-          "reduxs":"./src/reduxs",
           "apis":"./src/apis",
           "commons":"./src/commons",
-          "images":"./src/assets/img"
+          "images":"./src/assets/img",
+          "store":"./src/store",
+          "reducers":"./src/reducers",
+          "actions":"./src/actions",
+          "effects":"./src/effects"
         }
       }
     ],

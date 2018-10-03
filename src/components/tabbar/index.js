@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, Modal, Image } from "react-native";
+import {
+    View,
+    Text,
+    Modal,
+    Image,
+    TouchableWithoutFeedback
+} from "react-native";
 import PropTypes from "prop-types";
 
 import styles from "./style";
@@ -131,29 +137,37 @@ export default class Tabbar extends Component {
                         //alert("Modal has been closed.");
                     }}
                 >
-                    <View style={styles.modalContainer}>
-                        <View style={styles.list}>
-                            <Image
-                                source={rect}
-                                style={styles.listBg}
-                                resizeMode="stretch"
-                            />
-                            {list.map(({ label, icon }) => {
-                                return (
-                                    <Button
-                                        onPress={this.requestModalClose}
-                                        style={styles.item}
-                                        key={label}
-                                    >
-                                        <Icon size={36} source={icon} />
-                                        <Text style={styles.itemText}>
-                                            {label}
-                                        </Text>
-                                    </Button>
-                                );
-                            })}
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            this.setState({
+                                isModalVisible: false
+                            });
+                        }}
+                    >
+                        <View style={styles.modalContainer}>
+                            <View style={styles.list}>
+                                <Image
+                                    source={rect}
+                                    style={styles.listBg}
+                                    resizeMode="stretch"
+                                />
+                                {list.map(({ label, icon }) => {
+                                    return (
+                                        <Button
+                                            onPress={this.requestModalClose}
+                                            style={styles.item}
+                                            key={label}
+                                        >
+                                            <Icon size={36} source={icon} />
+                                            <Text style={styles.itemText}>
+                                                {label}
+                                            </Text>
+                                        </Button>
+                                    );
+                                })}
+                            </View>
                         </View>
-                    </View>
+                    </TouchableWithoutFeedback>
                 </Modal>
             </View>
         );

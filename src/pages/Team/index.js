@@ -3,7 +3,8 @@ import { View } from "react-native";
 import { connect } from "react-redux";
 import _ from "lodash";
 
-import { Text, Icon } from "components";
+import { Text, Icon, Button } from "components";
+import { navigate } from "actions";
 import { team as styles } from "../styles";
 import Tree from "./Tree";
 import Search from "./Search";
@@ -99,7 +100,14 @@ export default class Team extends PureComponent {
                         });
                     }}
                 />
-                <View style={styles.invite}>
+                <Button
+                    onPress={() => {
+                        navigate({
+                            routeName: "InviteList"
+                        });
+                    }}
+                    style={styles.invite}
+                >
                     <View style={styles.inviteLeft}>
                         <Icon
                             source={iconSource.invite}
@@ -113,7 +121,7 @@ export default class Team extends PureComponent {
                             style={styles.rightIcon}
                         />
                     </View>
-                </View>
+                </Button>
                 <Text style={styles.countText}>
                     当前团队总人数：
                     <Text style={styles.numText}>{this.getCount()}</Text> 人

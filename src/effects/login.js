@@ -4,15 +4,9 @@ import { NavigationActions } from "react-navigation";
 
 import { login, loginOut } from "apis/UserApi";
 import { Tip, Storage } from "commons";
-// import {
-//   fetchChoiceData,
-//   fetchFundsInfo,
-//   fetchPosition,
-//   fetchDayCommission,
-//   fetchDayDeal
-// } from "reduxs/actions";
+
 const setSerialNum = "1";
-import store from "../store";
+import store from "store";
 
 export default function*() {
     let loginTaskTag, logoutTaskTag;
