@@ -18,7 +18,7 @@ const preloadedStateForLoadong = {};
 const preloadedState = {
     loading: preloadedStateForLoadong,
     nav: AppNavigator.router.getStateForAction(
-        AppNavigator.router.getActionForPathAndParams("Feedback")
+        AppNavigator.router.getActionForPathAndParams("ChangeDealPassword")
     )
 };
 

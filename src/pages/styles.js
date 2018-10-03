@@ -691,4 +691,54 @@ const feedback = {
         color: "#fff"
     }
 };
-export { home, mine, team, wallet, inviteList, feedback };
+
+const changeDealPassword = {
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+        paddingLeft: scale(15),
+        paddingRight: scale(15)
+    },
+    item: {
+        height: scale(70),
+        flexDirection: "row",
+        alignItems: "center",
+        borderBottomWidth: 1,
+        borderColor: "#F2F2F2"
+    },
+    itemLabelText: {
+        width: scale(80),
+        fontSize: scale(16),
+        color: "#333"
+    },
+    itemInput: {
+        flex: 1,
+        height: "100%",
+        fontSize: scale(16),
+        color: "#000"
+    },
+    verifyBox: {
+        height: scale(70),
+        flexDirection: "row",
+        alignItems: "center",
+        borderBottomWidth: scale(5),
+        borderColor: "#F2F2F2"
+    },
+    verifyIcon: {
+        width: scale(54),
+        height: scale(19)
+    },
+    submit: {
+        marginTop: scale(40),
+        height: scale(40),
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: scale(4),
+        backgroundColor: "#fa4f75"
+    },
+    submitText: {
+        fontSize: scale(22),
+        color: "#fff"
+    }
+};
+export { home, mine, team, wallet, inviteList, feedback, changeDealPassword };

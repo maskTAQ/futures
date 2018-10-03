@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 
 import { Header, Text, Button } from "components";
 import { mine as styles } from "../styles";
+import { navigate } from "actions";
+
 import UserHeader from "./Header";
 
 const list = [
@@ -14,7 +16,7 @@ const list = [
     ],
     [{ label: "消息推送", Component: Switch }],
     [
-        { label: "求助反馈", routeName: "" },
+        { label: "求助反馈", routeName: "Feedback" },
         { label: "关于", routeName: "" },
         { label: "应用分享", routeName: "" }
     ]
@@ -32,33 +34,41 @@ export default class Mine extends PureComponent {
                     {list.map((group, i) => {
                         return (
                             <View style={styles.group} key={i}>
-                                {group.map(({ label, Component }) => {
-                                    return (
-                                        <Button
-                                            style={styles.item}
-                                            key={label}
-                                            disabled={!!Component}
-                                            disabledButtonStyle={{
-                                                backgroundColor: "#fff"
-                                            }}
-                                        >
-                                            <Text style={styles.itemText}>
-                                                {label}
-                                            </Text>
-                                            {Component && (
-                                                <Component
-                                                    value={true}
-                                                    //_thumbColor="red"
-                                                    thumbTintColor="#fff"
-                                                    trackColor={{
-                                                        false: "#e3e3e3",
-                                                        true: "#fa4f75"
-                                                    }}
-                                                />
-                                            )}
-                                        </Button>
-                                    );
-                                })}
+                                {group.map(
+                                    ({ label, Component, routeName }) => {
+                                        return (
+                                            <Button
+                                                style={styles.item}
+                                                key={label}
+                                                disabled={!!Component}
+                                                disabledButtonStyle={{
+                                                    backgroundColor: "#fff"
+                                                }}
+                                                onPress={() => {
+                                                    console.log(12121);
+                                                    navigate({
+                                                        routeName
+                                                    });
+                                                }}
+                                            >
+                                                <Text style={styles.itemText}>
+                                                    {label}
+                                                </Text>
+                                                {Component && (
+                                                    <Component
+                                                        value={true}
+                                                        //_thumbColor="red"
+                                                        thumbTintColor="#fff"
+                                                        trackColor={{
+                                                            false: "#e3e3e3",
+                                                            true: "#fa4f75"
+                                                        }}
+                                                    />
+                                                )}
+                                            </Button>
+                                        );
+                                    }
+                                )}
                             </View>
                         );
                     })}
