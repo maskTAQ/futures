@@ -106,7 +106,7 @@ const home = {
             backgroundColor: "#eee"
         },
         itemBorderBottom: {
-            borderBottomWidth: 0.3,
+            borderBottomWidth: 0.5,
             borderColor: "#eee"
         },
         itemText: {

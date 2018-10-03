@@ -12,7 +12,7 @@ const WrapperText = ({ style, ...otherProps }) => {
 };
 
 WrapperText.propTypes = {
-    style: PropTypes.object
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
 export default WrapperText;

@@ -90,12 +90,12 @@ export default class Tabbar extends Component {
                     />
                     <Text
                         style={[
+                            styles.tabItemText,
                             {
                                 color: isModalVisible
                                     ? activeTintColor
                                     : inactiveTintColor
-                            },
-                            styles.tabItemText
+                            }
                         ]}
                     >
                         发布

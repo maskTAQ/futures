@@ -1,5 +1,11 @@
 import React, { PureComponent } from "react";
-import { View, Image, Modal, TouchableWithoutFeedback } from "react-native";
+import {
+    View,
+    Image,
+    Modal,
+    TouchableWithoutFeedback,
+    StatusBar
+} from "react-native";
 import { connect } from "react-redux";
 
 import { home as styles } from "../styles";
@@ -35,15 +41,20 @@ export default class Home extends PureComponent {
         );
     };
     renderItemT = ({
-        item: { content = "预计每个生长周期收入20%", canBuy }
+        item: { content = "预计每个生长周期收入20%", canBuy, type, name }
     }) => {
         return (
             <View style={styles.item}>
-                <Icon source={flowerIcon} size={80} />
+                <StatusBar
+                    backgroundColor="#1a98e0"
+                    translucent={true}
+                    barStyle="light-content"
+                />
+                <Icon source={iconSource[type]} size={80} />
                 <View style={styles.itemContent}>
                     <View style={styles.itemTop}>
                         <Text style={styles.itemTitleText}>
-                            牡丹花
+                            {name}
                             {canBuy}
                         </Text>
                         <Button
@@ -121,10 +132,22 @@ export default class Home extends PureComponent {
                     <DataView
                         injectData={true}
                         dataSource={[
-                            { canBuy: true },
-                            { label: "测试数据" },
-                            { label: "测试数据" },
-                            { label: "测试数据" }
+                            { canBuy: true, type: "jugan", name: "桔柑花" },
+                            {
+                                label: "测试数据",
+                                type: "mudan",
+                                name: "牡丹花"
+                            },
+                            {
+                                label: "测试数据",
+                                type: "mulan",
+                                name: "木兰花"
+                            },
+                            {
+                                label: "测试数据",
+                                type: "tiantangniao",
+                                name: "天堂鸟"
+                            }
                         ]}
                         refreshing={false}
                         isLoadingMore={false}

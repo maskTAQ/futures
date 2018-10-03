@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { View, Image } from "react-native";
+import { View, Image, StatusBar } from "react-native";
 import { connect } from "react-redux";
 
 import { wallet as styles } from "../styles";
@@ -26,6 +26,11 @@ export default class Wallet extends PureComponent {
     render() {
         return (
             <View style={styles.container}>
+                <StatusBar
+                    //backgroundColor="#1a98e0"
+                    translucent={true}
+                    barStyle="light-content"
+                />
                 <View style={styles.bgContainer}>
                     <Image
                         source={iconSource.bg}

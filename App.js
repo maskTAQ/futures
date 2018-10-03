@@ -6,18 +6,16 @@
 
 import React, { Component } from "react";
 import {
-  AppState,
-  Platform,
   BackHandler,
   View,
   ToastAndroid
 } from "react-native";
-import { combineReducers } from "redux";
 import { Provider } from "react-redux";
-import { ThemeProvider, Page } from "components";
+import {  Page } from "components";
 import { reduxifyNavigator } from "react-navigation-redux-helpers";
 import { connect } from "react-redux";
 
+import {iconSource} from 'commons';
 import store from "reduxs/store/index.js";
 import { back } from "reduxs/actions";
 import sage from "reduxs/effects/index.js";
@@ -26,7 +24,7 @@ import sage from "reduxs/effects/index.js";
 import Router from "./src/Router";
 //注册页面返回句柄
 Page.registerReturnEventlistener(back);
-//Page.setLeftIconSource(require("hx/images/nav-back-light.png"));
+Page.setLeftIconSource(iconSource.left);
 //将state.nav注入路由
 const Navigation = reduxifyNavigator(Router, "root");
 const mapStateToProps = ({ nav }) => ({ state: nav });

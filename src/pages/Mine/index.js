@@ -48,6 +48,8 @@ export default class Mine extends PureComponent {
                                             {Component && (
                                                 <Component
                                                     value={true}
+                                                    //_thumbColor="red"
+                                                    thumbTintColor="#fff"
                                                     trackColor={{
                                                         false: "#e3e3e3",
                                                         true: "#fa4f75"

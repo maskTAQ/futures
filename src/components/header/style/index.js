@@ -13,17 +13,25 @@ export default (theme = {}) => {
             height: 44,
             flexDirection: "row"
         },
+
         item: {
             width: 80,
             justifyContent: "center"
         },
         leftItem: {
-            alignItems: "flex-start",
-            paddingLeft: 10
+            flexDirection: "row",
+            alignItems: "center",
+            //alignItems: "flex-end",
+            paddingLeft: 6
+        },
+        backText: {
+            marginLeft: 4,
+            fontSize: 15,
+            color: "#fff"
         },
         rightItem: {
             alignItems: "flex-end",
-            paddingRight: 10
+            paddingRight: 6
         },
         titleWrapper: {
             flex: 1,

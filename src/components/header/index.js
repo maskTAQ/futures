@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { View, Text, StatusBar } from "react-native";
+import { View, StatusBar } from "react-native";
 import PropTypes from "prop-types";
 
-import { Icon, Button } from "../";
+import { Icon, Button, Text } from "../";
 import createStyle from "./style";
 
 const defaultLeftIconSource = require("./img/return.png");
@@ -90,8 +90,9 @@ export default class Header extends Component {
                         onPress={onLeftPress}
                     >
                         {LeftComponent !== undefined || (
-                            <Icon size={20} source={leftIconSource} />
+                            <Icon size={16} source={leftIconSource} />
                         )}
+                        <Text style={styles.backText}>返回</Text>
                     </Button>
                     <View style={styles.title}>
                         {titleComponent ||

@@ -13,7 +13,8 @@ YellowBox.ignoreWarnings([
     "Warning: isMounted(...) is deprecated",
     "Module RCTImageLoader",
     "Class RCTCxxModule",
-    "Remote"
+    "Remote",
+    "thumbTintColor"
 ]);
 
 const homeIcon = require("./tabImg/home.png");
