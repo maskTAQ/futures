@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { View } from "react-native";
 
 import { changeDealPassword as styles } from "./styles";
-import { Page, Text, Input, Icon, Button } from "components";
+import { Page, Text, Input, Button } from "components";
 
 const inputList = [
     [
@@ -66,13 +66,7 @@ export default class AccountInfo extends PureComponent {
                             </View>
                         );
                     })}
-                    <View style={styles.verifyBox}>
-                        <Text style={styles.itemLabelText}>验证码</Text>
-                        <Input style={styles.itemInput} />
-                        <Button>
-                            <Icon style={styles.verifyIcon} />
-                        </Button>
-                    </View>
+
                     <Button
                         style={styles.submit}
                         textStyle={styles.submitStyle}

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { View } from "react-native";
+import { View, StatusBar } from "react-native";
 import { connect } from "react-redux";
 import _ from "lodash";
 
@@ -92,6 +92,11 @@ export default class Team extends PureComponent {
         const { data, searchValue } = this.state;
         return (
             <View style={styles.container}>
+                <StatusBar
+                    hide={false}
+                    translucent={true}
+                    barStyle="light-content"
+                />
                 <Search
                     value={searchValue}
                     onChangeSearch={searchValue => {

@@ -89,10 +89,16 @@ export default class Header extends Component {
                         style={[styles.item, styles.leftItem]}
                         onPress={onLeftPress}
                     >
-                        {LeftComponent !== undefined || (
-                            <Icon size={16} source={leftIconSource} />
-                        )}
-                        <Text style={styles.backText}>返回</Text>
+                        {LeftComponent !== undefined || [
+                            <Icon
+                                size={16}
+                                source={leftIconSource}
+                                key="icon"
+                            />,
+                            <Text style={styles.backText} key="label">
+                                返回
+                            </Text>
+                        ]}
                     </Button>
                     <View style={styles.title}>
                         {titleComponent ||

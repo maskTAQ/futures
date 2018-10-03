@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { View, Switch } from "react-native";
+import { View, Switch, StatusBar } from "react-native";
 import { connect } from "react-redux";
 
 import { Header, Text, Button } from "components";
@@ -10,14 +10,14 @@ import UserHeader from "./Header";
 
 const list = [
     [
-        { label: "收款信息", routeName: "" },
+        { label: "收款信息", routeName: "AccountInfo" },
         { label: "登录密码", routeName: "" },
         { label: "交易密码", routeName: "" }
     ],
     [{ label: "消息推送", Component: Switch }],
     [
         { label: "求助反馈", routeName: "Feedback" },
-        { label: "关于", routeName: "" },
+        { label: "关于", routeName: "About" },
         { label: "应用分享", routeName: "" }
     ]
 ];
@@ -28,6 +28,11 @@ export default class Mine extends PureComponent {
     render() {
         return (
             <View style={styles.container}>
+                <StatusBar
+                    hide={false}
+                    translucent={true}
+                    barStyle="light-content"
+                />
                 <Header title="个人中心" LeftComponent={null} />
                 <UserHeader />
                 <View style={styles.list}>
