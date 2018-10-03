@@ -312,7 +312,6 @@ const mine = {
     list: {
         flex: 1,
         marginTop: scale(13),
-        marginBottom: scale(4),
         paddingLeft: scale(14),
         paddingRight: scale(14),
         backgroundColor: "#fff"
@@ -335,4 +334,144 @@ const mine = {
         color: "#333"
     }
 };
-export { home, mine };
+const team = {
+    container: {
+        flex: 1,
+        backgroundColor: "#fff"
+    },
+    tree: {
+        container: {
+            flex: 1
+        },
+        treeNodeContent: {
+            flexDirection: "row",
+            height: scale(50),
+            alignItems: "center",
+            paddingLeft: scale(15),
+            paddingRight: scale(15)
+        },
+        treeNodeLeft: {
+            flexDirection: "row",
+            alignItems: "center"
+        },
+        treeChildNumText: {
+            marginLeft: scale(15),
+            fontSize: scale(16),
+            color: "#bfbfbf"
+        },
+        treeLine: {
+            width: scale(18),
+            height: scale(15),
+            marginTop: scale(-4),
+            marginRight: scale(4)
+        },
+        treeNodeCenter: {
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center"
+        },
+        usernameText: {
+            fontSize: scale(16),
+            color: "#606060",
+            fontFamily: "PingFangSC-Regular"
+        },
+        lv: {
+            marginLeft: scale(6),
+            marginRight: scale(6),
+            height: scale(14),
+            paddingLeft: scale(8),
+            paddingRight: scale(8),
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: scale(6),
+            backgroundColor: "#fa4f75"
+        },
+        lvText: {
+            color: "#fff",
+            fontSize: scale(12),
+            lineHeight: scale(15)
+        },
+        vipIcon: {
+            width: scale(13),
+            height: scale(14)
+        },
+        treeNodeRight: {
+            width: scale(34),
+            height: scale(15),
+            borderRadius: scale(4),
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#fa4f75"
+        },
+        freezeText: {
+            fontSize: scale(10),
+            color: "#fff"
+        }
+    },
+    search: {
+        container: {
+            height: scale(70),
+            backgroundColor: "#fa4f75",
+            justifyContent: "flex-end"
+        },
+        box: {
+            height: scale(30),
+            flexDirection: "row",
+            alignItems: "center",
+            borderRadius: scale(12),
+            marginLeft: scale(15),
+            marginRight: scale(15),
+            paddingLeft: scale(15),
+            paddingRight: scale(15),
+            marginBottom: scale(10),
+            backgroundColor: "#fc91a9"
+        },
+        input: {
+            flex: 1,
+
+            color: "#fff",
+            justifyContent: "center"
+        }
+    },
+    invite: {
+        height: scale(50),
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginLeft: scale(15),
+        marginRight: scale(15),
+        paddingLeft: scale(15),
+        paddingRight: scale(15),
+        borderBottomWidth: 1,
+        borderColor: "#E7E7E7"
+    },
+    inviteLeft: {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    inviteIcon: {
+        width: scale(14),
+        height: scale(17),
+        marginRight: scale(10)
+    },
+    inviteText: {
+        fontSize: scale(16),
+        color: "#C5C5C5"
+    },
+    rightIcon: {
+        width: scale(8),
+        height: scale(14)
+    },
+    countText: {
+        textAlign: "center",
+        lineHeight: scale(40),
+        fontSize: scale(17),
+        color: "#606060"
+    },
+    numText: {
+        fontWeight: "bold",
+        fontSize: scale(19),
+        color: "#fa4f75"
+    }
+};
+export { home, mine, team };

@@ -12,3 +12,4 @@ export { default as Loading } from "./loading";
 export { default as Input } from "./input";
 export { default as TabBar } from "./tabbar";
 export { default as Text } from "./text";
+export { default as Visible } from "./Visible";

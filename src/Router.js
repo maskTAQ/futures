@@ -7,7 +7,7 @@ import {
 import { YellowBox } from "react-native";
 import { Icon, TabBar } from "components";
 
-import { Login, Home, Mine } from "pages";
+import { Login, Home, Mine, Team } from "pages";
 
 YellowBox.ignoreWarnings([
     "Warning: isMounted(...) is deprecated",
@@ -52,7 +52,7 @@ TabBarIcon.propTypes = {
 const tabPageConfig = [
     ["Home", Home, "主页", TabBarIcon("Home")],
     ["Wallet", Home, "钱包", TabBarIcon("Wallet")],
-    ["Team", Home, "团队", TabBarIcon("Team")],
+    ["Team", Team, "团队", TabBarIcon("Team")],
     ["Mine", Mine, "个人", TabBarIcon("Mine")]
 ];
 
@@ -73,7 +73,7 @@ const createTabNavigatorParams = () => {
 };
 // 创建TAB导航
 const TabNavigator = createBottomTabNavigator(createTabNavigatorParams(), {
-    initialRouteName: "Mine",
+    initialRouteName: "Team",
     tabBarOptions: {
         activeTintColor: "#fa4f75",
         inactiveTintColor: "#919191",

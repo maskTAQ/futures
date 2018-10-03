@@ -13,6 +13,7 @@
     "@babel/runtime": "^7.1.2",
     "axios": "^0.18.0",
     "events": "^3.0.0",
+    "immutability-helper": "^2.8.1",
     "lodash": "^4.17.10",
     "react": "16.5.0",
     "react-native": "0.57.1",
