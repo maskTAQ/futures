@@ -889,7 +889,7 @@ const gardenWarehouse = {
         backgroundColor: "#fff"
     },
     item: {
-        height: scale(80),
+        //height: scale(80),
         paddingLeft: scale(15),
         paddingRight: scale(15),
         borderBottomWidth: 1,
@@ -916,6 +916,11 @@ const gardenWarehouse = {
     itemValueText: {
         fontSize: scale(11),
         color: "#FD4C73"
+    },
+    userIdText: {
+        lineHeight: scale(20),
+        fontSize: scale(11),
+        color: "#AFAFAF"
     },
     itemBottom: {
         height: scale(20),

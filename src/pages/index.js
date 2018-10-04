@@ -10,3 +10,4 @@ export { default as About } from "./About";
 export { default as AccountInfo } from "./AccountInfo";
 export { default as TransferInvitationCode } from "./TransferInvitationCode";
 export { default as GardenWarehouse } from "./GardenWarehouse";
+export { default as AwardWarehouse } from "./AwardWarehouse";
