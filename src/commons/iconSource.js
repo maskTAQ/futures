@@ -18,5 +18,6 @@ export default {
     mulan: require("images/mulan.png"),
     invitationcode: require("images/invitationcode.png"),
     garden: require("images/garden.png"),
-    award: require("images/award.png")
+    award: require("images/award.png"),
+    bi: require("images/bi.png")
 };

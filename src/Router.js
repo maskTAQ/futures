@@ -20,7 +20,8 @@ import {
     AccountInfo,
     TransferInvitationCode,
     GardenWarehouse,
-    AwardWarehouse
+    AwardWarehouse,
+    TransferManure
 } from "pages";
 
 YellowBox.ignoreWarnings([
@@ -116,7 +117,8 @@ const AppRouteConfigs = {
     AccountInfo,
     TransferInvitationCode,
     GardenWarehouse,
-    AwardWarehouse
+    AwardWarehouse,
+    TransferManure
 };
 // 创建一级导航
 const StackNavigator = createStackNavigator(AppRouteConfigs, {
