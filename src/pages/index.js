@@ -9,3 +9,4 @@ export { default as ChangeDealPassword } from "./ChangeDealPassword";
 export { default as About } from "./About";
 export { default as AccountInfo } from "./AccountInfo";
 export { default as TransferInvitationCode } from "./TransferInvitationCode";
+export { default as GardenWarehouse } from "./GardenWarehouse";

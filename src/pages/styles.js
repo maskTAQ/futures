@@ -856,6 +856,78 @@ const transferInvitationCode = {
         color: "#fff"
     }
 };
+const gardenWarehouse = {
+    container: {
+        flex: 1,
+        backgroundColor: "#f2f2f2"
+    },
+    header: {
+        height: scale(60),
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingLeft: scale(15),
+        paddingRight: scale(15),
+        backgroundColor: "#fff"
+    },
+    headerLeft: {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    headerLabelText: {
+        marginLeft: scale(10),
+        fontSize: scale(15),
+        color: "#FD4C73"
+    },
+    residueText: {
+        fontSize: scale(13),
+        color: "#8E8E8E"
+    },
+    list: {
+        marginTop: scale(10),
+        flex: 1,
+        backgroundColor: "#fff"
+    },
+    item: {
+        height: scale(80),
+        paddingLeft: scale(15),
+        paddingRight: scale(15),
+        borderBottomWidth: 1,
+        borderColor: "#F2F2F2"
+    },
+    itemTop: {
+        height: scale(20),
+        justifyContent: "flex-end"
+    },
+    itemTimeText: {
+        fontSize: scale(11),
+        color: "#AFAFAF"
+    },
+    itemCenter: {
+        height: scale(40),
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    itemTypeText: {
+        fontSize: scale(17),
+        color: "#606060"
+    },
+    itemValueText: {
+        fontSize: scale(11),
+        color: "#FD4C73"
+    },
+    itemBottom: {
+        height: scale(20),
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-start"
+    },
+    balanceText: {
+        fontSize: scale(11),
+        color: "#AFAFAF"
+    }
+};
 export {
     home,
     mine,
@@ -865,5 +937,6 @@ export {
     feedback,
     changeDealPassword,
     about,
-    transferInvitationCode
+    transferInvitationCode,
+    gardenWarehouse
 };
