@@ -1114,6 +1114,20 @@ const orderDetail = {
         fontSize: scale(12),
         color: "#797979"
     },
+    alertContainer: {
+        alignItems: "center"
+    },
+    successIcon: {
+        width: scale(43),
+        height: scale(43),
+        marginTop: scale(15)
+        //marginBottom:scale(20),
+    },
+    successText: {
+        marginTop: scale(35),
+        fontSize: scale(25),
+        color: "#FD4C73"
+    },
     submit: {
         marginTop: scale(40),
         marginBottom: scale(20),

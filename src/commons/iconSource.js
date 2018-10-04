@@ -19,5 +19,6 @@ export default {
     invitationcode: require("images/invitationcode.png"),
     garden: require("images/garden.png"),
     award: require("images/award.png"),
-    bi: require("images/bi.png")
+    bi: require("images/bi.png"),
+    success: require("images/success.png")
 };
