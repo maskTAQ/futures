@@ -977,6 +977,157 @@ const alert = {
         color: "#fff"
     }
 };
+const buy = {
+    container: {
+        flex: 1,
+        backgroundColor: "#f2f2f2"
+    },
+    header: {
+        paddingLeft: scale(15),
+        paddingRight: scale(15),
+        paddingBottom: scale(30),
+        backgroundColor: "#fff"
+    },
+    title: {
+        height: scale(70),
+        justifyContent: "center"
+    },
+    titleText: {
+        fontSize: scale(16),
+        color: "#333"
+    },
+    intro: {
+        flexDirection: "row"
+    },
+    introDetail: {
+        paddingLeft: scale(10)
+    },
+    productName: {
+        flex: 1,
+        justifyContent: "center"
+    },
+    productNameText: {
+        fontSize: scale(31),
+        color: "#333"
+    },
+    productDesc: {
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+    productDescText: {
+        fontSize: scale(12),
+        color: "#999"
+    },
+    bottom: {
+        marginTop: scale(10),
+        flex: 1,
+        paddingLeft: scale(15),
+        paddingRight: scale(15),
+        backgroundColor: "#fff"
+    },
+    consume: {
+        flexDirection: "row",
+        height: scale(40),
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    consumeText: {
+        fontSize: scale(14),
+        color: "#999"
+    },
+    residueText: {
+        fontSize: scale(12),
+        color: "#999"
+    },
+    submit: {
+        marginTop: scale(40),
+        marginBottom: scale(20),
+        height: scale(40),
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: scale(4),
+        backgroundColor: "#fa4f75"
+    },
+    submitText: {
+        fontSize: scale(22),
+        color: "#fff"
+    }
+};
+const orderDetail = {
+    container: {
+        flex: 1,
+        paddingLeft: scale(15),
+        paddingRight: scale(15),
+        backgroundColor: "#fff"
+    },
+    header: {
+        flexDirection: "row",
+        paddingTop: scale(30),
+        paddingBottom: scale(40),
+        borderBottomWidth: 1,
+        borderColor: "#F2F2F2"
+    },
+    headerContent: {
+        flex: 1,
+        paddingLeft: scale(15)
+    },
+    headerTop: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    productNameText: {
+        fontSize: scale(17),
+        color: "#333"
+    },
+    productStatusText: {
+        fontSize: scale(14),
+        color: "#FD4C73"
+    },
+    headerBottom: {
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+    productTimeText: {
+        fontSize: scale(10),
+        color: "#AFAFAF"
+    },
+    productScheduleText: {
+        fontSize: scale(10),
+        color: "#AFAFAF"
+    },
+    bottom: {
+        paddingTop: scale(20)
+    },
+    item: {
+        flexDirection: "row",
+        ///alignItems:'center',
+        //justifyContent:'space-between',
+        height: scale(40)
+    },
+    itemLabelText: {
+        fontSize: scale(12),
+        color: "#797979"
+    },
+    itemValueText: {
+        fontSize: scale(12),
+        color: "#797979"
+    },
+    submit: {
+        marginTop: scale(40),
+        marginBottom: scale(20),
+        height: scale(40),
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: scale(4),
+        backgroundColor: "#fa4f75"
+    },
+    submitText: {
+        fontSize: scale(22),
+        color: "#fff"
+    }
+};
 export {
     home,
     mine,
@@ -988,5 +1139,7 @@ export {
     about,
     transferInvitationCode,
     gardenWarehouse,
-    alert
+    alert,
+    buy,
+    orderDetail
 };
