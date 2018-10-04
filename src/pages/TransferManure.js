@@ -27,7 +27,7 @@ export default class TransferManure extends PureComponent {
     render() {
         const { isEnough } = this.state;
         return (
-            <Page title="排单币(肥料)" RightComponent={<Button>记录</Button>}>
+            <Page title="排单币(肥料)">
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <View style={styles.headerLeft}>

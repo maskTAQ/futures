@@ -4,15 +4,19 @@ import { connect } from "react-redux";
 
 import { wallet as styles } from "../styles";
 import { Text, Button } from "components";
+import { navigate } from "actions";
 import Card from "./Card";
 import { iconSource } from "commons";
 
 const list = [
     [
-        { label: "静态收益（花园仓库）", routeName: "" },
-        { label: "动态收益（奖励仓库）", routeName: "" }
+        { label: "静态收益（花园仓库）", routeName: "GardenWarehouse" },
+        { label: "动态收益（奖励仓库）", routeName: "AwardWarehouse" }
     ],
-    [{ label: "排单币（肥料）", value: 15 }, { label: "邀请名额", value: 1 }]
+    [
+        { label: "排单币（肥料）", value: 15, routeName: "TransferManure" },
+        { label: "邀请名额", value: 1, routeName: "TransferInvitationCode" }
+    ]
 ];
 
 @connect()
@@ -57,38 +61,22 @@ export default class Wallet extends PureComponent {
                             key={groupI}
                         >
                             {group.map(({ label, routeName, value }) => {
-                                if (groupI === 0) {
-                                    return (
-                                        <Button
-                                            onPress={() => {
-                                                console.log(
-                                                    routeName,
-                                                    "routeName"
-                                                );
-                                            }}
-                                            style={styles.item}
-                                            key={label}
-                                        >
-                                            <Text style={styles.itemText}>
-                                                {label}
-                                            </Text>
-                                            <Text style={styles.itemText}>
-                                                {value}
-                                            </Text>
-                                        </Button>
-                                    );
-                                } else {
-                                    return (
-                                        <View style={styles.item} key={label}>
-                                            <Text style={styles.itemText}>
-                                                {label}
-                                            </Text>
-                                            <Text style={styles.itemText}>
-                                                {value}
-                                            </Text>
-                                        </View>
-                                    );
-                                }
+                                return (
+                                    <Button
+                                        onPress={() => {
+                                            navigate({ routeName });
+                                        }}
+                                        style={styles.item}
+                                        key={label}
+                                    >
+                                        <Text style={styles.itemText}>
+                                            {label}
+                                        </Text>
+                                        <Text style={styles.itemText}>
+                                            {value}
+                                        </Text>
+                                    </Button>
+                                );
                             })}
                         </View>
                     );
