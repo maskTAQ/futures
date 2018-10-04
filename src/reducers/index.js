@@ -18,7 +18,7 @@ const preloadedStateForLoadong = {};
 const preloadedState = {
     loading: preloadedStateForLoadong,
     nav: AppNavigator.router.getStateForAction(
-        AppNavigator.router.getActionForPathAndParams("TabNavigator")
+        AppNavigator.router.getActionForPathAndParams("TransferInvitationCode")
     )
 };
 

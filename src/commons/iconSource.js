@@ -15,5 +15,6 @@ export default {
     jugan: require("images/jugan.png"),
     mudan: require("images/mudan.png"),
     tiantangniao: require("images/tiantangniao.png"),
-    mulan: require("images/mulan.png")
+    mulan: require("images/mulan.png"),
+    invitationcode: require("images/invitationcode.png")
 };

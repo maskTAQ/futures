@@ -791,6 +791,71 @@ const about = {
         color: "#fff"
     }
 };
+
+const transferInvitationCode = {
+    container: {
+        flex: 1,
+        backgroundColor: "#f2f2f2"
+    },
+    header: {
+        height: scale(60),
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingLeft: scale(15),
+        paddingRight: scale(15),
+        backgroundColor: "#fff"
+    },
+    headerLeft: {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    headerLabelText: {
+        marginLeft: scale(10),
+        fontSize: scale(15),
+        color: "#FD4C73"
+    },
+    residueText: {
+        fontSize: scale(13),
+        color: "#8E8E8E"
+    },
+    content: {
+        flex: 1,
+        paddingLeft: scale(15),
+        paddingRight: scale(15),
+        backgroundColor: "#fff"
+    },
+    item: {
+        height: scale(80),
+        borderBottomWidth: 1,
+        borderColor: "#DAD9D9"
+    },
+    itemLabel: {
+        flex: 1,
+        justifyContent: "center"
+    },
+    itemLabelText: {
+        fontSize: scale(16),
+        color: "#333333"
+    },
+    itemInput: {
+        flex: 1,
+        fontSize: scale(16)
+    },
+    submit: {
+        marginTop: scale(60),
+        marginBottom: scale(20),
+        height: scale(40),
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: scale(4),
+        backgroundColor: "#fa4f75"
+    },
+    submitText: {
+        fontSize: scale(22),
+        color: "#fff"
+    }
+};
 export {
     home,
     mine,
@@ -799,5 +864,6 @@ export {
     inviteList,
     feedback,
     changeDealPassword,
-    about
+    about,
+    transferInvitationCode
 };
