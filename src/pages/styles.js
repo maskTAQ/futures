@@ -931,6 +931,50 @@ const gardenWarehouse = {
     balanceText: {
         fontSize: scale(11),
         color: "#AFAFAF"
+    },
+    submit: {
+        marginTop: scale(20),
+        marginBottom: scale(20),
+        height: scale(40),
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: scale(4),
+        backgroundColor: "#fa4f75"
+    },
+    submitText: {
+        fontSize: scale(22),
+        color: "#fff"
+    }
+};
+
+const alert = {
+    container: {
+        flex: 1,
+        borderRadius: 6,
+        justifyContent: "space-between",
+        overflow: "hidden"
+    },
+    errorTitleText: {
+        textAlign: "center",
+        lineHeight: scale(100),
+        fontSize: scale(45),
+        color: "#FD4C73"
+    },
+    errorContentText: {
+        textAlign: "center",
+        lineHeight: scale(30),
+        fontSize: scale(15),
+        color: "#333"
+    },
+    submit: {
+        height: scale(50),
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#fa4f75"
+    },
+    submitText: {
+        fontSize: scale(22),
+        color: "#fff"
     }
 };
 export {
@@ -943,5 +987,6 @@ export {
     changeDealPassword,
     about,
     transferInvitationCode,
-    gardenWarehouse
+    gardenWarehouse,
+    alert
 };
