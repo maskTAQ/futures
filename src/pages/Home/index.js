@@ -13,6 +13,7 @@ import { home as styles } from "../styles";
 import { DataView, Icon, Text, Button } from "components";
 import User from "./User";
 import { iconSource } from "commons";
+import { navigate } from "actions";
 
 const shapeIcon = require("./img/shape.png");
 
@@ -23,20 +24,30 @@ export default class Home extends PureComponent {
     };
     renderItem = ({ content = "成长时间：2018/09/02   23:12:00" }) => {
         return (
-            <View style={styles.item}>
-                <Icon source={iconSource.mudan} size={80} />
-                <View style={styles.itemContent}>
-                    <View style={styles.itemTop}>
-                        <Text style={styles.itemTitleText}>牡丹花</Text>
-                        <Text style={styles.statusText}>成长中</Text>
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    navigate({
+                        routeName: "OrderDetail"
+                    });
+                }}
+            >
+                <View style={styles.item}>
+                    <Icon source={iconSource.mudan} size={80} />
+                    <View style={styles.itemContent}>
+                        <View style={styles.itemTop}>
+                            <Text style={styles.itemTitleText}>牡丹花</Text>
+                            <Text style={styles.statusText}>成长中</Text>
+                        </View>
+                        <View style={styles.itemCenter}>
+                            <Text style={styles.itemTitleText}>2000</Text>
+                            <Text style={styles.itemPercentageText}>
+                                20%成长值
+                            </Text>
+                        </View>
+                        <Text style={styles.itemDetail}>{content}</Text>
                     </View>
-                    <View style={styles.itemCenter}>
-                        <Text style={styles.itemTitleText}>2000</Text>
-                        <Text style={styles.itemPercentageText}>20%成长值</Text>
-                    </View>
-                    <Text style={styles.itemDetail}>{content}</Text>
                 </View>
-            </View>
+            </TouchableWithoutFeedback>
         );
     };
     renderItemT = ({
@@ -57,6 +68,11 @@ export default class Home extends PureComponent {
                             disabledButtonStyle={{ backgroundColor: "#e3e3e3" }}
                             disabledTextStyle={{ color: "#999" }}
                             textStyle={styles.buyButtonText}
+                            onPress={() => {
+                                navigate({
+                                    routeName: "ChooseBuyFlower"
+                                });
+                            }}
                         >
                             {canBuy ? "不可采收" : "采收"}
                         </Button>

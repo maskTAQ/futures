@@ -20,5 +20,10 @@ export default {
     garden: require("images/garden.png"),
     award: require("images/award.png"),
     bi: require("images/bi.png"),
-    success: require("images/success.png")
+    success: require("images/success.png"),
+    logo: require("images/logo.png"),
+    l: require("images/l.png"),
+    password: require("images/password.png"),
+    username: require("images/username.png"),
+    bottom: require("images/bottom.png")
 };

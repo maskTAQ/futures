@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { home as styles } from "./styles";
 import { DataView, Icon, Text, Button, Page } from "components";
 import { iconSource } from "commons";
+import { navigate } from "actions";
 
 @connect()
 export default class ChooseBuyFlower extends PureComponent {
@@ -30,6 +31,11 @@ export default class ChooseBuyFlower extends PureComponent {
                             disabledButtonStyle={{ backgroundColor: "#e3e3e3" }}
                             disabledTextStyle={{ color: "#999" }}
                             textStyle={styles.buyButtonText}
+                            onPress={() => {
+                                navigate({
+                                    routeName: "Buy"
+                                });
+                            }}
                         >
                             {canBuy ? "不可采收" : "采收"}
                         </Button>

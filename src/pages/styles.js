@@ -1142,6 +1142,80 @@ const orderDetail = {
         color: "#fff"
     }
 };
+
+const login = {
+    container: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        paddingLeft: scale(15),
+        paddingRight: scale(15),
+        backgroundColor: "#fa4f75"
+    },
+    logoBox: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    logoIcon: {
+        width: scale(86),
+        height: scale(195)
+    },
+    content: {
+        flex: 1
+    },
+    inputItem: {
+        height: scale(60),
+        paddingLeft: scale(10),
+        paddingRight: scale(10),
+        flexDirection: "row",
+        alignItems: "center",
+        borderBottomWidth: 1,
+        borderColor: "#fff"
+    },
+    usernameIcon: {
+        width: scale(22),
+        height: scale(24)
+    },
+    passwordIcon: {
+        width: scale(19),
+        height: scale(26)
+    },
+    bottomIcon: {
+        width: scale(14),
+        height: scale(8)
+    },
+    input: {
+        flex: 1,
+        height: "100%",
+        fontSize: scale(16),
+        paddingLeft: scale(10),
+        color: "#fff"
+    },
+    submit: {
+        marginTop: scale(30),
+        height: scale(41),
+        borderRadius: scale(4),
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#fff"
+    },
+    submitText: {
+        fontSize: scale(18),
+        color: "#fa4f75"
+    },
+    nav: {
+        marginTop: scale(10),
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+    navText: {
+        fontSize: scale(12),
+        color: "#fff"
+    }
+};
 export {
     home,
     mine,
@@ -1155,5 +1229,6 @@ export {
     gardenWarehouse,
     alert,
     buy,
-    orderDetail
+    orderDetail,
+    login
 };
