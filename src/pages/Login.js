@@ -46,7 +46,7 @@ export default class Login extends PureComponent {
                         <Button
                             textStyle={styles.navText}
                             onPress={() => {
-                                navigate({ routeName: "forgetPassword" });
+                                navigate({ routeName: "ForgetPassword" });
                             }}
                         >
                             忘记密码
@@ -54,7 +54,7 @@ export default class Login extends PureComponent {
                         <Button
                             textStyle={styles.navText}
                             onPress={() => {
-                                navigate({ routeName: "register" });
+                                navigate({ routeName: "Register" });
                             }}
                         >
                             注册

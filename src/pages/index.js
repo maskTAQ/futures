@@ -15,3 +15,5 @@ export { default as TransferManure } from "./TransferManure";
 export { default as Buy } from "./Buy";
 export { default as ChooseBuyFlower } from "./ChooseBuyFlower";
 export { default as OrderDetail } from "./OrderDetail";
+export { default as ForgetPassword } from "./ForgetPassword";
+export { default as Register } from "./Register";

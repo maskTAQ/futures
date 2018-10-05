@@ -24,7 +24,9 @@ import {
     TransferManure,
     Buy,
     ChooseBuyFlower,
-    OrderDetail
+    OrderDetail,
+    ForgetPassword,
+    Register
 } from "pages";
 
 YellowBox.ignoreWarnings([
@@ -124,7 +126,9 @@ const AppRouteConfigs = {
     TransferManure,
     Buy,
     ChooseBuyFlower,
-    OrderDetail
+    OrderDetail,
+    ForgetPassword,
+    Register
 };
 // 创建一级导航
 const StackNavigator = createStackNavigator(AppRouteConfigs, {

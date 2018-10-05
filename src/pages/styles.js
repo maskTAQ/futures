@@ -1216,6 +1216,54 @@ const login = {
         color: "#fff"
     }
 };
+
+const forgetPassword = {
+    container: {
+        flex: 1,
+        paddingTop: scale(15),
+        paddingLeft: scale(15),
+        paddingRight: scale(15),
+        backgroundColor: "#fff"
+    },
+    item: {
+        height: scale(50),
+        flexDirection: "row",
+        alignItems: "center",
+        borderBottomWidth: 1,
+        borderColor: "#F2F2F2"
+    },
+    input: {
+        flex: 1,
+        fontSize: scale(16),
+        color: "#8F8F8F"
+    },
+    code: {
+        width: scale(106),
+        height: scale(31),
+        borderRadius: scale(4),
+        backgroundColor: "#fa4f75"
+    },
+    codeText: {
+        fontSize: scale(14),
+        color: "#fff"
+    },
+    buttonBox: {
+        flex: 1,
+        justifyContent: "flex-end"
+    },
+    submit: {
+        marginBottom: scale(150),
+        height: scale(40),
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: scale(4),
+        backgroundColor: "#fa4f75"
+    },
+    submitText: {
+        fontSize: scale(16),
+        color: "#fff"
+    }
+};
 export {
     home,
     mine,
@@ -1230,5 +1278,6 @@ export {
     alert,
     buy,
     orderDetail,
-    login
+    login,
+    forgetPassword
 };
