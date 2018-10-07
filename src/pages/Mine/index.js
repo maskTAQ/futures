@@ -29,8 +29,8 @@ export default class Mine extends PureComponent {
         return (
             <View style={styles.container}>
                 <StatusBar
-                    hide={false}
-                    translucent={true}
+                    hide={true}
+                    backgroundColor={"transparent"}
                     barStyle="light-content"
                 />
                 <Header title="个人中心" LeftComponent={null} />

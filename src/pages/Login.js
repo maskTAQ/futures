@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { View } from "react-native";
+import { View, StatusBar } from "react-native";
 
 import { Icon, Input, Button } from "components";
 import { login as styles } from "./styles";
@@ -11,6 +11,11 @@ export default class Login extends PureComponent {
     render() {
         return (
             <View style={styles.container}>
+                <StatusBar
+                    backgroundColor={"transparent"}
+                    translucent={true}
+                    barStyle="light-content"
+                />
                 <View style={styles.logoBox}>
                     <Icon source={iconSource.l} style={styles.logoIcon} />
                 </View>

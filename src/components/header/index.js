@@ -80,7 +80,7 @@ export default class Header extends Component {
         return (
             <View style={[styles.container, style]}>
                 <StatusBar
-                    backgroundColor={barStyleObj.backgroundColor}
+                    backgroundColor={"transparent"}
                     translucent={true}
                     barStyle={barStyleObj.barStyle}
                 />

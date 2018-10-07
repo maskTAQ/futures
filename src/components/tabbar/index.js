@@ -4,7 +4,8 @@ import {
     Text,
     Modal,
     Image,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    StatusBar
 } from "react-native";
 import PropTypes from "prop-types";
 
@@ -128,6 +129,11 @@ export default class Tabbar extends Component {
         const { routes = [] } = navigation.state;
         return (
             <View style={styles.container}>
+                <StatusBar
+                    hide={true}
+                    translucent={true}
+                    barStyle="light-content"
+                />
                 {routes.map((route, index) => this.renderItem(route, index))}
                 <Modal
                     animationType="none"

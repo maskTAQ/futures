@@ -8,14 +8,15 @@ import React, { Component } from "react";
 import {
   BackHandler,
   View,
-  ToastAndroid
+  ToastAndroid,
+  Platform
 } from "react-native";
 import { Provider } from "react-redux";
-import {  Page } from "components";
+import { Page } from "components";
 import { reduxifyNavigator } from "react-navigation-redux-helpers";
 import { connect } from "react-redux";
 
-import {iconSource} from 'commons';
+import { iconSource } from 'commons';
 import store from "store/index.js";
 import { back } from "actions";
 import sage from "effects/index.js";
@@ -46,24 +47,19 @@ export default class App extends Component {
     store.runSaga(sage);
   }
 
-  // componentDidMount() {
-  //   if (Platform.OS === "android") {
-  //     BackHandler.addEventListener("hardwareBackPress", this.handleBack);
-  //   } else {
-  //     SplashScreen.hide();
-  //   }
-  //   this.initAllStock();
-  //   //监听指数行情
-  //   this.subscribeExponent();
-  //   AppState.addEventListener("change", this.handleAppStateChange);
-  // }
+  componentDidMount() {
+    if (Platform.OS === "android") {
+      BackHandler.addEventListener("hardwareBackPress", this.handleBack);
+    }
 
-  // componentWillUnmount() {
-  //   AppState.removeListener("change", this.handleAppStateChange);
-  //   if (Platform.OS === "android") {
-  //     BackHandler.removeEventListener("hardwareBackPress", this.handleBack);
-  //   }
-  // }
+  }
+
+  componentWillUnmount() {
+    if (Platform.OS === "android") {
+      BackHandler.removeEventListener("hardwareBackPress", this.handleBack);
+    }
+  }
+
 
 
   handleAppStateChange = nextAppState => {
@@ -83,21 +79,25 @@ export default class App extends Component {
   };
 
   lastBack = null;
+
   handleBack = () => {
     const { nav } = store.getState();
-    if (nav.index === 0) {
+    const routeName = nav.routes[nav.index].routeName;
+    if (nav.routes.length > 1 && !["TabNavigator"].includes(routeName)) {
+      this.props.dispatch(action.navigate.back());
+      return true;
+    }
+    if (routeName === "TabNavigator") {
       if (this.lastBack && new Date().getTime() - this.lastBack < 2000) {
-        console.log("will exit app ......");
+        this.ws && this.ws.close();
         BackHandler.exitApp();
-        return false;
       } else {
         this.lastBack = new Date().getTime();
         ToastAndroid.show("再按一次返回键退出程序", 2000);
-        return true;
       }
+      return true;
     }
-    back();
-    return true;
+    return false;
   };
 
   render() {
