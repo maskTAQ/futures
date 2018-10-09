@@ -13,6 +13,7 @@ import { DataView, Icon, Text, Button } from "components";
 import User from "./User";
 import { iconSource } from "commons";
 import { navigate } from "actions";
+import { getNotice, getHome } from "apis";
 
 const shapeIcon = require("./img/shape.png");
 
@@ -21,6 +22,22 @@ export default class Home extends PureComponent {
     state = {
         isModalVisible: false
     };
+    UNSAFE_componentWillMount() {
+        getNotice()
+            .then(res => {
+                console.log(res);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+        getHome()
+            .then(res => {
+                console.log(res);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
     renderItem = ({ content = "成长时间：2018/09/02   23:12:00" }) => {
         return (
             <TouchableWithoutFeedback
@@ -107,7 +124,6 @@ export default class Home extends PureComponent {
                 </View>
                 <User
                     requestShowNotif={() => {
-                        console.log("111");
                         this.setState({
                             isModalVisible: true
                         });

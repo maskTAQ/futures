@@ -3,7 +3,7 @@ import { View, StatusBar } from "react-native";
 
 import { Icon, Input, Button } from "components";
 import { login as styles } from "./styles";
-import { iconSource } from "commons";
+import { iconSource, Storage } from "commons";
 import { navigate } from "actions";
 import { login } from "apis";
 
@@ -53,6 +53,7 @@ export default class Login extends PureComponent {
                             onChangeText={password => {
                                 this.setState({ password });
                             }}
+                            secureTextEntry={true}
                         />
                     </View>
                     <Button
@@ -61,12 +62,12 @@ export default class Login extends PureComponent {
                         onPress={() => {
                             login({ account, password })
                                 .then(res => {
-                                    console.log(res);
+                                    Storage.set("Token", res.access_token);
+                                    navigate({ routeName: "TabNavigator" });
                                 })
-                                .catch(res => {
-                                    console.log(res);
+                                .catch(e => {
+                                    console.log(e);
                                 });
-                            //navigate({ routeName: "TabNavigator" });
                         }}
                     >
                         登录
