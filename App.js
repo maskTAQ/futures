@@ -16,7 +16,9 @@ import { Page } from "components";
 import { reduxifyNavigator } from "react-navigation-redux-helpers";
 import { connect } from "react-redux";
 
+
 import { iconSource } from 'commons';
+import {Tip} from 'components';
 import store from "store/index.js";
 import { back } from "actions";
 import sage from "effects/index.js";
@@ -105,6 +107,7 @@ export default class App extends Component {
       <Provider store={store}>
         <View style={{ flex: 1 }}>
           <AppWithNavigationState />
+          <Tip />
         </View>
       </Provider>
     );

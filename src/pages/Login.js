@@ -5,10 +5,15 @@ import { Icon, Input, Button } from "components";
 import { login as styles } from "./styles";
 import { iconSource } from "commons";
 import { navigate } from "actions";
+import { login } from "apis";
 
 export default class Login extends PureComponent {
-    state = {};
+    state = {
+        account: "H66455429",
+        password: "123456"
+    };
     render() {
+        const { account, password } = this.state;
         return (
             <View style={styles.container}>
                 <StatusBar
@@ -25,7 +30,13 @@ export default class Login extends PureComponent {
                             source={iconSource.username}
                             style={styles.usernameIcon}
                         />
-                        <Input style={styles.input} />
+                        <Input
+                            style={styles.input}
+                            value={account}
+                            onChangeText={account => {
+                                this.setState({ account });
+                            }}
+                        />
                         <Icon
                             source={iconSource.bottom}
                             style={styles.bottomIcon}
@@ -36,13 +47,26 @@ export default class Login extends PureComponent {
                             source={iconSource.password}
                             style={styles.passwordIcon}
                         />
-                        <Input style={styles.input} />
+                        <Input
+                            style={styles.input}
+                            value={password}
+                            onChangeText={password => {
+                                this.setState({ password });
+                            }}
+                        />
                     </View>
                     <Button
                         style={styles.submit}
                         textStyle={styles.submitText}
                         onPress={() => {
-                            navigate({ routeName: "TabNavigator" });
+                            login({ account, password })
+                                .then(res => {
+                                    console.log(res);
+                                })
+                                .catch(res => {
+                                    console.log(res);
+                                });
+                            //navigate({ routeName: "TabNavigator" });
                         }}
                     >
                         登录

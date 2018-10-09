@@ -1,17 +1,22 @@
 import Axios from "axios";
+
+import store from "store";
 import { Tip } from "commons";
 
-const baseURL = "http://106.14.186.2:8088/";
-
-const token = "13";
+Axios.defaults.headers.post["Content-Type"] =
+    "application/x-www-form-urlencoded";
 /**
  * 请求拦截器
  * */
 Axios.interceptors.request.use(
     config => {
-        if (token) {
-            config.headers["token"] = token;
+        const user = store.getState().auth.userInfo;
+        //在发送请求之前做某事
+        if (user) {
+            config.headers["token"] = user.token;
         }
+        config.headers["Content-Type"] = "application/x-www-form-urlencoded";
+        console.log(config);
         return config;
     },
     error => {
@@ -19,6 +24,7 @@ Axios.interceptors.request.use(
         return Promise.reject(error);
     }
 );
+
 /**
  * 打印错误信息
  * */
@@ -35,51 +41,44 @@ const logError = ({ url, params, error }) => {
 /**
  * 请求
  * */
-const requestWrapper = (method, url, param = {}, hasBaseUrl) => {
+const requestWrapper = (method, url, param = {}) => {
     const params = method === "post" ? { data: param } : { params: param };
-    return Axios.request({
-        method,
+    // const params = method === "post" ? param : { params: param };
+    // console.log("request: ", `${baseURL}${url}`);
+    // console.log(JSON.stringify(params));
+    // console.log(...params);
+    console.log({
+        baseURL: "http://pig.bateersoft.cc",
         url,
-        baseURL: hasBaseUrl ? baseURL : "",
+        method,
+        timeout: 60000,
+        ...params
+    });
+    return Axios.request({
+        baseURL: "http://pig.bateersoft.cc",
+        url,
+        method,
         timeout: 60000,
         ...params
     });
 };
 
-const base = (
-    type,
-    url,
-    params = {},
-    config = {
-        loading: true,
-        handleCatch: true,
-        showErr: true,
-        hasBaseUrl: true
-    }
-) => {
-    const {
-        loading = true,
-        handleCatch = true,
-        showErr = true,
-        hasBaseUrl = true
-    } = config;
-    loading && Tip.loading();
+const base = (type, url, params, config) => {
+    const { handleCatch } = config;
     return new Promise((resolve, reject) => {
-        requestWrapper(type, url, params, hasBaseUrl)
+        requestWrapper(type, url, params)
             .then(res => {
-                const { errorCode, data, message } = res.data;
-                //errorCode不存在时是为了处理直接请求行情json文件时 返回字段不符合约束条件的情况
-                loading && Tip.dismiss();
-                if (errorCode === 0 || errorCode === undefined) {
-                    resolve(errorCode ? data : res.data);
+                console.log(res, "config");
+                const { code, data, msg } = res.data;
+                if (code === 200) {
+                    return resolve(data);
                 } else {
-                    showErr && Tip.fail(message);
-                    handleCatch
-                        ? resolve({
-                              message: `已捕获错误:${message}`,
-                              error: true
-                          })
-                        : reject(message);
+                    if (handleCatch) {
+                        Tip.fail(msg);
+
+                        return resolve("已处理错误");
+                    }
+                    return reject(msg);
                 }
             })
             .catch(e => {
@@ -88,14 +87,24 @@ const base = (
                     params,
                     error: e
                 });
-                handleCatch
-                    ? resolve({ message: `已捕获错误:${e}` })
-                    : reject(e);
+                if (handleCatch) {
+                    // Tip.fail(`error:${String(e)}`);
+                    return resolve("已处理错误");
+                }
+                return reject(String(e));
             });
     });
 };
-const post = (...params) => base("post", ...params);
+const post = (
+    url,
+    params = {},
+    { loading = true, handleCatch = true } = {}
+) => {
+    return Axios.post("http://pig.bateersoft.cc/Api/checkLogin", params);
+};
 
-const get = (...params) => base("get", ...params);
+const get = (url, params = {}, { loading = true, handleCatch = true } = {}) => {
+    return base("get", url, params, { loading, handleCatch });
+};
 
 export { post, get };

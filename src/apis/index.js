@@ -1,3 +1,7 @@
-// export { default as StockApi } from "./StockApi";
-// export { default as quotationBase } from "./quotationBase";
-// export { default as ReconnectSocket } from "./ReconnectSocket";
+import { post } from "./base";
+
+const login = params => {
+    return post("/Api/checkLogin", params);
+};
+
+export { login };
