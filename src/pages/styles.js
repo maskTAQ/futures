@@ -162,14 +162,14 @@ const home = {
 
     list: {
         marginTop: scale(6),
-        height: scale(102),
+        height: scale(76),
         backgroundColor: "#fff"
     },
     item: {
-        height: scale(102),
+        height: scale(76),
         flexDirection: "row",
-        paddingTop: scale(11),
-        paddingBottom: scale(11),
+        paddingTop: scale(4),
+        paddingBottom: scale(4),
         paddingLeft: scale(16),
         paddingRight: scale(16)
     },
@@ -221,7 +221,7 @@ const home = {
         backgroundColor: "#fff"
     },
     storeHeader: {
-        height: scale(40),
+        height: scale(30),
         flexDirection: "row",
         alignItems: "center",
         paddingLeft: scale(10),
@@ -233,7 +233,7 @@ const home = {
         flexDirection: "row"
     },
     storeTitleText: {
-        fontSize: scale(16),
+        fontSize: scale(14),
         color: "#333"
     },
     storeTitleIcon: {

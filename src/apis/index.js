@@ -12,5 +12,8 @@ const getNotice = () => {
 const getHome = () => {
     return post("/Api/getHome");
 };
-
-export { login, register, getNotice, getHome };
+const getCode = () => {
+    return post("Api/getCode ");
+};
+export { host } from "./base";
+export { login, register, getNotice, getHome, getCode };

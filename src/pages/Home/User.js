@@ -5,27 +5,24 @@ import PropTypes from "prop-types";
 import { home as homeStyles } from "../styles";
 import { Icon, Button, Text } from "components";
 import { iconSource } from "commons";
+import { host } from "apis";
 
 const styles = homeStyles.user;
 const emailIcon = require("./img/email.png");
 const orderIcon = require("./img/order.png");
 const transferIcon = require("./img/transfer.png");
-const User = ({
-    username = "张某某",
-    lv = 2,
-    repositoryNum = 2333.4,
-    requestShowNotif
-}) => {
+const User = ({ requestShowNotif, data }) => {
+    const { jingtaiMoney = 0, dongtaiMoney = 0, user_id, level, logo } = data;
     const detailList = [
         [
             {
                 label: "花园仓库",
-                value: "3183.2"
+                value: jingtaiMoney
             },
             { type: "border", label: "1", style: { alignSelf: "flex-end" } },
             {
                 label: "奖励仓库",
-                value: "3183.2"
+                value: dongtaiMoney
             }
         ],
         [
@@ -44,7 +41,7 @@ const User = ({
         <View style={styles.container}>
             <View style={styles.box}>
                 <View style={styles.header}>
-                    <Icon source={iconSource.defaultPortrait} size={44} />
+                    <Icon source={{ uri: host + logo }} size={44} />
                     <View style={styles.headerContent}>
                         <View
                             style={[
@@ -54,10 +51,10 @@ const User = ({
                         >
                             <View style={styles.username}>
                                 <Text style={styles.usernameText}>
-                                    {username}
+                                    {user_id}
                                 </Text>
                                 <View style={styles.lv}>
-                                    <Text style={styles.lvText}>v{lv}</Text>
+                                    <Text style={styles.lvText}>v{level}</Text>
                                 </View>
                                 <Icon source={iconSource.vipIcon} size={14} />
                             </View>
@@ -76,7 +73,7 @@ const User = ({
                         >
                             <Text style={styles.repositoryNumText}>
                                 仓库数量:
-                                {repositoryNum}
+                                {jingtaiMoney + dongtaiMoney}
                             </Text>
                         </View>
                     </View>
@@ -110,7 +107,7 @@ const User = ({
                                                     ]}
                                                     key={label}
                                                 >
-                                                    {value ? (
+                                                    {value !== undefined ? (
                                                         <Text
                                                             style={
                                                                 styles.itemValueText
@@ -145,9 +142,7 @@ const User = ({
     );
 };
 User.propTypes = {
-    username: PropTypes.string,
-    lv: PropTypes.number,
-    repositoryNum: PropTypes.number,
+    data: PropTypes.object,
     requestShowNotif: PropTypes.func
 };
 

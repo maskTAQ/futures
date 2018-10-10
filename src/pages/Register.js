@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { Input, Button, Page, CodeButton } from "components";
 import { forgetPassword as styles } from "./styles";
 import { navigate } from "actions";
-import { register } from "apis";
+import { register, getCode } from "apis";
 import { Tip } from "commons";
 
 const list = [
@@ -64,9 +64,7 @@ export default class ForgetPassword extends PureComponent {
                                             mobile={mobile}
                                             style={styles.code}
                                             textStyle={styles.codeText}
-                                            requestGetCode={() =>
-                                                Promise.resolve()
-                                            }
+                                            requestGetCode={getCode}
                                         />
                                     )}
                                 </View>

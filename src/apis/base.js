@@ -2,16 +2,12 @@ import Axios from "axios";
 import qs from "qs";
 import { Tip, Storage } from "commons";
 
+const host = "http://pig.bateersoft.cc";
 /**
  * 请求拦截器
  * */
 Axios.interceptors.request.use(
     config => {
-        //const user = store.getState().auth.userInfo;
-        //在发送请求之前做某事
-        // console.log(Storage.get('Token'))
-        // config.headers["access_token"] = user.token;
-
         return Storage.get("Token")
             .then(data => {
                 if (data) {
@@ -19,7 +15,6 @@ Axios.interceptors.request.use(
                 }
                 config.headers["Content-Type"] =
                     "application/x-www-form-urlencoded";
-                console.log(config);
                 return config;
             })
             .catch(e => {
@@ -54,7 +49,7 @@ const requestWrapper = (method, url, param = {}) => {
     const params =
         method === "post" ? { data: qs.stringify(param) } : { params: param };
     return Axios.request({
-        baseURL: "http://pig.bateersoft.cc",
+        baseURL: host,
         url,
         method,
         timeout: 60000,
@@ -108,4 +103,4 @@ const get = (url, params = {}, { loading = true, handleCatch = true } = {}) => {
     return base("get", url, params, { loading, handleCatch });
 };
 
-export { post, get };
+export { post, get, host };
