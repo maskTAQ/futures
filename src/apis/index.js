@@ -10,7 +10,7 @@ const getNotice = () => {
     return post("/Api/getNotice");
 };
 const getHome = () => {
-    return post("/Api/getHome");
+    return post("/Api/getHome", null, { loading: false });
 };
 const getCode = () => {
     return post("Api/getCode ");

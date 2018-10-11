@@ -24,20 +24,12 @@ export default class Home extends PureComponent {
         isModalVisible: false,
         notif: "",
         timeDown: "",
-        userInfo: {}
+        data: {}
     };
     UNSAFE_componentWillMount() {
         getNotice()
             .then(notif => {
-                console.log(notif, "notif");
                 this.setState({ notif });
-            })
-            .catch(e => {
-                console.log(e);
-            });
-        getHome()
-            .then(userInfo => {
-                this.setState({ userInfo });
             })
             .catch(e => {
                 console.log(e);
@@ -46,6 +38,13 @@ export default class Home extends PureComponent {
         t.setTime(t.getTime() + 24 * 60 * 60 * 1000);
         this.TimeDown(t);
     }
+    getData = () => {
+        return getHome().then(data => {
+            console.log(data, "data");
+            this.setState({ data });
+            return data.list;
+        });
+    };
     TimeDown = endDate => {
         //当前时间
         const nowDate = new Date();
@@ -70,7 +69,12 @@ export default class Home extends PureComponent {
             this.TimeDown(endDate);
         }, 1000);
     };
-    renderItem = ({ content = "成长时间：2018/09/02   23:12:00" }) => {
+    has = item => {
+        if (!item) {
+            return null;
+        }
+        const { rate, title, flowerType, time } = item;
+
         return (
             <TouchableWithoutFeedback
                 onPress={() => {
@@ -80,39 +84,40 @@ export default class Home extends PureComponent {
                 }}
             >
                 <View style={styles.item}>
-                    <Icon source={iconSource.mudan} size={68} />
+                    <Icon source={iconSource[flowerType]} size={68} />
                     <View style={styles.itemContent}>
                         <View style={styles.itemTop}>
-                            <Text style={styles.itemTitleText}>牡丹花</Text>
-                            <Text style={styles.statusText}>成长中</Text>
+                            <Text style={styles.itemTitleText}>{title}</Text>
+                            <Text style={styles.statusText}>{rate}</Text>
                         </View>
                         <View style={styles.itemCenter}>
-                            <Text style={styles.itemTitleText}>2000</Text>
+                            <Text style={styles.itemTitleText}>成长中</Text>
                             <Text style={styles.itemPercentageText}>
-                                20%成长值
+                                {rate}
+                                成长值
                             </Text>
                         </View>
-                        <Text style={styles.itemDetail}>{content}</Text>
+                        <Text style={styles.itemDetail}>
+                            成长时间：
+                            {time}
+                        </Text>
                     </View>
                 </View>
             </TouchableWithoutFeedback>
         );
     };
     renderItemT = ({
-        item: { content = "预计每个生长周期收入20%", canBuy, type, name }
+        item: { rate, price, canBuy, title, flowerType, is_ok }
     }) => {
         return (
             <View style={styles.item}>
-                <Icon source={iconSource[type]} size={68} />
+                <Icon source={iconSource[flowerType]} size={68} />
                 <View style={styles.itemContent}>
                     <View style={styles.itemTop}>
-                        <Text style={styles.itemTitleText}>
-                            {name}
-                            {canBuy}
-                        </Text>
+                        <Text style={styles.itemTitleText}>{title}</Text>
                         <Button
                             style={styles.buyButton}
-                            disabled={canBuy}
+                            disabled={!is_ok}
                             disabledButtonStyle={{ backgroundColor: "#e3e3e3" }}
                             disabledTextStyle={{ color: "#999" }}
                             textStyle={styles.buyButtonText}
@@ -122,19 +127,22 @@ export default class Home extends PureComponent {
                                 });
                             }}
                         >
-                            {canBuy ? "不可采收" : "采收"}
+                            {canBuy ? "不可采收" : "申请种植"}
                         </Button>
                     </View>
                     <View style={styles.itemCenter}>
-                        <Text style={styles.itemTitleText}>2000</Text>
+                        <Text style={styles.itemTitleText}>{price}</Text>
                     </View>
-                    <Text style={styles.itemDetail}>{content}</Text>
+                    <Text style={styles.itemDetail}>
+                        预计每个生长周期收入
+                        {rate}
+                    </Text>
                 </View>
             </View>
         );
     };
     render() {
-        const { isModalVisible, notif, timeDown, userInfo } = this.state;
+        const { isModalVisible, notif, timeDown, data } = this.state;
         return (
             <View style={styles.container}>
                 <StatusBar
@@ -160,23 +168,12 @@ export default class Home extends PureComponent {
                             isModalVisible: true
                         });
                     }}
-                    data={userInfo}
+                    data={data}
                     username={"张某某"}
                     lv={2}
                     repositoryNum={2333.4}
                 />
-                <View style={styles.list}>
-                    <DataView
-                        injectData={true}
-                        dataSource={[
-                            { content: "成长时间：2018/09/02   23:12:00" }
-                        ]}
-                        refreshing={false}
-                        isLoadingMore={false}
-                        isPulldownLoadMore={false}
-                        renderItem={this.renderItem}
-                    />
-                </View>
+                <View style={styles.list}>{this.has(data.growing)}</View>
                 <View style={styles.store}>
                     <View style={styles.storeHeader}>
                         <View style={styles.storeTitle}>
@@ -187,32 +184,16 @@ export default class Home extends PureComponent {
                             <Text style={styles.storeTitleText}>购买花卉</Text>
                         </View>
                         <Text style={styles.countDownText}>
-                            终止倒计时：
+                            周期剩余时间:
                             <Text style={{ color: "#fa4f75" }}>{timeDown}</Text>
                         </Text>
                     </View>
                     <DataView
-                        injectData={true}
-                        dataSource={[
-                            { canBuy: true, type: "jugan", name: "桔柑花" },
-                            {
-                                label: "测试数据",
-                                type: "mudan",
-                                name: "牡丹花"
-                            },
-                            {
-                                label: "测试数据",
-                                type: "mulan",
-                                name: "木兰花"
-                            },
-                            {
-                                label: "测试数据",
-                                type: "tiantangniao",
-                                name: "天堂鸟"
-                            }
-                        ]}
-                        refreshing={false}
-                        isLoadingMore={false}
+                        // injectData={true}
+                        // dataSource={data.list}
+                        // refreshing={false}
+                        // isLoadingMore={false}
+                        getData={this.getData}
                         isPulldownLoadMore={false}
                         renderItem={this.renderItemT}
                     />

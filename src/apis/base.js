@@ -58,13 +58,12 @@ const requestWrapper = (method, url, param = {}) => {
 };
 
 const base = (type, url, params, config) => {
-    const { handleCatch } = config;
-    Tip.loading();
+    const { handleCatch, loading } = config;
+    loading && Tip.loading();
     return new Promise((resolve, reject) => {
         requestWrapper(type, url, params)
             .then(res => {
                 const { code, data, msg } = res.data;
-                console.log(res, "[[[");
                 Tip.dismiss();
                 if (Number(code) === 200) {
                     return resolve(data);

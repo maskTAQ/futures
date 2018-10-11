@@ -27,12 +27,12 @@ const User = ({ requestShowNotif, data }) => {
         ],
         [
             {
-                label: "采收订单",
+                label: "种植记录",
                 icon: orderIcon
             },
             { type: "border", label: "2" },
             {
-                label: "转让订单",
+                label: "出售记录",
                 icon: transferIcon
             }
         ]

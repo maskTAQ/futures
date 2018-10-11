@@ -85,11 +85,8 @@ export default class App extends Component {
   handleBack = () => {
     const { nav } = store.getState();
     const routeName = nav.routes[nav.index].routeName;
-    if (nav.routes.length > 1 && !["TabNavigator"].includes(routeName)) {
-      this.props.dispatch(action.navigate.back());
-      return true;
-    }
-    if (routeName === "TabNavigator") {
+    
+    if (routeName === "Home") {
       if (this.lastBack && new Date().getTime() - this.lastBack < 2000) {
         this.ws && this.ws.close();
         BackHandler.exitApp();
@@ -97,6 +94,10 @@ export default class App extends Component {
         this.lastBack = new Date().getTime();
         ToastAndroid.show("再按一次返回键退出程序", 2000);
       }
+      return true;
+    }
+    if (nav.routes.length > 1 && !["Login",'Home'].includes(routeName)) {
+      this.props.dispatch(action.navigate.back());
       return true;
     }
     return false;

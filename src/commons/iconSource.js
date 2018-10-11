@@ -12,7 +12,7 @@ export default {
     bg: require("images/bg.png"),
     message: require("images/message.png"),
     radius: require("images/radius.png"),
-    jugan: require("images/jugan.png"),
+    jiegen: require("images/jugan.png"),
     mudan: require("images/mudan.png"),
     tiantangniao: require("images/tiantangniao.png"),
     mulan: require("images/mulan.png"),
