@@ -24,7 +24,8 @@ import {
     TransferManure,
     Buy,
     ChooseBuyFlower,
-    OrderDetail,
+    BuyOrderDetail,
+    SellOrderDetail,
     ForgetPassword,
     Register,
     OrderSellFlowerList,
@@ -128,11 +129,12 @@ const AppRouteConfigs = {
     TransferManure,
     Buy,
     ChooseBuyFlower,
-    OrderDetail,
     ForgetPassword,
     Register,
     OrderSellFlowerList,
-    OrderBuyFlowerList
+    OrderBuyFlowerList,
+    BuyOrderDetail,
+    SellOrderDetail
 };
 // 创建一级导航
 const StackNavigator = createStackNavigator(AppRouteConfigs, {

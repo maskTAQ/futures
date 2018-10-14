@@ -14,8 +14,10 @@ export { default as AwardWarehouse } from "./AwardWarehouse";
 export { default as TransferManure } from "./TransferManure";
 export { default as Buy } from "./Buy";
 export { default as ChooseBuyFlower } from "./ChooseBuyFlower";
-export { default as OrderDetail } from "./OrderDetail";
+
 export { default as ForgetPassword } from "./ForgetPassword";
 export { default as Register } from "./Register";
-export { default as OrderSellFlowerList } from "./orderSellFlowerList";
+export { default as OrderSellFlowerList } from "./OrderSellFlowerList";
 export { default as OrderBuyFlowerList } from "./OrderBuyFlowerList";
+export { default as SellOrderDetail } from "./SellOrderDetail";
+export { default as BuyOrderDetail } from "./BuyOrderDetail";

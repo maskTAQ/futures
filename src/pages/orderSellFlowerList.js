@@ -4,9 +4,10 @@ import { View, Text } from "react-native";
 import PropTypes from "prop-types";
 
 import { orderSellFlowerList as styles } from "./styles";
-import { DataView, Page, Icon } from "components";
-import { getOrderSellFlowerList } from "actions";
+import { DataView, Page, Icon, Button } from "components";
+import { getOrderSellFlowerList, navigate } from "actions";
 import { iconSource } from "commons";
+import { getorderSellFlowerInfo } from "apis";
 import ScrollableTabView from "react-native-scrollable-tab-view";
 
 const tabs = [
@@ -43,7 +44,14 @@ export default class OrderSellFlowerList extends PureComponent {
     }
     renderItem = ({ item: { state, name, money, number, date, percent } }) => {
         return (
-            <View style={styles.item}>
+            <Button
+                style={styles.item}
+                onPress={() => {
+                    getorderSellFlowerInfo({ number, state }).then(res => {
+                        navigate({ routeName: "SellOrderDetail", params: res });
+                    });
+                }}
+            >
                 <Icon source={iconSource.mudan} size={60} />
                 <View style={styles.itemContent}>
                     <View style={styles.itemTop}>
@@ -71,7 +79,7 @@ export default class OrderSellFlowerList extends PureComponent {
                         </Text>
                     </View>
                 </View>
-            </View>
+            </Button>
         );
     };
     render() {

@@ -26,11 +26,7 @@ const userInfo = () => {
 const getTeamMember = () => {
     return post("/api.php?action=teamMember");
 };
-const getOrderSellFlowerList = () => {
-    return post("/api.php?action=orderSellFlowerList", null, {
-        loading: false
-    });
-};
+
 const getOrderBuyFlowerList = () => {
     return post("/api.php?action=orderBuyFlowerList", null, { loading: false });
 };
@@ -51,6 +47,25 @@ const orderBuySureCollection = params => {
 const orderBuyRepetition = params => {
     return post("/api.php?action=orderBuyRepetition", params);
 };
+
+const getOrderSellFlowerList = () => {
+    return post("/api.php?action=orderSellFlowerList", null, {
+        loading: false
+    });
+};
+const getorderSellFlowerInfo = params => {
+    return post("/api.php?action=orderSellFlowerInfo", {
+        ...params,
+        voucher: true
+    });
+};
+
+const orderSellSureCollection = params => {
+    return post("/api.php?action=orderSellSureCollection", params);
+};
+const orderSellRepetition = params => {
+    return post("/api.php?action=orderSellRepetition", params);
+};
 export { host } from "./base";
 export {
     login,
@@ -66,5 +81,8 @@ export {
     getorderBuyFlowerInfo,
     orderBuyUpdateVoucher,
     orderBuySureCollection,
-    orderBuyRepetition
+    orderBuyRepetition,
+    getorderSellFlowerInfo,
+    orderSellSureCollection,
+    orderSellRepetition
 };

@@ -133,7 +133,7 @@ const getListByState = (state, data) => {
             ];
     }
 };
-export default class OrderDetail extends PureComponent {
+export default class BuyOrderDetail extends PureComponent {
     static propTypes = {
         navigation: PropTypes.object
     };

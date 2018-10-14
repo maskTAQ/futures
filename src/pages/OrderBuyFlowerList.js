@@ -44,7 +44,7 @@ export default class OrderBuyFlowerList extends PureComponent {
                 style={styles.item}
                 onPress={() => {
                     getorderBuyFlowerInfo({ number, state }).then(res => {
-                        navigate({ routeName: "OrderDetail", params: res });
+                        navigate({ routeName: "BuyOrderDetail", params: res });
                     });
                 }}
             >
