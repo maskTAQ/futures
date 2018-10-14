@@ -216,7 +216,8 @@ export default class BuyOrderDetail extends PureComponent {
             pay_endtime,
             assign_bank_name,
             assign_bank_card,
-            assign_phone
+            assign_phone,
+            type
         } = this.props.navigation.state.params;
         if (state === "0" || state === "3" || state === "4") {
             return null;
@@ -225,7 +226,7 @@ export default class BuyOrderDetail extends PureComponent {
             <View style={{ marginTop: 30 }}>
                 <Text style={styles.itemLabelText}>转让用户：</Text>
                 <View style={styles.header}>
-                    <Icon source={iconSource.mudan} size={60} />
+                    <Icon source={iconSource[type]} size={60} />
                     <View style={styles.headerContent}>
                         <View style={styles.headerTop}>
                             <Text style={styles.productNameText}>
@@ -425,14 +426,15 @@ export default class BuyOrderDetail extends PureComponent {
             state,
             date,
             percent,
-            number
+            number,
+            type
         } = this.props.navigation.state.params;
         return (
             <Page title="采收订单详情">
                 <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
                     <View style={styles.container}>
                         <View style={styles.header}>
-                            <Icon source={iconSource.mudan} size={60} />
+                            <Icon source={iconSource[type]} size={60} />
                             <View style={styles.headerContent}>
                                 <View style={styles.headerTop}>
                                     <Text style={styles.productNameText}>

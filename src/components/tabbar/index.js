@@ -8,9 +8,12 @@ import {
     StatusBar
 } from "react-native";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { NavigationActions } from "react-navigation";
 
 import styles from "./style";
 import { Button, Icon } from "components";
+//import { navigate } from "actions";
 
 const publishIcon = require("./img/publish.png");
 const activePublishIcon = require("./img/active_publish.png");
@@ -18,7 +21,8 @@ const rect = require("./img/rect.png");
 const list = [
     {
         icon: require("./img/flower.png"),
-        label: "购买花卉"
+        label: "购买花卉",
+        routeName: "ChooseBuyFlower"
     },
     {
         icon: require("./img/repo.png"),
@@ -33,6 +37,8 @@ const list = [
         label: "转让奖励"
     }
 ];
+
+@connect()
 export default class Tabbar extends Component {
     static propTypes = {
         navigation: PropTypes.object,
@@ -40,7 +46,8 @@ export default class Tabbar extends Component {
         activeTintColor: PropTypes.string,
         inactiveTintColor: PropTypes.string,
         renderIcon: PropTypes.func,
-        getLabelText: PropTypes.func
+        getLabelText: PropTypes.func,
+        dispatch: PropTypes.func
     };
     state = {
         isModalVisible: false
@@ -157,10 +164,18 @@ export default class Tabbar extends Component {
                                     style={styles.listBg}
                                     resizeMode="stretch"
                                 />
-                                {list.map(({ label, icon }) => {
+                                {list.map(({ label, icon, routeName }) => {
                                     return (
                                         <Button
-                                            onPress={this.requestModalClose}
+                                            onPress={() => {
+                                                this.requestModalClose();
+                                                this.props.dispatch(
+                                                    NavigationActions.navigate({
+                                                        routeName
+                                                    })
+                                                );
+                                                // navigate({routeName})
+                                            }}
                                             style={styles.item}
                                             key={label}
                                         >

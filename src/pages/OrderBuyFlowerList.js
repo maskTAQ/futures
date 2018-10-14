@@ -38,7 +38,9 @@ export default class OrderBuyFlowerList extends PureComponent {
         }
         return label;
     }
-    renderItem = ({ item: { state, name, money, number, date, percent } }) => {
+    renderItem = ({
+        item: { state, name, money, number, date, percent, type }
+    }) => {
         return (
             <Button
                 style={styles.item}
@@ -48,7 +50,7 @@ export default class OrderBuyFlowerList extends PureComponent {
                     });
                 }}
             >
-                <Icon source={iconSource.mudan} style={styles.icon} />
+                <Icon source={iconSource[type]} style={styles.icon} />
                 <View style={styles.itemContent}>
                     <View style={styles.itemTop}>
                         <Text style={styles.itemTitleText}>

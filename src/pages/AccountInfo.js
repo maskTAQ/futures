@@ -48,7 +48,7 @@ export default class AccountInfo extends PureComponent {
     state = {};
     render() {
         return (
-            <Page title="修改交易密码">
+            <Page title="收款信息">
                 <View style={styles.container}>
                     {inputList.map((group, groupI) => {
                         return (

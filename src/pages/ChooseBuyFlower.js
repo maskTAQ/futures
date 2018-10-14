@@ -66,20 +66,20 @@ export default class ChooseBuyFlower extends PureComponent {
                     <DataView
                         injectData={true}
                         dataSource={[
-                            { canBuy: true, type: "jugan", name: "桔柑花" },
+                            { canBuy: true, type: "1", name: "桔柑花" },
                             {
                                 label: "测试数据",
-                                type: "mudan",
+                                type: "2",
                                 name: "牡丹花"
                             },
                             {
                                 label: "测试数据",
-                                type: "mulan",
+                                type: "3",
                                 name: "木兰花"
                             },
                             {
                                 label: "测试数据",
-                                type: "tiantangniao",
+                                type: "4",
                                 name: "天堂鸟"
                             }
                         ]}

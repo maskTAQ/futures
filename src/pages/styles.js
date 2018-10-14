@@ -1267,7 +1267,12 @@ const login = {
 
 const forgetPassword = {
     container: {
-        flex: 1,
+        //flex: 1,
+        position: "absolute",
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0,
         paddingTop: scale(15),
         paddingLeft: scale(15),
         paddingRight: scale(15),

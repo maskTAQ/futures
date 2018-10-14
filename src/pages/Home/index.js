@@ -28,8 +28,8 @@ export default class Home extends PureComponent {
     };
     UNSAFE_componentWillMount() {
         getNotice()
-            .then(notif => {
-                this.setState({ notif });
+            .then(res => {
+                this.setState({ notif: res.notice });
             })
             .catch(e => {
                 console.log(e);
