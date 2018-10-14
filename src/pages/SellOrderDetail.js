@@ -404,22 +404,6 @@ export default class SellOrderDetail extends PureComponent {
 
                         <View style={styles.bottom}>
                             {this.renderList()}
-                            <Visible show={state === "4"}>
-                                <Button
-                                    onPress={() => {
-                                        this.setState({
-                                            comfirm: {
-                                                visible: true,
-                                                content: "是否复投"
-                                            }
-                                        });
-                                    }}
-                                    style={styles.submit}
-                                    textStyle={styles.submitText}
-                                >
-                                    复投
-                                </Button>
-                            </Visible>
                             {this.renderUser()}
                             {this.renderVoucher()}
                         </View>

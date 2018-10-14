@@ -24,11 +24,11 @@ const inputList = [
 ];
 const codeUri =
     "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539539164062&di=ce6a6277035c2ed7c109047860bcef60&imgtype=0&src=http%3A%2F%2Fs4.sinaimg.cn%2Fmw690%2F003bsgbmgy6R6efoOr1c3";
-export default class ChangeDealPassword extends PureComponent {
+export default class LoginPassword extends PureComponent {
     state = {};
     render() {
         return (
-            <Page title="交易密码">
+            <Page title="登录密码">
                 <View style={styles.container}>
                     <View style={styles.group}>
                         {inputList.map(({ placeholder, key }) => {

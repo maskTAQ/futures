@@ -11,8 +11,8 @@ import UserHeader from "./Header";
 const list = [
     [
         { label: "收款信息", routeName: "AccountInfo" },
-        { label: "登录密码", routeName: "" },
-        { label: "交易密码", routeName: "" }
+        { label: "登录密码", routeName: "LoginPassword" },
+        { label: "交易密码", routeName: "ChangeDealPassword" }
     ],
     [{ label: "消息推送", Component: Switch }],
     [

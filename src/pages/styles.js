@@ -721,6 +721,10 @@ const changeDealPassword = {
         fontSize: scale(16),
         color: "#000"
     },
+    codeIcon: {
+        width: scale(54),
+        height: scale(19)
+    },
     verifyBox: {
         height: scale(70),
         flexDirection: "row",
@@ -1369,6 +1373,47 @@ const orderSellFlowerList = {
         alignSelf: "flex-end"
     }
 };
+
+const sellRedPacket = {
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+        paddingLeft: scale(15),
+        paddingRight: scale(15)
+    },
+    labelText: {
+        fontSize: scale(16),
+        lineHeight: scale(40),
+        color: "#333333"
+    },
+    input: {
+        height: scale(40),
+        borderBottomWidth: 1,
+        borderColor: "#DAD9D9"
+    },
+    balanceText: {
+        fontSize: scale(15),
+        lineHeight: scale(40),
+        color: "#858585"
+    },
+    hintText: {
+        fontSize: scale(11),
+        lineHeight: scale(40),
+        color: "#9D9D9D"
+    },
+    submit: {
+        marginTop: scale(40),
+        height: scale(40),
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: scale(4),
+        backgroundColor: "#fa4f75"
+    },
+    submitText: {
+        fontSize: scale(22),
+        color: "#fff"
+    }
+};
 export {
     home,
     mine,
@@ -1385,5 +1430,6 @@ export {
     orderDetail,
     login,
     forgetPassword,
-    orderSellFlowerList
+    orderSellFlowerList,
+    sellRedPacket
 };

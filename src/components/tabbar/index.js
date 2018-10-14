@@ -26,15 +26,28 @@ const list = [
     },
     {
         icon: require("./img/repo.png"),
-        label: "转让花园仓库"
+        label: "转让花园仓库",
+        routeName: "SellRedPacket",
+        params: { type: "jingtai", title: "出售静态红包" }
     },
     {
         icon: require("./img/money.png"),
-        label: "转让奖励仓库"
+        label: "转让奖励仓库",
+        routeName: "SellRedPacket",
+        params: { type: "dongtai", title: "出售动态红包" }
     },
     {
         icon: require("./img/repeat.png"),
-        label: "转让奖励"
+        label: "转让奖励",
+        routeName: "Buy",
+        params: {
+            money: "2000",
+            name: "桔柑花",
+            percent: "20",
+            queuing_money: "2",
+            state: "0",
+            type: "1"
+        }
     }
 ];
 
@@ -164,28 +177,33 @@ export default class Tabbar extends Component {
                                     style={styles.listBg}
                                     resizeMode="stretch"
                                 />
-                                {list.map(({ label, icon, routeName }) => {
-                                    return (
-                                        <Button
-                                            onPress={() => {
-                                                this.requestModalClose();
-                                                this.props.dispatch(
-                                                    NavigationActions.navigate({
-                                                        routeName
-                                                    })
-                                                );
-                                                // navigate({routeName})
-                                            }}
-                                            style={styles.item}
-                                            key={label}
-                                        >
-                                            <Icon size={36} source={icon} />
-                                            <Text style={styles.itemText}>
-                                                {label}
-                                            </Text>
-                                        </Button>
-                                    );
-                                })}
+                                {list.map(
+                                    ({ label, icon, routeName, params }) => {
+                                        return (
+                                            <Button
+                                                onPress={() => {
+                                                    this.requestModalClose();
+                                                    this.props.dispatch(
+                                                        NavigationActions.navigate(
+                                                            {
+                                                                routeName,
+                                                                params
+                                                            }
+                                                        )
+                                                    );
+                                                    // navigate({routeName})
+                                                }}
+                                                style={styles.item}
+                                                key={label}
+                                            >
+                                                <Icon size={36} source={icon} />
+                                                <Text style={styles.itemText}>
+                                                    {label}
+                                                </Text>
+                                            </Button>
+                                        );
+                                    }
+                                )}
                             </View>
                         </View>
                     </TouchableWithoutFeedback>

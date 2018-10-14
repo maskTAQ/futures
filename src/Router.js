@@ -29,7 +29,9 @@ import {
     ForgetPassword,
     Register,
     OrderSellFlowerList,
-    OrderBuyFlowerList
+    OrderBuyFlowerList,
+    LoginPassword,
+    SellRedPacket
 } from "pages";
 
 YellowBox.ignoreWarnings([
@@ -134,7 +136,9 @@ const AppRouteConfigs = {
     OrderSellFlowerList,
     OrderBuyFlowerList,
     BuyOrderDetail,
-    SellOrderDetail
+    SellOrderDetail,
+    LoginPassword,
+    SellRedPacket
 };
 // 创建一级导航
 const StackNavigator = createStackNavigator(AppRouteConfigs, {
