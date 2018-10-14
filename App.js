@@ -18,7 +18,7 @@ import { connect } from "react-redux";
 
 
 import { iconSource } from 'commons';
-import {Tip} from 'components';
+import { Tip } from 'components';
 import store from "store/index.js";
 import { back } from "actions";
 import sage from "effects/index.js";
@@ -85,10 +85,8 @@ export default class App extends Component {
   handleBack = () => {
     const { nav } = store.getState();
     const routeName = nav.routes[nav.index].routeName;
-    
-    if (routeName === "Home") {
+    if (routeName === "TabNavigator") {
       if (this.lastBack && new Date().getTime() - this.lastBack < 2000) {
-        this.ws && this.ws.close();
         BackHandler.exitApp();
       } else {
         this.lastBack = new Date().getTime();
@@ -96,8 +94,8 @@ export default class App extends Component {
       }
       return true;
     }
-    if (nav.routes.length > 1 && !["Login",'Home'].includes(routeName)) {
-      this.props.dispatch(action.navigate.back());
+    if (nav.routes.length > 1) {
+      back();
       return true;
     }
     return false;

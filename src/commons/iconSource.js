@@ -25,5 +25,7 @@ export default {
     l: require("images/l.png"),
     password: require("images/password.png"),
     username: require("images/username.png"),
-    bottom: require("images/bottom.png")
+    bottom: require("images/bottom.png"),
+    add: require("images/add.png"),
+    complaint: require("images/complaint.png")
 };

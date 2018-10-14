@@ -2,12 +2,14 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
+import ScrollableTabView from "react-native-scrollable-tab-view";
 
 import { orderSellFlowerList as styles } from "./styles";
-import { DataView, Page, Icon } from "components";
+import { DataView, Page, Icon, Button } from "components";
 import { getOrderBuyFlowerList } from "actions";
 import { iconSource } from "commons";
-import ScrollableTabView from "react-native-scrollable-tab-view";
+import { getorderBuyFlowerInfo } from "apis";
+import { navigate } from "actions";
 
 const tabs = [
     { label: "全部", value: "all" },
@@ -38,7 +40,14 @@ export default class OrderBuyFlowerList extends PureComponent {
     }
     renderItem = ({ item: { state, name, money, number, date, percent } }) => {
         return (
-            <View style={styles.item}>
+            <Button
+                style={styles.item}
+                onPress={() => {
+                    getorderBuyFlowerInfo({ number, state }).then(res => {
+                        navigate({ routeName: "OrderDetail", params: res });
+                    });
+                }}
+            >
                 <Icon source={iconSource.mudan} style={styles.icon} />
                 <View style={styles.itemContent}>
                     <View style={styles.itemTop}>
@@ -66,7 +75,7 @@ export default class OrderBuyFlowerList extends PureComponent {
                         </Text>
                     </View>
                 </View>
-            </View>
+            </Button>
         );
     };
     render() {

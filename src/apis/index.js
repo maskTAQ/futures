@@ -1,14 +1,14 @@
 import { post } from "./base";
 
 const login = params => {
-    return post("/Api/checkLogin", params);
+    return post("/api.php?action=checkLogin", params);
 };
 
 const getNotice = () => {
     return post("/api.php?action=getNotice");
 };
 const getHome = () => {
-    return post("/Api/getHome", null, { loading: false });
+    return post("/api.php?action=getHome", null, { loading: false });
 };
 const getCode = params => {
     return post("/api.php?action=getCode ", params, { loading: false });
@@ -34,6 +34,23 @@ const getOrderSellFlowerList = () => {
 const getOrderBuyFlowerList = () => {
     return post("/api.php?action=orderBuyFlowerList", null, { loading: false });
 };
+const getorderBuyFlowerInfo = params => {
+    return post("/api.php?action=orderBuyFlowerInfo", {
+        ...params,
+        voucher: true
+    });
+};
+const orderBuyUpdateVoucher = params => {
+    return post("/api.php?action=orderBuyUpdateVoucher", params, {
+        handleCatch: false
+    });
+};
+const orderBuySureCollection = params => {
+    return post("/api.php?action=orderBuySureCollection", params);
+};
+const orderBuyRepetition = params => {
+    return post("/api.php?action=orderBuyRepetition", params);
+};
 export { host } from "./base";
 export {
     login,
@@ -45,5 +62,9 @@ export {
     userInfo,
     getTeamMember,
     getOrderSellFlowerList,
-    getOrderBuyFlowerList
+    getOrderBuyFlowerList,
+    getorderBuyFlowerInfo,
+    orderBuyUpdateVoucher,
+    orderBuySureCollection,
+    orderBuyRepetition
 };

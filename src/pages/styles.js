@@ -1062,8 +1062,8 @@ const orderDetail = {
     },
     header: {
         flexDirection: "row",
-        paddingTop: scale(30),
-        paddingBottom: scale(40),
+        paddingTop: scale(20),
+        paddingBottom: scale(20),
         borderBottomWidth: 1,
         borderColor: "#F2F2F2"
     },
@@ -1114,6 +1114,52 @@ const orderDetail = {
         fontSize: scale(12),
         color: "#797979"
     },
+    voucher: {
+        position: "relative",
+        borderTopWidth: 1,
+        borderColor: "#F2F2F2",
+        marginBottom: scale(30)
+    },
+    complaint: {
+        position: "absolute",
+        height: scale(40),
+        top: scale(-15),
+        right: 20
+    },
+    complaintIcon: {
+        width: scale(25),
+        height: scale(25),
+        backgroundColor: "#fff"
+    },
+    complaintText: {
+        fontSize: scale(11),
+        color: "#FD4C73"
+    },
+    voucherTitleText: {
+        lineHeight: scale(60),
+        fontSize: scale(14),
+        color: "#797979"
+    },
+    voucherContent: {
+        flexDirection: "row",
+        paddingLeft: scale(10),
+        paddingRight: scale(10)
+    },
+    voucherItem: {
+        marginLeft: scale(10),
+        width: scale(65),
+        height: scale(65)
+    },
+    voucherItemImg: {
+        width: "100%",
+        height: "100%"
+    },
+    voucherItemBorder: {
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 0.3,
+        borderColor: "#D6D6D6"
+    },
     alertContainer: {
         alignItems: "center"
     },
@@ -1138,7 +1184,7 @@ const orderDetail = {
         backgroundColor: "#fa4f75"
     },
     submitText: {
-        fontSize: scale(22),
+        fontSize: scale(16),
         color: "#fff"
     }
 };
