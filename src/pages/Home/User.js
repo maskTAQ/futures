@@ -6,6 +6,7 @@ import { home as homeStyles } from "../styles";
 import { Icon, Button, Text } from "components";
 import { iconSource } from "commons";
 import { host } from "apis";
+import { navigate } from "actions";
 
 const styles = homeStyles.user;
 const emailIcon = require("./img/email.png");
@@ -17,23 +18,27 @@ const User = ({ requestShowNotif, data }) => {
         [
             {
                 label: "花园仓库",
-                value: jingtaiMoney
+                value: jingtaiMoney,
+                routeName: "GardenWarehouse"
             },
             { type: "border", label: "1", style: { alignSelf: "flex-end" } },
             {
                 label: "奖励仓库",
-                value: dongtaiMoney
+                value: dongtaiMoney,
+                routeName: "AwardWarehouse"
             }
         ],
         [
             {
                 label: "种植记录",
-                icon: orderIcon
+                icon: orderIcon,
+                routeName: "OrderBuyFlowerList"
             },
             { type: "border", label: "2" },
             {
                 label: "出售记录",
-                icon: transferIcon
+                icon: transferIcon,
+                routeName: "OrderSellFlowerList"
             }
         ]
     ];
@@ -84,7 +89,14 @@ const User = ({ requestShowNotif, data }) => {
                             <View style={styles.detailGroup} key={groupI}>
                                 {group.map(
                                     (
-                                        { type, label, icon, value, style },
+                                        {
+                                            type,
+                                            label,
+                                            icon,
+                                            value,
+                                            style,
+                                            routeName
+                                        },
                                         i
                                     ) => {
                                         if (type === "border") {
@@ -99,13 +111,16 @@ const User = ({ requestShowNotif, data }) => {
                                             );
                                         } else {
                                             return (
-                                                <View
+                                                <Button
                                                     style={[
                                                         styles.item,
                                                         groupI === 0 &&
                                                             styles.itemBorderBottom
                                                     ]}
                                                     key={label}
+                                                    onPress={() => {
+                                                        navigate({ routeName });
+                                                    }}
                                                 >
                                                     {value !== undefined ? (
                                                         <Text
@@ -128,7 +143,7 @@ const User = ({ requestShowNotif, data }) => {
                                                     >
                                                         {label}
                                                     </Text>
-                                                </View>
+                                                </Button>
                                             );
                                         }
                                     }

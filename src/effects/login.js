@@ -2,7 +2,10 @@ import { take, fork, cancel } from "redux-saga/effects";
 import taskWrapper from "./taskWrapper";
 import { NavigationActions } from "react-navigation";
 
-import { login, loginOut } from "apis/UserApi";
+import { loginOut } from "apis/UserApi";
+import { login } from "apis";
+import { navigate } from "actions";
+import { setIsLogin } from "reducers";
 import { Tip, Storage } from "commons";
 
 const setSerialNum = "1";
@@ -29,33 +32,25 @@ export default function*() {
                 //开始登陆
                 loginTaskTag = yield fork(
                     taskWrapper({
-                        module: "auth",
-                        field: "userInfo",
+                        module: "user",
+                        field: "main",
                         type,
                         saveDataToRedux: (params, config) => {
                             return login(params, config).then(res => {
-                                const { error, token, userName } = res;
-                                if (error) {
-                                    return null;
-                                } else {
-                                    Tip.success("登录成功", 1000);
-                                    Storage.setJson("userName", userName);
-                                    Storage.setJson("userInfo", payload);
-                                    setSerialNum(token);
-
-                                    if (preRouteParamsAction) {
-                                        setTimeout(() => {
-                                            // 如果是重定向来的登录页则返回到重定向的页面 否则跳转到tab页
-                                            store.dispatch(
-                                                NavigationActions.navigate(
-                                                    preRouteParamsAction
-                                                )
-                                            );
-                                        }, 1000);
-                                    }
-
-                                    return res;
+                                setIsLogin(true);
+                                Storage.set("Token", res.access_token);
+                                navigate({ routeName: "TabNavigator" });
+                                if (preRouteParamsAction) {
+                                    setTimeout(() => {
+                                        // 如果是重定向来的登录页则返回到重定向的页面 否则跳转到tab页
+                                        store.dispatch(
+                                            NavigationActions.navigate(
+                                                preRouteParamsAction
+                                            )
+                                        );
+                                    }, 1000);
                                 }
+                                return { account: params.account };
                             });
                         },
                         params: payload

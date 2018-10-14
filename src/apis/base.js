@@ -32,11 +32,12 @@ Axios.interceptors.request.use(
 /**
  * 打印错误信息
  * */
-const logError = ({ url, params, error }) => {
+const logError = ({ url, params, res, error }) => {
     console.log(`
     --     start    --
     url:${url} 
-    params:${params}
+    params:${JSON.stringify(params)}
+    res:${JSON.stringify(res)}
     error:${JSON.stringify(error)}
     --      end     --
     `);
@@ -64,13 +65,19 @@ const base = (type, url, params, config) => {
         requestWrapper(type, url, params)
             .then(res => {
                 const { code, data, msg } = res.data;
+                console.log(res, url);
                 Tip.dismiss();
                 if (Number(code) === 200) {
                     return resolve(data);
                 } else {
                     if (handleCatch) {
+                        logError({
+                            url,
+                            params,
+                            res: res.data
+                        });
                         Tip.fail(msg);
-                        return reject("已处理错误");
+                        return reject("已处理错误:" + msg);
                     }
                     return reject(msg);
                 }

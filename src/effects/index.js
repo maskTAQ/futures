@@ -1,5 +1,6 @@
 import { all } from "redux-saga/effects";
 import login from "./login";
+import data from "./data";
 import store from "../store";
 
 const clearEffectsTask = function(id) {
@@ -10,6 +11,6 @@ const clearEffectsTask = function(id) {
 };
 
 export default function* root() {
-    yield all([login()]);
+    yield all([login(), data()]);
 }
 export { clearEffectsTask };

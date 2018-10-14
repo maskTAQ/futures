@@ -3,9 +3,9 @@ import { View, StatusBar } from "react-native";
 
 import { Icon, Input, Button } from "components";
 import { login as styles } from "./styles";
-import { iconSource, Storage } from "commons";
+import { iconSource } from "commons";
 import { navigate } from "actions";
-import { login } from "apis";
+import { login } from "actions";
 
 export default class Login extends PureComponent {
     state = {
@@ -60,14 +60,7 @@ export default class Login extends PureComponent {
                         style={styles.submit}
                         textStyle={styles.submitText}
                         onPress={() => {
-                            login({ account, password })
-                                .then(res => {
-                                    Storage.set("Token", res.access_token);
-                                    navigate({ routeName: "TabNavigator" });
-                                })
-                                .catch(e => {
-                                    console.log(e);
-                                });
+                            login({ account, password });
                         }}
                     >
                         登录

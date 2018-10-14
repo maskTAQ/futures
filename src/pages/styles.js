@@ -1264,6 +1264,58 @@ const forgetPassword = {
         color: "#fff"
     }
 };
+
+const orderSellFlowerList = {
+    container: {
+        flex: 1,
+        backgroundColor: "#fff"
+    },
+    item: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginLeft: scale(15),
+        marginRight: scale(15),
+        height: scale(82),
+        borderBottomWidth: 1,
+        borderColor: "#F2F2F2"
+    },
+    icon: {
+        width: scale(60),
+        height: scale(60),
+        borderRadius: scale(5),
+        overflow: "hidden"
+    },
+    itemContent: {
+        flex: 1,
+        height: scale(60),
+        paddingLeft: scale(15)
+    },
+    itemTop: {
+        flexDirection: "row",
+        height: scale(30),
+        justifyContent: "space-between",
+        alignItems: "flex-start"
+    },
+    textBox: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    text: {
+        fontSize: scale(10),
+        color: "#999999"
+    },
+    itemTitleText: {
+        fontSize: scale(17),
+        color: "#333"
+    },
+    stateText: {
+        fontSize: scale(14),
+        color: "#FD4C73",
+        alignSelf: "flex-end"
+    }
+};
 export {
     home,
     mine,
@@ -1279,5 +1331,6 @@ export {
     buy,
     orderDetail,
     login,
-    forgetPassword
+    forgetPassword,
+    orderSellFlowerList
 };

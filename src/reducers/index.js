@@ -1,16 +1,14 @@
 import { combineReducers } from "redux";
 import _ from "lodash";
 import { NavigationActions } from "react-navigation";
-//import { createNavigationReducer } from "react-navigation-redux-helpers";
-
 import AppNavigator from "src/Router";
-//import {  } from "apis/base";
-const isLogin = true;
+let isLogin = true;
+
+const setIsLogin = v => (isLogin = v);
 //redux中存储的内容
 const modules = [
-    "auth:fundsInfo.userInfo.siteIndex",
-    "stock:allStock.allStockMap.choice.dayCommission.dayDeal.position.positionMap.historySearch",
-    "quotation:all.exponent"
+    "user:main",
+    "data:team.orderSellFlowerList.orderBuyFlowerList"
 ];
 
 //redux中存储的内容 逻辑部分
@@ -161,5 +159,5 @@ const reducer = combineReducers({
     }
 });
 
-export { preloadedState };
+export { preloadedState, setIsLogin };
 export default reducer;

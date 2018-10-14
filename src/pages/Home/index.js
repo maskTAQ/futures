@@ -34,13 +34,13 @@ export default class Home extends PureComponent {
             .catch(e => {
                 console.log(e);
             });
+
         const t = new Date();
         t.setTime(t.getTime() + 24 * 60 * 60 * 1000);
         this.TimeDown(t);
     }
     getData = () => {
         return getHome().then(data => {
-            console.log(data, "data");
             this.setState({ data });
             return data.list;
         });

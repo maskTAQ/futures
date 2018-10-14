@@ -9,17 +9,16 @@ import { iconSource, scale } from "commons";
 const styles = teamStyles.tree;
 
 const TreeNode = ({ item, depth, requestTreeNodeVisibleChange }) => {
-    const { showChildren, children = [], username, lv, freeze } = item;
-
+    const { showChildren = true, team = [], user_id, level, freeze } = item;
     return (
-        <View style={styles.treeNode} key={username + lv}>
+        <View style={styles.treeNode} key={user_id + level}>
             <View style={styles.treeNodeContent}>
                 <View style={styles.treeNodeLeft}>
-                    {children && children.length ? (
+                    {team && team.length ? (
                         <Button
                             onPress={() => {
                                 requestTreeNodeVisibleChange({
-                                    username,
+                                    user_id,
                                     showChildren: !showChildren
                                 });
                             }}
@@ -38,7 +37,7 @@ const TreeNode = ({ item, depth, requestTreeNodeVisibleChange }) => {
                     )}
 
                     <Text style={styles.treeChildNumText}>
-                        ({children.length + 1}){" "}
+                        ({team.length + 1}){" "}
                     </Text>
                 </View>
                 <View
@@ -51,9 +50,9 @@ const TreeNode = ({ item, depth, requestTreeNodeVisibleChange }) => {
                         />
                     </Visible>
 
-                    <Text style={styles.usernameText}>{username}</Text>
+                    <Text style={styles.usernameText}>{user_id}</Text>
                     <View style={styles.lv}>
-                        <Text style={styles.lvText}>v{lv}</Text>
+                        <Text style={styles.lvText}>v{level}</Text>
                     </View>
                     <Icon source={iconSource.vipIcon} style={styles.vipIcon} />
                 </View>
@@ -64,8 +63,8 @@ const TreeNode = ({ item, depth, requestTreeNodeVisibleChange }) => {
                 </Visible>
             </View>
             <View style={styles.treeNodeChildren}>
-                {showChildren && children.length
-                    ? children.map(item =>
+                {showChildren && team.length
+                    ? team.map(item =>
                           TreeNode({
                               item,
                               depth: depth + 1,

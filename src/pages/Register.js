@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { Input, Button, Page, CodeButton } from "components";
 import { forgetPassword as styles } from "./styles";
 import { navigate } from "actions";
-import { register, getCode } from "apis";
+import { getCode, userReg } from "apis";
 import { Tip } from "commons";
 
 const list = [
@@ -41,7 +41,7 @@ export default class ForgetPassword extends PureComponent {
         mobile: "13888888888"
     };
     render() {
-        const { mobile } = this.state;
+        const { mobile, account } = this.state;
         return (
             <Page title="注册账号">
                 <View style={styles.container}>
@@ -64,7 +64,12 @@ export default class ForgetPassword extends PureComponent {
                                             mobile={mobile}
                                             style={styles.code}
                                             textStyle={styles.codeText}
-                                            requestGetCode={getCode}
+                                            requestGetCode={() => {
+                                                return getCode({
+                                                    phone: mobile,
+                                                    account
+                                                });
+                                            }}
                                         />
                                     )}
                                 </View>
@@ -77,20 +82,24 @@ export default class ForgetPassword extends PureComponent {
                             textStyle={styles.submitText}
                             onPress={() => {
                                 const { password, passwordT } = this.state;
-                                if (password !== passwordT) {
-                                    Tip.fail("俩次密码不一致");
-                                } else {
-                                    register(this.state)
-                                        .then(res => {
-                                            console.log(res, "res");
-                                            navigate({
-                                                routeName: "Login"
-                                            });
-                                        })
-                                        .catch(e => {
-                                            console.log(e);
-                                        });
+
+                                if (!password) {
+                                    return Tip.fail("请输入密码");
                                 }
+                                if (password !== passwordT) {
+                                    return Tip.fail("俩次输入的密码一致");
+                                }
+
+                                return userReg(this.state)
+                                    .then(res => {
+                                        console.log(res, "res");
+                                        navigate({
+                                            routeName: "Login"
+                                        });
+                                    })
+                                    .catch(e => {
+                                        console.log(e);
+                                    });
                             }}
                         >
                             完成注册

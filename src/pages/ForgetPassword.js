@@ -3,8 +3,14 @@ import { View } from "react-native";
 
 import { Input, Button, Page, CodeButton } from "components";
 import { forgetPassword as styles } from "./styles";
+import { findPassword, getCode } from "apis";
+import { Tip } from "commons";
 
 const list = [
+    {
+        placeholder: "请输入账号",
+        key: "account"
+    },
     {
         placeholder: "请输入手机号",
         key: "mobile"
@@ -15,19 +21,20 @@ const list = [
     },
     {
         placeholder: "填写新密码",
-        key: "n"
+        key: "password"
     },
     {
         placeholder: "请再次输入新密码",
-        key: "newt"
+        key: "passwordT"
     }
 ];
 export default class ForgetPassword extends PureComponent {
     state = {
-        mobile: "13888888888"
+        mobile: "13500000000",
+        account: "H66455429"
     };
     render() {
-        const { mobile } = this.state;
+        const { mobile, account } = this.state;
         return (
             <Page title="找回密码">
                 <View style={styles.container}>
@@ -37,6 +44,7 @@ export default class ForgetPassword extends PureComponent {
                                 <Input
                                     placeholder={placeholder}
                                     style={styles.input}
+                                    value={this.state[key]}
                                     onChangeText={v => {
                                         this.setState({
                                             [key]: v
@@ -48,7 +56,12 @@ export default class ForgetPassword extends PureComponent {
                                         mobile={mobile}
                                         style={styles.code}
                                         textStyle={styles.codeText}
-                                        requestGetCode={() => Promise.resolve()}
+                                        requestGetCode={() => {
+                                            return getCode({
+                                                phone: mobile,
+                                                account
+                                            });
+                                        }}
                                     />
                                 )}
                             </View>
@@ -58,6 +71,22 @@ export default class ForgetPassword extends PureComponent {
                         <Button
                             style={styles.submit}
                             textStyle={styles.submitText}
+                            onPress={() => {
+                                const { password, passwordT } = this.state;
+                                if (!password) {
+                                    return Tip.fail("请输入密码");
+                                }
+                                if (password !== passwordT) {
+                                    return Tip.fail("俩次输入的密码一致");
+                                }
+                                return findPassword(this.state)
+                                    .then(res => {
+                                        console.log(res);
+                                    })
+                                    .catch(e => {
+                                        console.log(e);
+                                    });
+                            }}
                         >
                             确认
                         </Button>
