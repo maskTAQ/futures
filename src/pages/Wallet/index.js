@@ -1,33 +1,52 @@
 import React, { PureComponent } from "react";
 import { View, Image } from "react-native";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import { wallet as styles } from "../styles";
 import { Text, Button } from "components";
-import { navigate } from "actions";
+import { navigate, getMyWallet } from "actions";
 import Card from "./Card";
 import { iconSource } from "commons";
 
-const list = [
-    [
-        { label: "静态收益（花园仓库）", routeName: "GardenWarehouse" },
-        { label: "动态收益（奖励仓库）", routeName: "AwardWarehouse" }
-    ],
-    [
-        { label: "排单币（肥料）", value: 15, routeName: "TransferManure" },
-        { label: "邀请名额", value: 1, routeName: "TransferInvitationCode" }
-    ]
-];
-
-@connect()
+@connect(({ data }) => {
+    return { wallet: data.wallet };
+})
 export default class Wallet extends PureComponent {
+    static propTypes = {
+        wallet: PropTypes.object
+    };
     state = {
         isModalVisible: false
     };
+    UNSAFE_componentWillMount() {
+        if (!this.props.wallet) {
+            getMyWallet();
+        }
+    }
     renderItem = ({ content }) => {
         return <View style={styles.item} />;
     };
     render() {
+        const { queuing_money = 0, invite_money = 0 } = this.props.wallet || {};
+        const list = [
+            [
+                { label: "静态收益（花园仓库）", routeName: "GardenWarehouse" },
+                { label: "动态收益（奖励仓库）", routeName: "AwardWarehouse" }
+            ],
+            [
+                {
+                    label: "排单币（肥料）",
+                    value: queuing_money,
+                    routeName: "TransferManure"
+                },
+                {
+                    label: "邀请名额",
+                    value: invite_money,
+                    routeName: "TransferInvitationCode"
+                }
+            ]
+        ];
         return (
             <View style={styles.container}>
                 <View style={styles.bgContainer}>
@@ -42,7 +61,7 @@ export default class Wallet extends PureComponent {
                         resizeMode="stretch"
                     />
                 </View>
-                <Card repositoryNum={2333.4} />
+                <Card data={this.props.wallet} />
                 {list.map((group, groupI) => {
                     return (
                         <View
@@ -58,7 +77,10 @@ export default class Wallet extends PureComponent {
                                 return (
                                     <Button
                                         onPress={() => {
-                                            navigate({ routeName });
+                                            navigate({
+                                                routeName,
+                                                params: { invite_money }
+                                            });
                                         }}
                                         style={styles.item}
                                         key={label}

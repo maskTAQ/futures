@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 
 import { orderDetail as styles, alert as alertStyle } from "./styles";
 import { Page, Text, Button, Icon, Comfirm, Alert, Visible } from "components";
-import { orderSellSureCollection, host, orderSellRepetition } from "apis";
+import {
+    orderSellSureCollection,
+    host,
+    orderSellRepetition,
+    orderComplaint
+} from "apis";
 import { iconSource, Tip } from "commons";
 import { back } from "actions";
 
@@ -130,8 +135,14 @@ export default class SellOrderDetail extends PureComponent {
         navigation: PropTypes.object
     };
     state = {
-        isComfirmVisible: false,
-        isAlertVisible: false
+        comfirm: {
+            visible: false,
+            content: ""
+        },
+        alert: {
+            visible: false,
+            content: ""
+        }
     };
     getLabelByValue(value) {
         const label = "";
@@ -275,13 +286,23 @@ export default class SellOrderDetail extends PureComponent {
         return (
             <Visible show={state !== "0"}>
                 <View style={styles.voucher}>
-                    <View style={styles.complaint}>
+                    <Button
+                        onPress={() => {
+                            this.setState({
+                                comfirm: {
+                                    visible: true,
+                                    content: "是否投诉"
+                                }
+                            });
+                        }}
+                        style={styles.complaint}
+                    >
                         <Icon
                             source={iconSource.complaint}
                             style={styles.complaintIcon}
                         />
                         <Text style={styles.complaintText}>投诉</Text>
-                    </View>
+                    </Button>
                     <Text style={styles.voucherTitleText}>上传打款凭证：</Text>
                     <View style={styles.voucherContent}>
                         <Visible show={state === "1" || state === "2"}>
@@ -323,9 +344,6 @@ export default class SellOrderDetail extends PureComponent {
                             style={styles.submit}
                             textStyle={styles.submitStyle}
                             onPress={() => {
-                                // this.setState({
-                                //     isComfirmVisible: true
-                                // });
                                 orderSellSureCollection({ number }).then(
                                     res => {
                                         Tip.success("确认收款成功!");
@@ -342,7 +360,10 @@ export default class SellOrderDetail extends PureComponent {
         );
     }
     render() {
-        const { isComfirmVisible, isAlertVisible } = this.state;
+        const {
+            alert: { visible, content },
+            comfirm
+        } = this.state;
         const {
             name,
             money,
@@ -385,7 +406,10 @@ export default class SellOrderDetail extends PureComponent {
                                 <Button
                                     onPress={() => {
                                         this.setState({
-                                            isComfirmVisible: true
+                                            comfirm: {
+                                                visible: true,
+                                                content: "是否复投"
+                                            }
                                         });
                                     }}
                                     style={styles.submit}
@@ -399,28 +423,55 @@ export default class SellOrderDetail extends PureComponent {
                         </View>
                     </View>
                     <Comfirm
-                        visible={isComfirmVisible}
-                        title="是否复投"
+                        visible={comfirm.visible}
+                        title={comfirm.content}
                         onOk={() => {
-                            orderSellRepetition({ number }).then(res => {
-                                this.setState({
-                                    isComfirmVisible: false,
-                                    isAlertVisible: true
+                            if (comfirm.content === "是否投诉") {
+                                orderComplaint({ number }).then(res => {
+                                    this.setState({
+                                        comfirm: {
+                                            visible: false,
+                                            content: ""
+                                        },
+                                        alert: {
+                                            visible: true,
+                                            content: "投诉成功"
+                                        }
+                                    });
                                 });
-                            });
+                            } else {
+                                orderSellRepetition({ number }).then(res => {
+                                    this.setState({
+                                        comfirm: {
+                                            visible: false,
+                                            content: ""
+                                        },
+                                        alert: {
+                                            visible: true,
+                                            content: "复投成功"
+                                        }
+                                    });
+                                });
+                            }
                         }}
                         onCancel={() => {
                             this.setState({
-                                isComfirmVisible: false
+                                comfirm: {
+                                    visible: false,
+                                    content: ""
+                                }
                             });
                         }}
                     />
                     <Alert
-                        visible={isAlertVisible}
+                        visible={visible}
                         showClose={false}
                         requestClose={() => {
                             this.setState({
-                                isAlertVisible: false
+                                alert: {
+                                    visible: false,
+                                    content: ""
+                                }
                             });
                             back();
                         }}
@@ -431,12 +482,17 @@ export default class SellOrderDetail extends PureComponent {
                                     source={iconSource.success}
                                     style={styles.successIcon}
                                 />
-                                <Text style={styles.successText}>复投成功</Text>
+                                <Text style={styles.successText}>
+                                    {content}
+                                </Text>
                             </View>
                             <Button
                                 onPress={() => {
                                     this.setState({
-                                        isAlertVisible: false
+                                        alert: {
+                                            visible: false,
+                                            content: ""
+                                        }
                                     });
                                     back();
                                 }}

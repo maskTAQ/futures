@@ -8,7 +8,7 @@ const setIsLogin = v => (isLogin = v);
 //redux中存储的内容
 const modules = [
     "user:main",
-    "data:team.orderSellFlowerList.orderBuyFlowerList"
+    "data:team.orderSellFlowerList.orderBuyFlowerList.Wallet"
 ];
 
 //redux中存储的内容 逻辑部分

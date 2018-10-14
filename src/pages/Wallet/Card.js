@@ -7,23 +7,25 @@ import { Icon, Text } from "components";
 
 const styles = walletStyles.card;
 
-const list = [
-    {
-        label: "花园仓库",
-        value: "3183.2"
-    },
-    {
-        label: "奖励仓库",
-        value: "3183.2"
-    }
-];
-const Card = ({ repositoryNum = 2333.4 }) => {
+const Card = ({ data = {} }) => {
+    const { total_money = 0, dongtai_money = 0, jingtai_money = 0 } = data;
+    console.log(data);
+    const list = [
+        {
+            label: "花园仓库",
+            value: jingtai_money
+        },
+        {
+            label: "奖励仓库",
+            value: dongtai_money
+        }
+    ];
     return (
         <View style={styles.container}>
             <View style={styles.box}>
                 <Text style={styles.repoText}>
                     仓库总数：
-                    {repositoryNum}
+                    {total_money}
                 </Text>
                 <View style={styles.list}>
                     {list.map(({ label, icon, value }, i) => {
@@ -35,7 +37,7 @@ const Card = ({ repositoryNum = 2333.4 }) => {
                                 ]}
                                 key={label}
                             >
-                                {value ? (
+                                {value !== undefined ? (
                                     <Text style={styles.itemValueText}>
                                         {value}
                                     </Text>
@@ -55,7 +57,7 @@ const Card = ({ repositoryNum = 2333.4 }) => {
     );
 };
 Card.propTypes = {
-    repositoryNum: PropTypes.number
+    data: PropTypes.object
 };
 
 export default Card;

@@ -4,7 +4,8 @@ import taskWrapper from "./taskWrapper";
 import {
     getTeamMember,
     getOrderSellFlowerList,
-    getOrderBuyFlowerList
+    getOrderBuyFlowerList,
+    getMyWallet
 } from "apis";
 
 export default function*() {
@@ -13,7 +14,8 @@ export default function*() {
         const { type, payload } = yield take([
             "getTeam",
             "getOrderSellFlowerList",
-            "getOrderBuyFlowerList"
+            "getOrderBuyFlowerList",
+            "getMyWallet"
         ]);
         switch (type) {
             case "getTeam": {
@@ -47,6 +49,18 @@ export default function*() {
                         field: "orderBuyFlowerList",
                         type,
                         saveDataToRedux: getOrderBuyFlowerList,
+                        params: payload
+                    })
+                );
+                break;
+            }
+            case "getMyWallet": {
+                yield fork(
+                    taskWrapper({
+                        module: "data",
+                        field: "Wallet",
+                        type,
+                        saveDataToRedux: getMyWallet,
                         params: payload
                     })
                 );

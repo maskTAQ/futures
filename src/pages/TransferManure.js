@@ -1,31 +1,37 @@
 import React, { PureComponent } from "react";
 import { View } from "react-native";
+import PropTypes from "prop-types";
 
 import {
     transferInvitationCode as styles,
     alert as alertStyle
 } from "./styles";
 import { Page, Text, Input, Button, Icon, Alert } from "components";
-import { iconSource } from "commons";
+import { iconSource, Tip } from "commons";
+import { queuingMoney } from "apis";
 
 const list = [
     {
         placeholder: "转发ID（仅支持团队内成员):",
-        key: "a"
+        key: "account"
     },
     {
         placeholder: "转账诚信币数:",
-        key: "b"
+        key: "queuing_money"
     }
 ];
 export default class TransferManure extends PureComponent {
+    static propTypes = {
+        navigation: PropTypes.object
+    };
     state = {
-        a: "",
-        b: "",
+        account: "",
+        queuing_money: "0",
         isEnough: true
     };
     render() {
-        const { isEnough } = this.state;
+        const { isEnough, account, queuing_money } = this.state;
+        const { invite_money } = this.props.navigation.state.params;
         return (
             <Page title="排单币(肥料)">
                 <View style={styles.container}>
@@ -36,7 +42,7 @@ export default class TransferManure extends PureComponent {
                                 剩余排单币
                             </Text>
                         </View>
-                        <Text style={styles.residueText}>15</Text>
+                        <Text style={styles.residueText}>{invite_money}</Text>
                     </View>
                     <View style={styles.content}>
                         {list.map(({ placeholder, key }) => {
@@ -63,9 +69,15 @@ export default class TransferManure extends PureComponent {
                             style={styles.submit}
                             textStyle={styles.submitStyle}
                             onPress={() => {
-                                this.setState({
-                                    isEnough: false
-                                });
+                                // this.setState({
+                                //     isEnough: false
+                                // });
+                                queuingMoney({ account, queuing_money }).then(
+                                    res => {
+                                        console.log(res, "res");
+                                        Tip.success("排单币转发成功！");
+                                    }
+                                );
                             }}
                         >
                             转发

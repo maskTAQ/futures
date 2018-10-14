@@ -12,7 +12,6 @@ import Search from "./Search";
 import { iconSource } from "commons";
 
 @connect(({ data }) => {
-    console.log(data, "data");
     return { team: data.team };
 })
 export default class Team extends PureComponent {

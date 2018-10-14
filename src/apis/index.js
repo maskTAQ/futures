@@ -66,6 +66,25 @@ const orderSellSureCollection = params => {
 const orderSellRepetition = params => {
     return post("/api.php?action=orderSellRepetition", params);
 };
+const orderComplaint = params => {
+    return post("/api.php?action=orderComplaint", params);
+};
+
+const getMyWallet = params => {
+    return post("/api.php?action=myWallet", params);
+};
+
+const getJingtaiMoney = params => {
+    return post("/api.php?action=jingtaiMoney", params, { loading: false });
+};
+const getDongtaiMoney = params => {
+    return post("/api.php?action=dongtaiMoney", params, { loading: false });
+};
+////排单币转发(肥料)
+const queuingMoney = params => {
+    return post("/api.php?action=queuingMoney", params, { loading: false });
+};
+
 export { host } from "./base";
 export {
     login,
@@ -84,5 +103,10 @@ export {
     orderBuyRepetition,
     getorderSellFlowerInfo,
     orderSellSureCollection,
-    orderSellRepetition
+    orderSellRepetition,
+    orderComplaint,
+    getMyWallet,
+    getJingtaiMoney,
+    getDongtaiMoney,
+    queuingMoney
 };

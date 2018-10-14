@@ -42,7 +42,7 @@ export default class Home extends PureComponent {
     getData = () => {
         return getHome().then(data => {
             this.setState({ data });
-            return data.list;
+            return data.buylist;
         });
     };
     TimeDown = endDate => {
@@ -73,7 +73,7 @@ export default class Home extends PureComponent {
         if (!item) {
             return null;
         }
-        const { rate, title, flowerType, time } = item;
+        const { percent, name, type, date } = item;
 
         return (
             <TouchableWithoutFeedback
@@ -84,58 +84,58 @@ export default class Home extends PureComponent {
                 }}
             >
                 <View style={styles.item}>
-                    <Icon source={iconSource[flowerType]} size={68} />
+                    <Icon source={iconSource[type]} size={68} />
                     <View style={styles.itemContent}>
                         <View style={styles.itemTop}>
-                            <Text style={styles.itemTitleText}>{title}</Text>
-                            <Text style={styles.statusText}>{rate}</Text>
+                            <Text style={styles.itemTitleText}>{name}</Text>
+                            <Text style={styles.statusText}>{percent}%</Text>
                         </View>
                         <View style={styles.itemCenter}>
                             <Text style={styles.itemTitleText}>成长中</Text>
                             <Text style={styles.itemPercentageText}>
-                                {rate}
+                                {percent}
                                 成长值
                             </Text>
                         </View>
                         <Text style={styles.itemDetail}>
                             成长时间：
-                            {time}
+                            {date}
                         </Text>
                     </View>
                 </View>
             </TouchableWithoutFeedback>
         );
     };
-    renderItemT = ({
-        item: { rate, price, canBuy, title, flowerType, is_ok }
-    }) => {
+    renderItemT = ({ item }) => {
+        const { percent, money, state, name, type } = item;
         return (
             <View style={styles.item}>
-                <Icon source={iconSource[flowerType]} size={68} />
+                <Icon source={iconSource[type]} size={68} />
                 <View style={styles.itemContent}>
                     <View style={styles.itemTop}>
-                        <Text style={styles.itemTitleText}>{title}</Text>
+                        <Text style={styles.itemTitleText}>{name}</Text>
                         <Button
                             style={styles.buyButton}
-                            disabled={!is_ok}
+                            disabled={!state}
                             disabledButtonStyle={{ backgroundColor: "#e3e3e3" }}
                             disabledTextStyle={{ color: "#999" }}
                             textStyle={styles.buyButtonText}
                             onPress={() => {
                                 navigate({
-                                    routeName: "Buy"
+                                    routeName: "Buy",
+                                    params: item
                                 });
                             }}
                         >
-                            {canBuy ? "不可采收" : "申请种植"}
+                            {state ? "申请种植" : "不可采收"}
                         </Button>
                     </View>
                     <View style={styles.itemCenter}>
-                        <Text style={styles.itemTitleText}>{price}</Text>
+                        <Text style={styles.itemTitleText}>{money}</Text>
                     </View>
                     <Text style={styles.itemDetail}>
                         预计每个生长周期收入
-                        {rate}
+                        {percent}
                     </Text>
                 </View>
             </View>
@@ -173,7 +173,9 @@ export default class Home extends PureComponent {
                     lv={2}
                     repositoryNum={2333.4}
                 />
-                <View style={styles.list}>{this.has(data.growing)}</View>
+                <View style={styles.list}>
+                    {this.has((data.growuplist || [])[0])}
+                </View>
                 <View style={styles.store}>
                     <View style={styles.storeHeader}>
                         <View style={styles.storeTitle}>

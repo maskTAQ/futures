@@ -4,27 +4,45 @@ import { View } from "react-native";
 import { gardenWarehouse as styles } from "./styles";
 import { Page, Text, DataView, Icon } from "components";
 import { iconSource } from "commons";
+import { getDongtaiMoney } from "apis";
 
-const list = ["推荐奖", "推荐奖"];
 export default class AwardWarehouse extends PureComponent {
     state = {
-        a: "",
-        b: ""
+        dongtai_money: 0
     };
-    renderItem({ item }) {
+    getData = () => {
+        return getDongtaiMoney().then(res => {
+            this.setState({
+                dongtai_money: res.dongtai_money
+            });
+            return res.list;
+        });
+    };
+    renderItem({
+        item: { item, date, money, account, last_balance, balance }
+    }) {
         return (
             <View style={styles.item}>
                 <View style={styles.itemTop}>
-                    <Text style={styles.itemTimeText}>2018/09/22 22:12</Text>
+                    <Text style={styles.itemTimeText}>{date}</Text>
                 </View>
                 <View style={styles.itemCenter}>
                     <Text style={styles.itemTypeText}>{item}</Text>
-                    <Text style={styles.itemValueText}>+4000.00</Text>
+                    <Text style={styles.itemValueText}>{money}</Text>
                 </View>
-                <Text style={styles.userIdText}>用户ID：dsa782676</Text>
+                <Text style={styles.userIdText}>
+                    用户ID：
+                    {account}
+                </Text>
                 <View style={styles.itemBottom}>
-                    <Text style={styles.balanceText}>原余额：4000.00</Text>
-                    <Text style={styles.balanceText}>新余额：1000.00</Text>
+                    <Text style={styles.balanceText}>
+                        原余额：
+                        {last_balance}
+                    </Text>
+                    <Text style={styles.balanceText}>
+                        新余额：
+                        {balance}
+                    </Text>
                 </View>
             </View>
         );
@@ -41,14 +59,14 @@ export default class AwardWarehouse extends PureComponent {
                             />
                             <Text style={styles.headerLabelText}>奖励仓库</Text>
                         </View>
-                        <Text style={styles.residueText}>1232.00</Text>
+                        <Text style={styles.residueText}>
+                            {this.state.dongtai_money}
+                        </Text>
                     </View>
                     <View style={styles.list}>
                         <DataView
-                            injectData={true}
-                            dataSource={list}
-                            refreshing={false}
-                            isLoadingMore={false}
+                            getData={this.getData}
+                            isPulldownLoadMore={false}
                             renderItem={this.renderItem}
                         />
                     </View>

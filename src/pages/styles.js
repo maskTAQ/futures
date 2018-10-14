@@ -997,9 +997,11 @@ const buy = {
         color: "#333"
     },
     intro: {
+        //flex:1,
         flexDirection: "row"
     },
     introDetail: {
+        flex: 1,
         paddingLeft: scale(10)
     },
     productName: {
