@@ -31,17 +31,25 @@ export default class Wallet extends PureComponent {
         const { queuing_money = 0, invite_money = 0 } = this.props.wallet || {};
         const list = [
             [
-                { label: "静态收益（花园仓库）", routeName: "GardenWarehouse" },
-                { label: "动态收益（奖励仓库）", routeName: "AwardWarehouse" }
+                { label: "静态收益", routeName: "GardenWarehouse" },
+                { label: "动态收益", routeName: "AwardWarehouse" }
             ],
             [
                 {
-                    label: "排单币（肥料）",
+                    label: "种植记录",
+                    routeName: "OrderBuyFlowerList"
+                },
+                {
+                    label: "出售记录",
+                    routeName: "OrderSellFlowerList"
+                },
+                {
+                    label: "有机肥数量（肥料）",
                     value: queuing_money,
                     routeName: "TransferManure"
                 },
                 {
-                    label: "邀请名额",
+                    label: "邀请码数量",
                     value: invite_money,
                     routeName: "TransferInvitationCode"
                 }

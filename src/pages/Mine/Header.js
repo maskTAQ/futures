@@ -3,7 +3,7 @@ import { View } from "react-native";
 import PropTypes from "prop-types";
 
 import { mine as mineStyles } from "../styles";
-import { Icon, Button, Text } from "components";
+import { Icon, Text } from "components";
 import { iconSource, scale } from "commons";
 
 const styles = mineStyles.header;
@@ -39,11 +39,6 @@ const UserHeader = ({
                         {repositoryNum}
                     </Text>
                 </View>
-            </View>
-            <View style={styles.right}>
-                <Button onPress={requireClose}>
-                    <Icon source={iconSource.close} style={styles.closeIcon} />
-                </Button>
             </View>
         </View>
     );

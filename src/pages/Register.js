@@ -5,7 +5,7 @@ import { Input, Button, Page, CodeButton } from "components";
 import { forgetPassword as styles } from "./styles";
 import { navigate } from "actions";
 import { getCode, userReg } from "apis";
-import { Tip } from "commons";
+import { Tip, isPassword, isMobile } from "commons";
 
 const list = [
     {
@@ -81,7 +81,31 @@ export default class ForgetPassword extends PureComponent {
                             style={styles.submit}
                             textStyle={styles.submitText}
                             onPress={() => {
-                                const { password, passwordT } = this.state;
+                                const {
+                                    password,
+                                    passwordT,
+                                    tjaccount
+                                } = this.state;
+
+                                if (!isPassword(tjaccount)) {
+                                    return Tip.fail(
+                                        "推荐人id只能是数字与字母组合!"
+                                    );
+                                }
+                                if (!isPassword(password)) {
+                                    return Tip.fail(
+                                        "密码只能是数字与字母组合!"
+                                    );
+                                }
+                                if (!isPassword(account)) {
+                                    return Tip.fail(
+                                        "账号只能是数字与字母组合!"
+                                    );
+                                }
+
+                                if (!isMobile(mobile)) {
+                                    return Tip.fail("请输入正确的手机号");
+                                }
 
                                 if (!password) {
                                     return Tip.fail("请输入密码");
@@ -102,7 +126,7 @@ export default class ForgetPassword extends PureComponent {
                                     });
                             }}
                         >
-                            完成注册
+                            申请注册
                         </Button>
                     </View>
                 </View>

@@ -226,6 +226,7 @@ const home = {
         alignItems: "center",
         paddingLeft: scale(10),
         paddingRight: scale(10),
+        marginBottom: scale(4),
         justifyContent: "space-between",
         backgroundColor: "#f7f7f7"
     },
@@ -332,6 +333,19 @@ const mine = {
     itemText: {
         fontSize: scale(16),
         color: "#333"
+    },
+    submit: {
+        marginTop: scale(20),
+        marginBottom: scale(20),
+        height: scale(40),
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: scale(4),
+        backgroundColor: "#fa4f75"
+    },
+    submitText: {
+        fontSize: scale(16),
+        color: "#fff"
     }
 };
 const team = {
@@ -712,6 +726,7 @@ const changeDealPassword = {
     },
     itemLabelText: {
         //width: scale(86),
+        marginRight: scale(6),
         fontSize: scale(16),
         color: "#333"
     },
@@ -1128,9 +1143,11 @@ const orderDetail = {
     },
     complaint: {
         position: "absolute",
+        width: scale(25),
         height: scale(40),
         top: scale(-15),
-        right: 20
+        right: 20,
+        zIndex: 1
     },
     complaintIcon: {
         width: scale(25),

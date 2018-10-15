@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Modal, TouchableWithoutFeedback } from "react-native";
+import { View, Modal, TouchableWithoutFeedback, StatusBar } from "react-native";
 import PropTypes from "prop-types";
 
 import { Button, Text } from "../index";
@@ -13,6 +13,11 @@ const Comfirm = ({ title, okText, cancelText, onOk, onCancel, visible }) => {
             visible={visible}
             animationType="fade"
         >
+            <StatusBar
+                backgroundColor="rgba(0,0,0,0.3)"
+                translucent={true}
+                barStyle="light-content"
+            />
             <TouchableWithoutFeedback onPress={onCancel}>
                 <View style={styles.container}>
                     <View style={styles.content}>

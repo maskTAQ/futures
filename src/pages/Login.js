@@ -3,7 +3,7 @@ import { View, StatusBar } from "react-native";
 
 import { Icon, Input, Button } from "components";
 import { login as styles } from "./styles";
-import { iconSource } from "commons";
+import { iconSource, isPassword, Tip } from "commons";
 import { navigate } from "actions";
 import { login } from "actions";
 
@@ -60,7 +60,13 @@ export default class Login extends PureComponent {
                         style={styles.submit}
                         textStyle={styles.submitText}
                         onPress={() => {
-                            login({ account, password });
+                            if (!isPassword(password)) {
+                                Tip.fail("密码只能是数字与字母组合!");
+                            } else if (!isPassword(account)) {
+                                Tip.fail("账号只能是数字与字母组合!");
+                            } else {
+                                login({ account, password });
+                            }
                         }}
                     >
                         登录

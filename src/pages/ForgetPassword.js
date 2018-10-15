@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { Input, Button, Page, CodeButton } from "components";
 import { forgetPassword as styles } from "./styles";
 import { findPassword, getCode } from "apis";
-import { Tip } from "commons";
+import { Tip, isPassword, isMobile } from "commons";
 
 const list = [
     {
@@ -13,10 +13,16 @@ const list = [
     },
     {
         placeholder: "请输入手机号",
+        props: {
+            keyboardType: "numeric"
+        },
         key: "mobile"
     },
     {
         placeholder: "",
+        props: {
+            keyboardType: "numeric"
+        },
         key: "code"
     },
     {
@@ -38,7 +44,7 @@ export default class ForgetPassword extends PureComponent {
         return (
             <Page title="找回密码">
                 <View style={styles.container}>
-                    {list.map(({ placeholder, key }) => {
+                    {list.map(({ placeholder, key, props }) => {
                         return (
                             <View style={styles.item} key={key}>
                                 <Input
@@ -50,6 +56,7 @@ export default class ForgetPassword extends PureComponent {
                                             [key]: v
                                         });
                                     }}
+                                    {...props}
                                 />
                                 {key === "code" && (
                                     <CodeButton
@@ -73,11 +80,24 @@ export default class ForgetPassword extends PureComponent {
                             textStyle={styles.submitText}
                             onPress={() => {
                                 const { password, passwordT } = this.state;
-                                if (!password) {
-                                    return Tip.fail("请输入密码");
+                                if (!isPassword(password)) {
+                                    return Tip.fail(
+                                        "密码只能是数字与字母组合!"
+                                    );
+                                }
+                                if (!isPassword(account)) {
+                                    return Tip.fail(
+                                        "账号只能是数字与字母组合!"
+                                    );
                                 }
                                 if (password !== passwordT) {
                                     return Tip.fail("俩次输入的密码一致");
+                                }
+                                if (!isPassword(password)) {
+                                    return Tip.fail("请输入密码");
+                                }
+                                if (!isMobile(mobile)) {
+                                    return Tip.fail("请输入正确的手机号");
                                 }
                                 return findPassword(this.state)
                                     .then(res => {

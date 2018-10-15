@@ -9,15 +9,16 @@ const styles = walletStyles.card;
 
 const Card = ({ data = {} }) => {
     const { total_money = 0, dongtai_money = 0, jingtai_money = 0 } = data;
-    console.log(data);
     const list = [
         {
             label: "花园仓库",
-            value: jingtai_money
+            value: jingtai_money,
+            routeName: "GardenWarehouse"
         },
         {
             label: "奖励仓库",
-            value: dongtai_money
+            value: dongtai_money,
+            routeName: "AwardWarehouse"
         }
     ];
     return (

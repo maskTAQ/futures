@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { View, Switch, StatusBar } from "react-native";
+import { View, Switch, StatusBar, ScrollView } from "react-native";
 import { connect } from "react-redux";
 
 import { Header, Text, Button } from "components";
@@ -27,58 +27,70 @@ export default class Mine extends PureComponent {
     state = {};
     render() {
         return (
-            <View style={styles.container}>
-                <StatusBar
-                    hide={true}
-                    backgroundColor={"transparent"}
-                    barStyle="light-content"
-                />
-                <Header title="个人中心" LeftComponent={null} />
-                <UserHeader />
-                <View style={styles.list}>
-                    {list.map((group, i) => {
-                        return (
-                            <View style={styles.group} key={i}>
-                                {group.map(
-                                    ({ label, Component, routeName }) => {
-                                        return (
-                                            <Button
-                                                style={styles.item}
-                                                key={label}
-                                                disabled={!!Component}
-                                                disabledButtonStyle={{
-                                                    backgroundColor: "#fff"
-                                                }}
-                                                onPress={() => {
-                                                    console.log(12121);
-                                                    navigate({
-                                                        routeName
-                                                    });
-                                                }}
-                                            >
-                                                <Text style={styles.itemText}>
-                                                    {label}
-                                                </Text>
-                                                {Component && (
-                                                    <Component
-                                                        value={true}
-                                                        //_thumbColor="red"
-                                                        thumbTintColor="#fff"
-                                                        trackColor={{
-                                                            false: "#e3e3e3",
-                                                            true: "#fa4f75"
-                                                        }}
-                                                    />
-                                                )}
-                                            </Button>
-                                        );
-                                    }
-                                )}
-                            </View>
-                        );
-                    })}
+            <ScrollView>
+                <View style={styles.container}>
+                    <StatusBar
+                        hide={true}
+                        backgroundColor={"transparent"}
+                        barStyle="light-content"
+                    />
+                    <Header title="个人中心" LeftComponent={null} />
+                    <UserHeader />
+                    <View style={styles.list}>
+                        {list.map((group, i) => {
+                            return (
+                                <View style={styles.group} key={i}>
+                                    {group.map(
+                                        ({ label, Component, routeName }) => {
+                                            return (
+                                                <Button
+                                                    style={styles.item}
+                                                    key={label}
+                                                    disabled={!!Component}
+                                                    disabledButtonStyle={{
+                                                        backgroundColor: "#fff"
+                                                    }}
+                                                    onPress={() => {
+                                                        console.log(12121);
+                                                        navigate({
+                                                            routeName
+                                                        });
+                                                    }}
+                                                >
+                                                    <Text
+                                                        style={styles.itemText}
+                                                    >
+                                                        {label}
+                                                    </Text>
+                                                    {Component && (
+                                                        <Component
+                                                            value={true}
+                                                            //_thumbColor="red"
+                                                            thumbTintColor="#fff"
+                                                            trackColor={{
+                                                                false:
+                                                                    "#e3e3e3",
+                                                                true: "#fa4f75"
+                                                            }}
+                                                        />
+                                                    )}
+                                                </Button>
+                                            );
+                                        }
+                                    )}
+                                </View>
+                            );
+                        })}
+                        <Button
+                            style={styles.submit}
+                            textStyle={styles.submitText}
+                            onPress={() => {}}
+                        >
+                            退出
+                        </Button>
+                    </View>
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }

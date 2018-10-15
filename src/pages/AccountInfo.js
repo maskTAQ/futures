@@ -8,6 +8,9 @@ const inputList = [
     [
         {
             placeholder: "卡号",
+            props: {
+                keyboardType: "numeric"
+            },
             key: "old"
         },
         {
@@ -20,6 +23,9 @@ const inputList = [
         },
         {
             placeholder: "联系电话",
+            props: {
+                keyboardType: "numeric"
+            },
             key: "mobile"
         }
     ],
@@ -32,17 +38,17 @@ const inputList = [
             placeholder: "收款人姓名",
             key: "new"
         }
-    ],
-    [
-        {
-            placeholder: "设置交易密码",
-            key: "old"
-        },
-        {
-            placeholder: "确认交易密码",
-            key: "new"
-        }
     ]
+    // [
+    //     {
+    //         placeholder: "设置交易密码",
+    //         key: "old"
+    //     },
+    //     {
+    //         placeholder: "确认交易密码",
+    //         key: "new"
+    //     }
+    // ]
 ];
 export default class AccountInfo extends PureComponent {
     state = {};
@@ -53,13 +59,16 @@ export default class AccountInfo extends PureComponent {
                     {inputList.map((group, groupI) => {
                         return (
                             <View style={styles.group} key={groupI}>
-                                {group.map(({ placeholder, key }) => {
+                                {group.map(({ placeholder, key, props }) => {
                                     return (
                                         <View style={styles.item} key={key}>
                                             <Text style={styles.itemLabelText}>
                                                 {placeholder}
                                             </Text>
-                                            <Input style={styles.itemInput} />
+                                            <Input
+                                                style={styles.itemInput}
+                                                {...props}
+                                            />
                                         </View>
                                     );
                                 })}

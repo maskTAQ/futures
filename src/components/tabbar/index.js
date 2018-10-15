@@ -21,24 +21,24 @@ const rect = require("./img/rect.png");
 const list = [
     {
         icon: require("./img/flower.png"),
-        label: "购买花卉",
+        label: "申请种子",
         routeName: "ChooseBuyFlower"
     },
     {
         icon: require("./img/repo.png"),
         label: "转让花园仓库",
-        routeName: "SellRedPacket",
+        routeName: "动态出售",
         params: { type: "jingtai", title: "出售静态红包" }
     },
     {
         icon: require("./img/money.png"),
-        label: "转让奖励仓库",
+        label: "静态出售",
         routeName: "SellRedPacket",
         params: { type: "dongtai", title: "出售动态红包" }
     },
     {
         icon: require("./img/repeat.png"),
-        label: "转让奖励",
+        label: "订单复购",
         routeName: "Buy",
         params: {
             money: "2000",
@@ -149,11 +149,6 @@ export default class Tabbar extends Component {
         const { routes = [] } = navigation.state;
         return (
             <View style={styles.container}>
-                <StatusBar
-                    hide={true}
-                    translucent={true}
-                    barStyle="light-content"
-                />
                 {routes.map((route, index) => this.renderItem(route, index))}
                 <Modal
                     animationType="none"
@@ -163,6 +158,11 @@ export default class Tabbar extends Component {
                         //alert("Modal has been closed.");
                     }}
                 >
+                    <StatusBar
+                        backgroundColor="rgba(0,0,0,0.3)"
+                        translucent={true}
+                        barStyle="light-content"
+                    />
                     <TouchableWithoutFeedback
                         onPress={() => {
                             this.setState({

@@ -16,7 +16,7 @@ export default (theme = {}) => {
         container: {
             flex: 1,
             justifyContent: "center",
-            backgroundColor: "rgba(0,0,0,0.5)"
+            backgroundColor: "rgba(0,0,0,0.3)"
         },
         box: {
             position: "relative",

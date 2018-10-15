@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Modal, TouchableWithoutFeedback } from "react-native";
+import { View, Modal, TouchableWithoutFeedback, StatusBar } from "react-native";
 import PropTypes from "prop-types";
 
 import { Icon, Visible } from "../";
@@ -19,6 +19,11 @@ const Alert = (
             animationType={"fade"}
             onRequestClose={() => {}}
         >
+            <StatusBar
+                backgroundColor="rgba(0,0,0,0.3)"
+                translucent={true}
+                barStyle="light-content"
+            />
             <View style={styles.container}>
                 <View style={styles.box}>
                     <Visible show={showClose}>
