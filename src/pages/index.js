@@ -23,3 +23,4 @@ export { default as SellOrderDetail } from "./SellOrderDetail";
 export { default as BuyOrderDetail } from "./BuyOrderDetail";
 export { default as LoginPassword } from "./LoginPassword";
 export { default as SellRedPacket } from "./SellRedPacket";
+export { default as Share } from "./Share";

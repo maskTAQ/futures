@@ -31,7 +31,8 @@ import {
     OrderSellFlowerList,
     OrderBuyFlowerList,
     LoginPassword,
-    SellRedPacket
+    SellRedPacket,
+    Share
 } from "pages";
 
 YellowBox.ignoreWarnings([
@@ -138,7 +139,8 @@ const AppRouteConfigs = {
     BuyOrderDetail,
     SellOrderDetail,
     LoginPassword,
-    SellRedPacket
+    SellRedPacket,
+    Share
 };
 // 创建一级导航
 const StackNavigator = createStackNavigator(AppRouteConfigs, {

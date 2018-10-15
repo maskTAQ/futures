@@ -27,5 +27,7 @@ export default {
     username: require("images/username.png"),
     bottom: require("images/bottom.png"),
     add: require("images/add.png"),
-    complaint: require("images/complaint.png")
+    complaint: require("images/complaint.png"),
+    codebg: require("images/codebg.png"),
+    dot: require("images/dot.png")
 };

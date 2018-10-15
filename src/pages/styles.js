@@ -1431,6 +1431,79 @@ const sellRedPacket = {
         color: "#fff"
     }
 };
+const share = {
+    container: {
+        flex: 1,
+        paddingLeft: scale(10),
+        paddingRight: scale(10),
+        backgroundColor: "#fff"
+    },
+    top: {
+        flex: 2,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    codebg: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    bottom: {
+        flex: 3,
+        alignItems: "center",
+        justifyContent: "space-around"
+    },
+    dotIcon: {
+        width: scale(11),
+        height: scale(38)
+    },
+    save: {
+        width: scale(140),
+        height: scale(35),
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 1,
+        borderRadius: scale(4),
+        borderColor: "#fa4f75",
+        borderStyle: "dashed"
+    },
+    saveText: {
+        fontSize: scale(18),
+        color: "#fa4f75"
+    },
+    copyBox: {
+        flexDirection: "row",
+        height: scale(),
+        borderRadius: scale(4),
+        overflow: "hidden"
+    },
+    copyContent: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 1,
+        borderColor: "#C8C8C8"
+    },
+    copyContentText: {
+        fontSize: scale(15),
+        color: "#C8C8C8"
+    },
+    copy: {
+        width: scale(84),
+        height: scale(30),
+        backgroundColor: "#fa4f75",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    copyText: {
+        fontSize: scale(14),
+        color: "#fff"
+    }
+};
 export {
     home,
     mine,
@@ -1448,5 +1521,6 @@ export {
     login,
     forgetPassword,
     orderSellFlowerList,
-    sellRedPacket
+    sellRedPacket,
+    share
 };
