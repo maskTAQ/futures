@@ -37,6 +37,7 @@ export default function*() {
                         type,
                         saveDataToRedux: (params, config) => {
                             return login(params, config).then(res => {
+                                Storage.setJson("userInfo", params);
                                 setIsLogin(true);
                                 Storage.set("Token", res.access_token);
                                 navigate({ routeName: "TabNavigator" });

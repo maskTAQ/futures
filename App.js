@@ -17,10 +17,10 @@ import { reduxifyNavigator } from "react-navigation-redux-helpers";
 import { connect } from "react-redux";
 
 
-import { iconSource } from 'commons';
+import { iconSource,Storage } from 'commons';
 import { Tip } from 'components';
 import store from "store/index.js";
-import { back } from "actions";
+import { back,login } from "actions";
 import sage from "effects/index.js";
 
 //import Loading from "./loading";
@@ -53,7 +53,9 @@ export default class App extends Component {
     if (Platform.OS === "android") {
       BackHandler.addEventListener("hardwareBackPress", this.handleBack);
     }
-
+    //自动登录
+    Storage.getJson('userInfo')
+    .then(login)
   }
 
   componentWillUnmount() {
