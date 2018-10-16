@@ -44,7 +44,7 @@ export default class Wallet extends PureComponent {
                     routeName: "OrderSellFlowerList"
                 },
                 {
-                    label: "有机肥数量（肥料）",
+                    label: "有机肥数量",
                     value: queuing_money,
                     routeName: "TransferManure"
                 },

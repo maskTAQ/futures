@@ -18,7 +18,7 @@ const list = [
     [
         { label: "求助反馈", routeName: "Feedback" },
         { label: "关于", routeName: "About" },
-        { label: "应用分享", routeName: "" }
+        { label: "应用分享", routeName: "Share" }
     ]
 ];
 

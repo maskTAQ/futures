@@ -54,8 +54,8 @@ export default class App extends Component {
       BackHandler.addEventListener("hardwareBackPress", this.handleBack);
     }
     //自动登录
-    // Storage.getJson('userInfo')
-    // .then(login)
+    Storage.getJson('userInfo')
+    .then(login)
   }
 
   componentWillUnmount() {

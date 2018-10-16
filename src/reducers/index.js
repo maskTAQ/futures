@@ -16,7 +16,7 @@ const preloadedStateForLoadong = {};
 const preloadedState = {
     loading: preloadedStateForLoadong,
     nav: AppNavigator.router.getStateForAction(
-        AppNavigator.router.getActionForPathAndParams("Share")
+        AppNavigator.router.getActionForPathAndParams("Login")
     )
 };
 

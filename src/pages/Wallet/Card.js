@@ -3,7 +3,8 @@ import { View } from "react-native";
 import PropTypes from "prop-types";
 
 import { wallet as walletStyles } from "../styles";
-import { Icon, Text } from "components";
+import { Icon, Text, Button } from "components";
+import { navigate } from "actions";
 
 const styles = walletStyles.card;
 
@@ -29,14 +30,17 @@ const Card = ({ data = {} }) => {
                     {total_money}
                 </Text>
                 <View style={styles.list}>
-                    {list.map(({ label, icon, value }, i) => {
+                    {list.map(({ label, icon, value, routeName }, i) => {
                         return (
-                            <View
+                            <Button
                                 style={[
                                     styles.item,
                                     i === 0 && styles.itemBorderRight
                                 ]}
                                 key={label}
+                                onPress={() => {
+                                    navigate({ routeName });
+                                }}
                             >
                                 {value !== undefined ? (
                                     <Text style={styles.itemValueText}>
@@ -49,7 +53,7 @@ const Card = ({ data = {} }) => {
                                     />
                                 )}
                                 <Text style={styles.itemText}>{label}</Text>
-                            </View>
+                            </Button>
                         );
                     })}
                 </View>
