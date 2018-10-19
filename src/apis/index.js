@@ -1,90 +1,148 @@
+import { Platform } from "react-native";
+
 import { post } from "./base";
 
 const login = params => {
-    return post("/api.php?action=checkLogin", params);
+    return post("/Api/checkLogin", params);
+};
+const logout = () => {
+    return post("/Api/LogOut");
 };
 
 const getNotice = () => {
-    return post("/api.php?action=getNotice");
+    return post("/Api/getNotice");
 };
 const getHome = () => {
-    return post("/api.php?action=getHome", null, { loading: false });
+    return post("/Api/getHome", null, { loading: false });
 };
 const getCode = params => {
-    return post("/api.php?action=getCode ", params, { loading: false });
+    return post("/Api/getRegSMSCode ", params, { loading: false });
 };
 const findPassword = params => {
-    return post("/api.php?action=findPassword", params);
+    return post("/Api/findPassword", params);
 };
-const userReg = () => {
-    return post("/api.php?action=userReg");
+const userReg = params => {
+    return post("/Api/userReg", params);
 };
 
 const userInfo = () => {
-    return post("/api.php?action=userInfo");
+    return post("/Api/userInfo");
 };
 const getTeamMember = () => {
-    return post("/api.php?action=teamMember");
+    return post("/Api/teamMember");
 };
 
 const getOrderBuyFlowerList = () => {
-    return post("/api.php?action=orderBuyFlowerList", null, { loading: false });
+    return post("/Api/orderBuyFlowerList", null, { loading: false });
 };
 const getorderBuyFlowerInfo = params => {
-    return post("/api.php?action=orderBuyFlowerInfo", {
+    return post("/Api/orderBuyFlowerInfo", {
         ...params,
         voucher: true
     });
 };
 const orderBuyUpdateVoucher = params => {
-    return post("/api.php?action=orderBuyUpdateVoucher", params, {
+    return post("/Api/orderBuyUpdateVoucher", params, {
         handleCatch: false
     });
 };
 const orderBuySureCollection = params => {
-    return post("/api.php?action=orderBuySureCollection", params);
+    return post("/Api/orderBuySureCollection", params);
 };
 const orderBuyRepetition = params => {
-    return post("/api.php?action=orderBuyRepetition", params);
+    return post("/Api/orderBuyRepetition", params);
 };
 
 const getOrderSellFlowerList = () => {
-    return post("/api.php?action=orderSellFlowerList", null, {
+    return post("/Api/orderSellFlowerList", null, {
         loading: false
     });
 };
 const getorderSellFlowerInfo = params => {
-    return post("/api.php?action=orderSellFlowerInfo", {
+    return post("/Api/orderSellFlowerInfo", {
         ...params,
         voucher: true
     });
 };
 
 const orderSellSureCollection = params => {
-    return post("/api.php?action=orderSellSureCollection", params);
+    return post("/Api/orderSellSureCollection", params);
 };
 const orderSellRepetition = params => {
-    return post("/api.php?action=orderSellRepetition", params);
+    return post("/Api/orderSellRepetition", params);
 };
 const orderComplaint = params => {
-    return post("/api.php?action=orderComplaint", params);
+    return post("/Api/orderComplaint", params);
 };
 
 const getMyWallet = params => {
-    return post("/api.php?action=myWallet", params);
+    return post("/Api/myWallet", params);
 };
 
 const getJingtaiMoney = params => {
-    return post("/api.php?action=jingtaiMoney", params, { loading: false });
+    return post("/Api/jingtaiMoney", params, { loading: false });
 };
 const getDongtaiMoney = params => {
-    return post("/api.php?action=dongtaiMoney", params, { loading: false });
+    return post("/Api/dongtaiMoney", params, { loading: false });
 };
-////排单币转发(肥料)
+//排单币转发(肥料)
 const queuingMoney = params => {
-    return post("/api.php?action=queuingMoney", params, { loading: false });
+    return post("/Api/queuingMoney", params);
+};
+//邀请名额转发
+const inviteMoney = params => {
+    return post("/Api/inviteMoney", params);
+};
+//求助反馈
+const myInfo = params => {
+    return post("/Api/myInfo", params);
+};
+//修改密码
+const updatePassword = params => {
+    return post("/Api/updatePassword", params);
+};
+//收款信息
+const collectionInfo = params => {
+    return post("/Api/collectionInfo", params);
+};
+//邀请列表
+const getInviteList = params => {
+    return post("/Api/inviteList", params, { loading: false });
+};
+//同意邀请
+const inviteSure = params => {
+    return post("/Api/inviteSure", params, { loading: false });
 };
 
+//检查更新
+const checkUpdate = () => {
+    return post("/Api/checkUpdate", {
+        model: Platform.select({ ios: "1", android: "2" }),
+        version: "1.0.0"
+    });
+};
+//获取银行账户信息
+const getBanckInfo = () => {
+    return post("/Api/getCollectionInfo", null);
+};
+const shareAPP = () => {
+    return post("/Api/shareAPP", null);
+};
+//验证交易密码
+const tradePassword = params => {
+    return post("/Api/tradePassword", params);
+};
+
+const buyFlower = params => {
+    return post("/Api/buyFlower", params);
+};
+const sellFlower = params => {
+    return post("/Api/sellFlower", params);
+};
+//设置推送
+const setPush = params => {
+    return post("/Api/smsNotice", params);
+};
 export { host } from "./base";
 export {
     login,
@@ -108,5 +166,19 @@ export {
     getMyWallet,
     getJingtaiMoney,
     getDongtaiMoney,
-    queuingMoney
+    queuingMoney,
+    inviteMoney,
+    myInfo,
+    updatePassword,
+    collectionInfo,
+    getInviteList,
+    inviteSure,
+    checkUpdate,
+    shareAPP,
+    tradePassword,
+    buyFlower,
+    sellFlower,
+    logout,
+    getBanckInfo,
+    setPush
 };
