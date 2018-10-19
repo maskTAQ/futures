@@ -26,15 +26,28 @@ const list = [
     },
     {
         icon: require("./img/repo.png"),
-        label: "转让花园仓库",
-        routeName: "动态出售",
-        params: { type: "jingtai", title: "出售静态红包" }
+        label: "动态出售",
+        routeName: "SellRedPacket",
+        params: {
+            type: "dongtai",
+            title: "出售静态红包",
+            hint: ["规则：200元起200的倍数"],
+            typeValue: 2
+        }
     },
     {
         icon: require("./img/money.png"),
         label: "静态出售",
         routeName: "SellRedPacket",
-        params: { type: "dongtai", title: "出售动态红包" }
+        params: {
+            type: "jingtai",
+            typeValue: 2,
+            title: "出售动态红包",
+            hint: [
+                "您是V1用户 本日还可提现2000元内 ",
+                "规则：单日内V1 2000元内  V2 5000元内  V3 10000元内"
+            ]
+        }
     },
     {
         icon: require("./img/repeat.png"),

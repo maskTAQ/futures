@@ -3,30 +3,32 @@ import { View } from "react-native";
 
 import { changeDealPassword as styles } from "./styles";
 import { Page, Text, Input, Button } from "components";
+import { updatePassword } from "apis";
+import { Tip } from "commons";
 
 const inputList = [
     {
         placeholder: "旧密码",
-        key: "old"
+        key: "old_password"
     },
     {
         placeholder: "新密码",
         props: {
             keyboardType: "numeric"
         },
-        key: "new"
+        key: "new_password"
     },
     {
         placeholder: "确认新密码",
         props: {
             keyboardType: "numeric"
         },
-        key: "newT"
-    },
-    {
-        placeholder: "验证码",
-        key: "code"
+        key: "new_passwordT"
     }
+    // {
+    //     placeholder: "验证码",
+    //     key: "code"
+    // }
 ];
 export default class LoginPassword extends PureComponent {
     state = {};
@@ -52,6 +54,16 @@ export default class LoginPassword extends PureComponent {
                     <Button
                         style={styles.submit}
                         textStyle={styles.submitStyle}
+                        onPress={() => {
+                            const { old_password, new_password } = this.state;
+                            updatePassword({
+                                old_password,
+                                new_password,
+                                type: "1"
+                            }).then(() => {
+                                Tip.success("交易密码修改成功");
+                            });
+                        }}
                     >
                         完成
                     </Button>

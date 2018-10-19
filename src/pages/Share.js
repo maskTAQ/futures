@@ -5,11 +5,21 @@ import RNFS from "react-native-fs";
 import { share as styles } from "./styles";
 import { Page, Icon, Text, Button } from "components";
 import { iconSource, Tip } from "commons";
+import { shareAPP } from "apis";
 
 export default class Share extends PureComponent {
-    state = {};
+    state = {
+        text: ""
+    };
+    UNSAFE_componentWillMount() {
+        shareAPP().then(({ url }) => {
+            this.setState({
+                text: url
+            });
+        });
+    }
     saveImg = () => {
-        this._Download("http://qr.liantu.com/api.php?text=x");
+        this._Download(`http://qr.liantu.com/api.php?text=${this.state.text}`);
     };
     _Download(uri) {
         return new Promise((resolve, reject) => {
@@ -61,6 +71,7 @@ export default class Share extends PureComponent {
     }
 
     render() {
+        const { text } = this.state;
         return (
             <Page title="应用分享">
                 <View style={styles.container}>
@@ -70,7 +81,7 @@ export default class Share extends PureComponent {
                         </View>
                         <Icon
                             source={{
-                                uri: "http://qr.liantu.com/api.php?text=x "
+                                uri: `http://qr.liantu.com/api.php?text=${text}`
                             }}
                             size={97}
                         />
@@ -86,14 +97,17 @@ export default class Share extends PureComponent {
                         </Button>
                         <View style={styles.copyBox}>
                             <View style={styles.copyContent}>
-                                <Text style={styles.copyContentText}>
-                                    http://qr.liantu.com/api.php?text=x{" "}
+                                <Text
+                                    style={styles.copyContentText}
+                                    numberOfLines={1}
+                                >
+                                    {`http://qr.liantu.com/api.php?text=${text}`}
                                 </Text>
                             </View>
                             <Button
                                 onPress={() => {
                                     Clipboard.setString(
-                                        "http://qr.liantu.com/api.php?text=x"
+                                        `http://qr.liantu.com/api.php?text=${text}`
                                     );
                                     Tip.success("复制成功");
                                     // .then(res => {

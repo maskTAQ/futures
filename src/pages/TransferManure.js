@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 import {
     transferInvitationCode as styles,
@@ -20,6 +21,10 @@ const list = [
         key: "queuing_money"
     }
 ];
+
+@connect(({ data }) => {
+    return { wallet: data.wallet };
+})
 export default class TransferManure extends PureComponent {
     static propTypes = {
         navigation: PropTypes.object
@@ -31,7 +36,9 @@ export default class TransferManure extends PureComponent {
     };
     render() {
         const { isEnough, account, queuing_money } = this.state;
-        const { invite_money } = this.props.navigation.state.params;
+        const {
+            queuing_money: all_queuing_money
+        } = this.props.navigation.state.params;
         return (
             <Page title="排单币(肥料)">
                 <View style={styles.container}>
@@ -42,7 +49,9 @@ export default class TransferManure extends PureComponent {
                                 剩余排单币
                             </Text>
                         </View>
-                        <Text style={styles.residueText}>{invite_money}</Text>
+                        <Text style={styles.residueText}>
+                            {all_queuing_money}
+                        </Text>
                     </View>
                     <View style={styles.content}>
                         {list.map(({ placeholder, key }) => {

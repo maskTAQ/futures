@@ -8,7 +8,7 @@ const setIsLogin = v => (isLogin = v);
 //redux中存储的内容
 const modules = [
     "user:main",
-    "data:team.orderSellFlowerList.orderBuyFlowerList.Wallet"
+    "data:team.orderSellFlowerList.orderBuyFlowerList.wallet.inviteList.bankInfo"
 ];
 
 //redux中存储的内容 逻辑部分
@@ -27,14 +27,6 @@ const autoHandleReducers = (module, fields) => (state, action) => {
     if (type === "logout") {
         const nextState = Object.assign({}, state);
         for (const item in nextState) {
-            //不清空quotation:exponent、stock.allStock的数据
-            if (
-                module === "quotation" ||
-                (module === "stock" && item === "allStock") ||
-                (module === "auth" && item === "siteIndex")
-            ) {
-                continue;
-            }
             nextState[item] = undefined;
         }
         return nextState;

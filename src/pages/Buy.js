@@ -1,22 +1,39 @@
 import React, { PureComponent } from "react";
-import { View } from "react-native";
+import { View, Alert as A } from "react-native";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { buy as styles, alert as alertStyle } from "./styles";
-import { Page, Text, Button, Icon, Alert } from "components";
-import { iconSource } from "commons";
+import { Page, Text, Button, Icon, Alert, Input } from "components";
+import { iconSource, Tip } from "commons";
+import { tradePassword, buyFlower } from "apis";
+import { getMyWallet } from "actions";
 
+@connect(({ data, user }) => {
+    return { user: user.main, wallet: data.wallet };
+})
 export default class Buy extends PureComponent {
     static propTypes = {
-        navigation: PropTypes.object
+        navigation: PropTypes.object,
+        user: PropTypes.object,
+        wallet: PropTypes.object
     };
     state = {
         a: "",
         b: "",
+        password: "",
+        isVerifyVisible: false,
         isEnough: true
     };
+    UNSAFE_componentWillMount() {
+        if (!this.props.wallet) {
+            getMyWallet();
+        }
+    }
     render() {
-        const { isEnough } = this.state;
+        const { isVerifyVisible, password } = this.state;
+        const { queuing_money: has_queuing_money = 0 } =
+            this.props.wallet || {};
         const {
             type,
             name,
@@ -60,14 +77,21 @@ export default class Buy extends PureComponent {
                                 {queuing_money}个
                             </Text>
                         </View>
-                        <Text style={styles.residueText}>当前剩余5个</Text>
+                        <Text style={styles.residueText}>
+                            当前剩余
+                            {has_queuing_money}个
+                        </Text>
                         <Button
                             style={styles.submit}
                             textStyle={styles.submitStyle}
                             onPress={() => {
-                                this.setState({
-                                    isEnough: false
-                                });
+                                if (has_queuing_money <= 0) {
+                                    Tip.fail("排单币不足");
+                                } else {
+                                    this.setState({
+                                        isVerifyVisible: true
+                                    });
+                                }
                             }}
                         >
                             确定发布
@@ -75,28 +99,72 @@ export default class Buy extends PureComponent {
                     </View>
                 </View>
                 <Alert
-                    visible={!isEnough}
+                    visible={isVerifyVisible}
                     requestClose={() => {
                         this.setState({
-                            isEnough: true
+                            isVerifyVisible: false
                         });
                     }}
                 >
                     <View style={alertStyle.container}>
-                        <View>
-                            <Text style={alertStyle.errorTitleText}>
-                                Sorry...
+                        <View style={alertStyle.top}>
+                            <Text style={alertStyle.titleText}>
+                                请输入交易密码
                             </Text>
-                            <Text style={alertStyle.errorContentText}>
-                                网络故障{" "}
-                            </Text>
+                            <Input
+                                style={alertStyle.input}
+                                value={password}
+                                onChangeText={password => {
+                                    this.setState({
+                                        password
+                                    });
+                                }}
+                            />
                         </View>
-                        <Button
-                            style={alertStyle.submit}
-                            textStyle={alertStyle.submitText}
-                        >
-                            OK
-                        </Button>
+                        <View style={alertStyle.btnGroup}>
+                            <Button
+                                style={alertStyle.submit}
+                                textStyle={alertStyle.submitText}
+                                onPress={() => {
+                                    tradePassword({
+                                        account: this.props.user.account,
+                                        password
+                                    })
+                                        .then(res => {
+                                            this.setState(
+                                                {
+                                                    isVerifyVisible: false
+                                                },
+                                                () => {
+                                                    buyFlower({ type }).then(
+                                                        res => {
+                                                            Tip.success(
+                                                                "发布成功"
+                                                            );
+                                                        }
+                                                    );
+                                                }
+                                            );
+                                        })
+                                        .catch(e => {
+                                            A.alert(e);
+                                        });
+                                }}
+                            >
+                                确定发布
+                            </Button>
+                            <Button
+                                style={alertStyle.cancel}
+                                textStyle={alertStyle.cancelText}
+                                onPress={() => {
+                                    this.setState({
+                                        isVerifyVisible: false
+                                    });
+                                }}
+                            >
+                                取消
+                            </Button>
+                        </View>
                     </View>
                 </Alert>
             </Page>

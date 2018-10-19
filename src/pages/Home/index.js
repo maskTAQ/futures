@@ -10,7 +10,7 @@ import {
 import { connect } from "react-redux";
 
 import { home as styles } from "../styles";
-import { DataView, Icon, Text, Button } from "components";
+import { DataView, Icon, Text, Button, Visible } from "components";
 import User from "./User";
 import { iconSource } from "commons";
 import { navigate } from "actions";
@@ -29,7 +29,7 @@ export default class Home extends PureComponent {
     UNSAFE_componentWillMount() {
         getNotice()
             .then(res => {
-                this.setState({ notif: res.notice });
+                this.setState({ notif: res.notif });
             })
             .catch(e => {
                 console.log(e);
@@ -37,6 +37,7 @@ export default class Home extends PureComponent {
     }
     getData = () => {
         return getHome().then(data => {
+            console.log(data, "data");
             this.setState({ data });
 
             const t = new Date(data.date_end);
@@ -142,7 +143,13 @@ export default class Home extends PureComponent {
         );
     };
     render() {
-        const { isModalVisible, notif, timeDown, data } = this.state;
+        const {
+            isModalVisible,
+            notif,
+            timeDown,
+            data,
+            data: { growuplist = [] }
+        } = this.state;
         return (
             <View style={styles.container}>
                 <StatusBar
@@ -173,9 +180,10 @@ export default class Home extends PureComponent {
                     lv={2}
                     repositoryNum={2333.4}
                 />
-                <View style={styles.list}>
-                    {this.has((data.growuplist || [])[0])}
-                </View>
+                <Visible visible={growuplist.length}>
+                    <View style={styles.list}>{this.has(growuplist[0])}</View>
+                </Visible>
+
                 <View style={styles.store}>
                     <View style={styles.storeHeader}>
                         <View style={styles.storeTitle}>
@@ -228,7 +236,7 @@ export default class Home extends PureComponent {
                                     </Text>
                                     <ScrollView>
                                         <Text style={styles.notifContentText}>
-                                            {notif}
+                                            {notif || "暂无公告"}
                                         </Text>
                                     </ScrollView>
                                 </View>

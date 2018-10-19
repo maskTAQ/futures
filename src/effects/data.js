@@ -5,7 +5,9 @@ import {
     getTeamMember,
     getOrderSellFlowerList,
     getOrderBuyFlowerList,
-    getMyWallet
+    getMyWallet,
+    getInviteList,
+    getBanckInfo
 } from "apis";
 
 export default function*() {
@@ -15,7 +17,9 @@ export default function*() {
             "getTeam",
             "getOrderSellFlowerList",
             "getOrderBuyFlowerList",
-            "getMyWallet"
+            "getMyWallet",
+            "getInviteList",
+            "getBanckInfo"
         ]);
         switch (type) {
             case "getTeam": {
@@ -59,7 +63,7 @@ export default function*() {
                 yield fork(
                     taskWrapper({
                         module: "data",
-                        field: "Wallet",
+                        field: "wallet",
                         type,
                         saveDataToRedux: getMyWallet,
                         params: payload
@@ -68,6 +72,30 @@ export default function*() {
                 break;
             }
 
+            case "getInviteList": {
+                yield fork(
+                    taskWrapper({
+                        module: "data",
+                        field: "inviteList",
+                        type,
+                        saveDataToRedux: getInviteList,
+                        params: payload
+                    })
+                );
+                break;
+            }
+            case "getBanckInfo": {
+                yield fork(
+                    taskWrapper({
+                        module: "data",
+                        field: "bankInfo",
+                        type,
+                        saveDataToRedux: getBanckInfo,
+                        params: payload
+                    })
+                );
+                break;
+            }
             default:
                 break;
         }

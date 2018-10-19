@@ -17,6 +17,13 @@ const getOrderBuyFlowerList = payload => {
 const getMyWallet = payload => {
     return store.dispatch({ type: "getMyWallet", payload });
 };
+const getInviteList = payload => {
+    return store.dispatch({ type: "getInviteList", payload });
+};
+
+const getBanckInfo = payload => {
+    return store.dispatch({ type: "getBanckInfo", payload });
+};
 const logout = () => {
     return store.dispatch({ type: "logout" });
 };
@@ -38,5 +45,7 @@ export {
     getTeam,
     getOrderSellFlowerList,
     getOrderBuyFlowerList,
-    getMyWallet
+    getMyWallet,
+    getInviteList,
+    getBanckInfo
 };

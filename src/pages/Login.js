@@ -9,8 +9,8 @@ import { login } from "actions";
 
 export default class Login extends PureComponent {
     state = {
-        account: "H66455429",
-        password: "123456"
+        account: "H12169799",
+        password: "1"
     };
     render() {
         const { account, password } = this.state;

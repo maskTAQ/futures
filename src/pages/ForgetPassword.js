@@ -5,6 +5,7 @@ import { Input, Button, Page, CodeButton } from "components";
 import { forgetPassword as styles } from "./styles";
 import { findPassword, getCode } from "apis";
 import { Tip, isPassword, isMobile } from "commons";
+import { back } from "actions";
 
 const list = [
     {
@@ -66,7 +67,8 @@ export default class ForgetPassword extends PureComponent {
                                         requestGetCode={() => {
                                             return getCode({
                                                 phone: mobile,
-                                                account
+                                                account,
+                                                type: "1"
                                             });
                                         }}
                                     />
@@ -101,7 +103,8 @@ export default class ForgetPassword extends PureComponent {
                                 }
                                 return findPassword(this.state)
                                     .then(res => {
-                                        console.log(res);
+                                        Tip.success("密码修改成功");
+                                        back();
                                     })
                                     .catch(e => {
                                         console.log(e);

@@ -29,6 +29,7 @@ export default class Wallet extends PureComponent {
     };
     render() {
         const { queuing_money = 0, invite_money = 0 } = this.props.wallet || {};
+        console.log(this.props.wallet, " this.props.wallet");
         const list = [
             [
                 { label: "静态收益", routeName: "GardenWarehouse" },
@@ -87,7 +88,10 @@ export default class Wallet extends PureComponent {
                                         onPress={() => {
                                             navigate({
                                                 routeName,
-                                                params: { invite_money }
+                                                params: {
+                                                    invite_money,
+                                                    queuing_money
+                                                }
                                             });
                                         }}
                                         style={styles.item}

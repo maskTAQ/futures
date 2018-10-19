@@ -2,7 +2,7 @@ import Axios from "axios";
 import qs from "qs";
 import { Tip, Storage } from "commons";
 
-const host = "http://pig.bateersoft.cc";
+const host = "http://pig.bateersoft.cc"; //http://123.207.84.39/index.php
 /**
  * 请求拦截器
  * */
@@ -49,6 +49,7 @@ const logError = ({ url, params, res, error }) => {
 const requestWrapper = (method, url, param = {}) => {
     const params =
         method === "post" ? { data: qs.stringify(param) } : { params: param };
+    console.log();
     return Axios.request({
         baseURL: host,
         url,
@@ -65,7 +66,7 @@ const base = (type, url, params, config) => {
         requestWrapper(type, url, params)
             .then(res => {
                 const { code, data, msg } = res.data;
-                console.log(res, url);
+                console.log(data, url);
                 Tip.dismiss();
                 if (Number(code) === 200) {
                     return resolve(data);
@@ -83,6 +84,7 @@ const base = (type, url, params, config) => {
                 }
             })
             .catch(e => {
+                console.log(e, url);
                 logError({
                     url,
                     params,

@@ -1,28 +1,40 @@
 import React, { PureComponent } from "react";
 import { View } from "react-native";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import { transferInvitationCode as styles } from "./styles";
 import { Page, Text, Input, Button, Icon } from "components";
-import { iconSource } from "commons";
+import { iconSource, Tip } from "commons";
+import { inviteMoney } from "apis";
 
 const list = [
     {
         placeholder: "转发ID（仅支持团队内成员):",
-        key: "a"
+        key: "account"
     },
     {
         placeholder: "转账邀请名额数:",
-        key: "b"
+        key: "invite_money"
     }
 ];
+
+@connect(({ data }) => {
+    return { wallet: data.wallet };
+})
 export default class TransferInvitationCode extends PureComponent {
+    static propTypes = {
+        wallet: PropTypes.object
+    };
     state = {
         a: "",
         b: ""
     };
     render() {
+        const { account, invite_money } = this.state;
+        const { invite_money: all_invite_money = 0 } = this.props.wallet || {};
         return (
-            <Page title="邀请名额" RightComponent={<Button>记录</Button>}>
+            <Page title="邀请名额">
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <View style={styles.headerLeft}>
@@ -34,7 +46,9 @@ export default class TransferInvitationCode extends PureComponent {
                                 剩余邀请码
                             </Text>
                         </View>
-                        <Text style={styles.residueText}>888</Text>
+                        <Text style={styles.residueText}>
+                            {all_invite_money}
+                        </Text>
                     </View>
                     <View style={styles.content}>
                         {list.map(({ placeholder, key }) => {
@@ -60,6 +74,13 @@ export default class TransferInvitationCode extends PureComponent {
                         <Button
                             style={styles.submit}
                             textStyle={styles.submitStyle}
+                            onPress={() => {
+                                inviteMoney({ account, invite_money }).then(
+                                    res => {
+                                        Tip.success("邀请名额转发成功！");
+                                    }
+                                );
+                            }}
                         >
                             转发
                         </Button>

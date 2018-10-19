@@ -31,7 +31,8 @@ export default (theme = {}) => {
             top: -12,
             right: -12,
             width: 25,
-            height: 25
+            height: 25,
+            zIndex: 1
         }
     };
 };

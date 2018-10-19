@@ -67,7 +67,8 @@ export default class ForgetPassword extends PureComponent {
                                             requestGetCode={() => {
                                                 return getCode({
                                                     phone: mobile,
-                                                    account
+                                                    account,
+                                                    type: "0"
                                                 });
                                             }}
                                         />

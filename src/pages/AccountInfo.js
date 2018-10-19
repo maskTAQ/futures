@@ -1,8 +1,13 @@
 import React, { PureComponent } from "react";
 import { View } from "react-native";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import { changeDealPassword as styles } from "./styles";
 import { Page, Text, Input, Button } from "components";
+import { collectionInfo } from "apis";
+import { Tip } from "commons";
+import { getBanckInfo } from "actions";
 
 const inputList = [
     [
@@ -11,32 +16,32 @@ const inputList = [
             props: {
                 keyboardType: "numeric"
             },
-            key: "old"
+            key: "bank_card_number"
         },
         {
             placeholder: "开户行",
-            key: "new"
+            key: "bank_name"
         },
         {
             placeholder: "收款姓名",
-            key: "newT"
+            key: "bankpayee_name"
         },
         {
             placeholder: "联系电话",
             props: {
                 keyboardType: "numeric"
             },
-            key: "mobile"
+            key: "bank_phone"
         }
     ],
     [
         {
             placeholder: "支付宝账号",
-            key: "old"
+            key: "alipay_account"
         },
         {
             placeholder: "收款人姓名",
-            key: "new"
+            key: "alipay_name"
         }
     ]
     // [
@@ -50,8 +55,25 @@ const inputList = [
     //     }
     // ]
 ];
+
+@connect(({ data }) => {
+    return { bankInfo: data.bankInfo };
+})
 export default class AccountInfo extends PureComponent {
+    static propTypes = {
+        wallet: PropTypes.object
+    };
     state = {};
+    UNSAFE_componentWillMount() {
+        if (!this.props.wallet) {
+            getBanckInfo();
+        }
+    }
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        this.setState({
+            ...nextProps.bankInfo
+        });
+    }
     render() {
         return (
             <Page title="收款信息">
@@ -66,6 +88,12 @@ export default class AccountInfo extends PureComponent {
                                                 {placeholder}
                                             </Text>
                                             <Input
+                                                value={this.state[key]}
+                                                onChangeText={v => {
+                                                    this.setState({
+                                                        [key]: v
+                                                    });
+                                                }}
                                                 style={styles.itemInput}
                                                 {...props}
                                             />
@@ -79,6 +107,27 @@ export default class AccountInfo extends PureComponent {
                     <Button
                         style={styles.submit}
                         textStyle={styles.submitStyle}
+                        onPress={() => {
+                            const {
+                                bank_card_number,
+                                bank_name,
+                                bankpayee_name,
+                                bank_phone,
+                                alipay_account,
+                                alipay_name
+                            } = this.state;
+                            collectionInfo({
+                                bank_card_number,
+                                bank_name,
+                                bankpayee_name,
+                                bank_phone,
+                                alipay_account,
+                                alipay_name
+                            }).then(() => {
+                                getBanckInfo();
+                                Tip.success("账户信息修改成功");
+                            });
+                        }}
                     >
                         完成
                     </Button>

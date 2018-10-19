@@ -14,7 +14,8 @@ export default class ChooseBuyFlower extends PureComponent {
     };
 
     renderItem = ({
-        item: { content = "预计每个生长周期收入20%", canBuy, type, name }
+        item: { content = "预计每个生长周期收入20%", canBuy, type, name },
+        item
     }) => {
         return (
             <View style={styles.item}>
@@ -33,7 +34,8 @@ export default class ChooseBuyFlower extends PureComponent {
                             textStyle={styles.buyButtonText}
                             onPress={() => {
                                 navigate({
-                                    routeName: "Buy"
+                                    routeName: "Buy",
+                                    params: item
                                 });
                             }}
                         >

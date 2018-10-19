@@ -673,7 +673,7 @@ const feedback = {
     inputTitle: {
         flex: 1,
         fontSize: scale(15),
-        color: "#A7A7A7",
+        color: "#000",
         paddingLeft: scale(10)
     },
     inputContentBox: {
@@ -683,7 +683,7 @@ const feedback = {
         backgroundColor: "#fff"
     },
     hintText: {
-        marginTop: scale(10),
+        //marginTop: scale(10),
         fontSize: scale(11),
         lineHeight: scale(20),
         color: "#979696"
@@ -970,30 +970,54 @@ const alert = {
     container: {
         flex: 1,
         borderRadius: 6,
-        justifyContent: "space-between",
+        //justifyContent: "space-between",
+        alignItems: "center",
         overflow: "hidden"
     },
-    errorTitleText: {
-        textAlign: "center",
-        lineHeight: scale(100),
-        fontSize: scale(45),
-        color: "#FD4C73"
+    top: {
+        width: "100%",
+        marginBottom: scale(20),
+        flex: 1,
+        justifyContent: "space-around",
+        alignItems: "center"
     },
-    errorContentText: {
-        textAlign: "center",
-        lineHeight: scale(30),
-        fontSize: scale(15),
-        color: "#333"
+    titleText: {
+        fontSize: scale(20),
+        lineHeight: scale(40),
+        color: "#606060",
+        textAlign: "center"
+    },
+    input: {
+        width: "90%",
+        height: scale(40),
+        borderBottomWidth: 1,
+        borderColor: "#DEDCDC"
+    },
+    btnGroup: {
+        width: "100%",
+        flexDirection: "row"
     },
     submit: {
-        height: scale(50),
+        flex: 1,
+        height: scale(40),
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#fa4f75"
     },
     submitText: {
-        fontSize: scale(22),
+        fontSize: scale(16),
         color: "#fff"
+    },
+    cancel: {
+        flex: 1,
+        height: scale(40),
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#ededed"
+    },
+    cancelText: {
+        fontSize: scale(16),
+        color: "#333"
     }
 };
 const buy = {
@@ -1409,13 +1433,14 @@ const sellRedPacket = {
         borderColor: "#DAD9D9"
     },
     balanceText: {
+        marginBottom: scale(10),
         fontSize: scale(15),
         lineHeight: scale(40),
         color: "#858585"
     },
     hintText: {
         fontSize: scale(11),
-        lineHeight: scale(40),
+        lineHeight: scale(20),
         color: "#9D9D9D"
     },
     submit: {

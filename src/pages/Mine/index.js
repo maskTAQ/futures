@@ -1,11 +1,12 @@
 import React, { PureComponent } from "react";
 import { View, Switch, StatusBar, ScrollView } from "react-native";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import { Header, Text, Button } from "components";
 import { mine as styles } from "../styles";
-import { navigate } from "actions";
-
+import { navigate, getMyWallet } from "actions";
+import { logout } from "apis";
 import UserHeader from "./Header";
 
 const list = [
@@ -22,10 +23,25 @@ const list = [
     ]
 ];
 
-@connect()
+@connect(({ data, user }) => {
+    return { wallet: data.wallet, user: user.main };
+})
 export default class Mine extends PureComponent {
-    state = {};
+    static propTypes = {
+        wallet: PropTypes.object,
+        user: PropTypes.object,
+        dispatch: PropTypes.func
+    };
+    UNSAFE_componentWillMount() {
+        if (!this.props.wallet) {
+            getMyWallet();
+        }
+    }
     render() {
+        const {
+            wallet: { total_money = 0 } = {},
+            user: { account, level } = {}
+        } = this.props;
         return (
             <ScrollView>
                 <View style={styles.container}>
@@ -35,7 +51,11 @@ export default class Mine extends PureComponent {
                         barStyle="light-content"
                     />
                     <Header title="个人中心" LeftComponent={null} />
-                    <UserHeader />
+                    <UserHeader
+                        account={account}
+                        total_money={total_money}
+                        level={level}
+                    />
                     <View style={styles.list}>
                         {list.map((group, i) => {
                             return (
@@ -84,7 +104,14 @@ export default class Mine extends PureComponent {
                         <Button
                             style={styles.submit}
                             textStyle={styles.submitText}
-                            onPress={() => {}}
+                            onPress={() => {
+                                logout().then(res => {
+                                    this.props.dispatch({
+                                        type: "logout"
+                                    });
+                                    navigate({ routeName: "Login" });
+                                });
+                            }}
                         >
                             退出
                         </Button>

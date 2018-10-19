@@ -95,7 +95,7 @@ export default class OrderBuyFlowerList extends PureComponent {
                         }}
                     >
                         {tabs.map(({ label, value }) => {
-                            const data = orderBuyFlowerList.list.filter(
+                            const data = (orderBuyFlowerList.list || []).filter(
                                 ({ state }) =>
                                     value === state || value === "all"
                             );

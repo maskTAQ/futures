@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { home as homeStyles } from "../styles";
 import { Icon, Button, Text } from "components";
 import { iconSource } from "commons";
-import { host } from "apis";
 import { navigate } from "actions";
 
 const styles = homeStyles.user;
@@ -13,7 +12,7 @@ const emailIcon = require("./img/email.png");
 const orderIcon = require("./img/order.png");
 const transferIcon = require("./img/transfer.png");
 const User = ({ requestShowNotif, data }) => {
-    const { jingtaiMoney = 0, dongtaiMoney = 0, user_id, level, logo } = data;
+    const { jingtaiMoney = 0, dongtaiMoney = 0, user_id, level } = data;
     const detailList = [
         [
             {
@@ -46,7 +45,7 @@ const User = ({ requestShowNotif, data }) => {
         <View style={styles.container}>
             <View style={styles.box}>
                 <View style={styles.header}>
-                    <Icon source={{ uri: host + logo }} size={44} />
+                    <Icon source={iconSource.defaultPortrait} size={44} />
                     <View style={styles.headerContent}>
                         <View
                             style={[

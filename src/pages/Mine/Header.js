@@ -7,12 +7,7 @@ import { Icon, Text } from "components";
 import { iconSource, scale } from "commons";
 
 const styles = mineStyles.header;
-const UserHeader = ({
-    username = "张某某",
-    lv = 2,
-    repositoryNum = 2333.4,
-    requireClose
-}) => {
+const UserHeader = ({ level = 0, total_money = 2333.4, account }) => {
     return (
         <View style={styles.container}>
             <Icon source={iconSource.defaultPortrait} size={scale(44)} />
@@ -21,9 +16,9 @@ const UserHeader = ({
                     style={[styles.headerContentTop, styles.headerContentItem]}
                 >
                     <View style={styles.username}>
-                        <Text style={styles.usernameText}>{username}</Text>
+                        <Text style={styles.usernameText}>{account}</Text>
                         <View style={styles.lv}>
-                            <Text style={styles.lvText}>v{lv}</Text>
+                            <Text style={styles.lvText}>v{level}</Text>
                         </View>
                         <Icon source={iconSource.vipIcon} size={scale(14)} />
                     </View>
@@ -36,7 +31,7 @@ const UserHeader = ({
                 >
                     <Text style={styles.repositoryNumText}>
                         仓库数量:
-                        {repositoryNum}
+                        {total_money}
                     </Text>
                 </View>
             </View>
@@ -44,9 +39,9 @@ const UserHeader = ({
     );
 };
 UserHeader.propTypes = {
-    username: PropTypes.string,
-    lv: PropTypes.number,
-    repositoryNum: PropTypes.number,
+    account: PropTypes.string,
+    level: PropTypes.string,
+    total_money: PropTypes.any,
     requireClose: PropTypes.func
 };
 

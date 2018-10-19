@@ -31,7 +31,7 @@ export default class Team extends PureComponent {
     UNSAFE_componentWillReceiveProps(nextProps) {
         if (this.props.team !== nextProps.team && nextProps.team) {
             this.setState({
-                data: nextProps.team.team
+                data: nextProps.team.team || []
             });
         }
     }
@@ -55,6 +55,7 @@ export default class Team extends PureComponent {
     };
     render() {
         const { searchValue, data = [] } = this.state;
+        console.log(this.props, "team");
         const { total = 0 } = this.props.team || {};
         return (
             <View style={styles.container}>

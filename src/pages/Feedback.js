@@ -3,6 +3,8 @@ import { View } from "react-native";
 
 import { feedback as styles } from "./styles";
 import { Page, Text, Input, Button } from "components";
+import { myInfo } from "apis";
+import { Tip } from "commons";
 
 export default class Feedback extends PureComponent {
     state = {
@@ -35,7 +37,7 @@ export default class Feedback extends PureComponent {
                                 this.setState({ content });
                             }}
                             multiline={true}
-                            placeholder="您的标题:"
+                            placeholder="反馈内容:"
                             style={styles.inputTitle}
                             placeholderTextColor="#A7A7A7"
                         />
@@ -47,6 +49,12 @@ export default class Feedback extends PureComponent {
                     <Button
                         style={styles.submit}
                         textStyle={styles.submitStyle}
+                        onPress={() => {
+                            const { title, content } = this.state;
+                            myInfo({ title, content }).then(res => {
+                                Tip.success("提交成功!");
+                            });
+                        }}
                     >
                         完成
                     </Button>
