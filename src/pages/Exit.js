@@ -34,7 +34,7 @@ export default class Exit extends PureComponent {
                 <StatusBar
                     backgroundColor={"transparent"}
                     translucent={true}
-                    barStyle="light-content"
+                    hidden={true}
                 />
                 <Visible show={Platform.OS === "android"}>
                     <Button style={styles.exit}>

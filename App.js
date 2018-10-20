@@ -63,11 +63,15 @@ export default class App extends Component {
           //   navigate({ routeName: 'Login' })
           // })
         } else {
-          navigate({ routeName: 'Login' })
+          setTimeout(()=>{
+            navigate({ routeName: 'Login' })
+          },2000);
         }
       })
       .catch(e => {
-        navigate({ routeName: 'Login' })
+        setTimeout(()=>{
+          navigate({ routeName: 'Login' })
+        },2000);
       })
   }
 

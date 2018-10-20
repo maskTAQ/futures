@@ -181,7 +181,7 @@ export default class BuyOrderDetail extends PureComponent {
                             Tip.loading(`图片上传中`);
                             orderBuyUpdateVoucher({
                                 number,
-                                voucher: "data:image/png;base64," + content
+                                voucher: "我是base64"
                             })
                                 .then(res => {
                                     Tip.success("图片上传成功");
@@ -461,7 +461,8 @@ export default class BuyOrderDetail extends PureComponent {
                         <View style={styles.bottom}>
                             {this.renderList()}
                             <Visible show={state === "4"}>
-                                <Button
+                                {/*
+                                    <Button
                                     onPress={() => {
                                         this.setState({
                                             comfirm: {
@@ -475,6 +476,7 @@ export default class BuyOrderDetail extends PureComponent {
                                 >
                                     复投
                                 </Button>
+                                    */}
                             </Visible>
                             {this.renderUser()}
                             {this.renderVoucher()}

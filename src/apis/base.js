@@ -74,7 +74,7 @@ const base = (type, url, params, config) => {
                     //
                 }
                 const { code, data, msg } = resData;
-                console.log(res, url);
+                console.log(params, resData, url);
                 Tip.dismiss();
                 if (Number(code) === 401) {
                     Tip.fail(msg);

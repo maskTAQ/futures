@@ -103,7 +103,8 @@ export default class Buy extends PureComponent {
                     visible={isVerifyVisible}
                     requestClose={() => {
                         this.setState({
-                            isVerifyVisible: false
+                            isVerifyVisible: false,
+                            password: ""
                         });
                     }}
                 >

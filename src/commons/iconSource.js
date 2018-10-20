@@ -31,5 +31,6 @@ export default {
     codebg: require("images/codebg.png"),
     dot: require("images/dot.png"),
     welcome: require("images/welcome.png"),
-    slogan: require("images/slogan.png")
+    slogan: require("images/slogan.png"),
+    exit: require("images/exit.png")
 };

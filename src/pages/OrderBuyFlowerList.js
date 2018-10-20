@@ -14,7 +14,7 @@ import { navigate } from "actions";
 const tabs = [
     { label: "全部", value: "all" },
     { label: "匹配中", value: "0" },
-    { label: "代付款", value: "1" },
+    { label: "待付款", value: "1" },
     { label: "待确认", value: "2" },
     { label: "成长中", value: "3" },
     { label: "已完成", value: "4" }

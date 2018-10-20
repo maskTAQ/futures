@@ -151,6 +151,7 @@ export default class Home extends PureComponent {
         const { isModalVisible, notif } = this.state;
         const { home = {} } = this.props;
         const { growuplist = [], buylist = [], date_end } = home;
+        console.log(growuplist, "growuplist");
         return (
             <View style={styles.container}>
                 <StatusBar
@@ -179,7 +180,7 @@ export default class Home extends PureComponent {
                     }}
                     data={home}
                 />
-                <Visible visible={growuplist.length}>
+                <Visible show={growuplist.length}>
                     <View style={styles.list}>{this.has(growuplist[0])}</View>
                 </Visible>
 
