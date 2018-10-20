@@ -15,7 +15,7 @@ import {
     orderComplaint
 } from "apis";
 import { iconSource, Tip } from "commons";
-import { back } from "actions";
+import { back, getOrderBuyFlowerList } from "actions";
 
 const tabs = [
     { label: "匹配中", value: "0" },
@@ -29,7 +29,7 @@ const getListByState = (state, data) => {
         number,
         date,
         statenoice,
-        buy_money,
+        assign_money,
         predictmatchdate,
         growup_endtime
     } = data;
@@ -67,7 +67,7 @@ const getListByState = (state, data) => {
                 },
                 {
                     label: "采购数额：",
-                    value: buy_money
+                    value: assign_money
                 },
                 {
                     label: "当前状态： ",
@@ -194,11 +194,11 @@ export default class BuyOrderDetail extends PureComponent {
                                     );
                                 })
                                 .catch(err => {
-                                    Tip.fail(`头像上传失败:${err}`);
+                                    Tip.fail(`上传失败:${err}`);
                                 });
                         })
                         .catch(err => {
-                            Tip.fail(`头像上传失败:${err}`);
+                            Tip.fail(`上传失败:${err}`);
                         });
                     break;
                 case !!didCancel:
@@ -210,13 +210,13 @@ export default class BuyOrderDetail extends PureComponent {
     renderUser() {
         const {
             state,
-            user_id,
-            buy_money,
+            assign_account,
+            assign_money,
             matchdate,
-            pay_endtime,
+            assign_endtime,
             assign_bank_name,
             assign_bank_card,
-            assign_phone,
+            assign_mobile,
             type
         } = this.props.navigation.state.params;
         if (state === "0" || state === "3" || state === "4") {
@@ -231,13 +231,13 @@ export default class BuyOrderDetail extends PureComponent {
                         <View style={styles.headerTop}>
                             <Text style={styles.productNameText}>
                                 ID:
-                                {user_id}
+                                {assign_account}
                             </Text>
                         </View>
                         <View style={styles.headerBottom}>
                             <Text style={styles.productTimeText}>
                                 数额：
-                                {buy_money}
+                                {assign_money}
                             </Text>
                             <Text style={styles.productScheduleText}>
                                 匹配时间：
@@ -250,7 +250,7 @@ export default class BuyOrderDetail extends PureComponent {
                     {this.renderList([
                         {
                             label: "付款倒计时：",
-                            value: pay_endtime,
+                            value: assign_endtime,
                             valueStyle: {
                                 color: "#FD4C73"
                             }
@@ -266,7 +266,7 @@ export default class BuyOrderDetail extends PureComponent {
                         },
                         {
                             label: "收款人电话：",
-                            value: assign_phone
+                            value: assign_mobile
                         },
                         state === "1"
                             ? {
@@ -384,7 +384,7 @@ export default class BuyOrderDetail extends PureComponent {
                             </Button>
                         </Visible>
                         <Visible show={state === "2"}>
-                            {voucher.map(uri => {
+                            {(voucher || []).map(uri => {
                                 return (
                                     <View style={styles.voucherItem} key={uri}>
                                         <Image
@@ -404,6 +404,7 @@ export default class BuyOrderDetail extends PureComponent {
                             onPress={() => {
                                 orderBuySureCollection({ number }).then(res => {
                                     Tip.success("确认收款成功!");
+                                    getOrderBuyFlowerList();
                                     back();
                                 });
                             }}

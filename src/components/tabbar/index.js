@@ -21,7 +21,7 @@ const rect = require("./img/rect.png");
 const list = [
     {
         icon: require("./img/flower.png"),
-        label: "申请种子",
+        label: "申请种植",
         routeName: "ChooseBuyFlower"
     },
     {

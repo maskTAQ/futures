@@ -8,18 +8,26 @@ import {
     ScrollView
 } from "react-native";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import { home as styles } from "../styles";
 import { DataView, Icon, Text, Button, Visible } from "components";
 import User from "./User";
-import { iconSource } from "commons";
-import { navigate } from "actions";
-import { getNotice, getHome } from "apis";
+import { iconSource, Tip } from "commons";
+import { navigate, getHome } from "actions";
+import { getNotice } from "apis";
 
 const shapeIcon = require("./img/shape.png");
 
-@connect()
+@connect(({ data, loading }) => {
+    return { wallet: data.wallet, home: data.home, loading };
+})
 export default class Home extends PureComponent {
+    static propTypes = {
+        wallet: PropTypes.object,
+        home: PropTypes.object,
+        loading: PropTypes.object
+    };
     state = {
         isModalVisible: false,
         notif: "",
@@ -29,23 +37,12 @@ export default class Home extends PureComponent {
     UNSAFE_componentWillMount() {
         getNotice()
             .then(res => {
-                this.setState({ notif: res.notif });
+                this.setState({ notif: res.notice });
             })
             .catch(e => {
                 console.log(e);
             });
     }
-    getData = () => {
-        return getHome().then(data => {
-            console.log(data, "data");
-            this.setState({ data });
-
-            const t = new Date(data.date_end);
-            t.setTime(t.getTime() + 24 * 60 * 60 * 1000);
-            this.TimeDown(t);
-            return data.buylist;
-        });
-    };
     TimeDown = endDate => {
         //当前时间
         const nowDate = new Date();
@@ -122,10 +119,18 @@ export default class Home extends PureComponent {
                             disabledTextStyle={{ color: "#999" }}
                             textStyle={styles.buyButtonText}
                             onPress={() => {
-                                navigate({
-                                    routeName: "Buy",
-                                    params: item
-                                });
+                                console.log(this.state);
+                                if (this.props.home.bankstate !== "1") {
+                                    Tip.fail("请先认证银行卡信息");
+                                    navigate({
+                                        routeName: "AccountInfo"
+                                    });
+                                } else {
+                                    navigate({
+                                        routeName: "Buy",
+                                        params: item
+                                    });
+                                }
                             }}
                         >
                             {state ? "申请种植" : "不可采收"}
@@ -143,13 +148,9 @@ export default class Home extends PureComponent {
         );
     };
     render() {
-        const {
-            isModalVisible,
-            notif,
-            timeDown,
-            data,
-            data: { growuplist = [] }
-        } = this.state;
+        const { isModalVisible, notif } = this.state;
+        const { home = {} } = this.props;
+        const { growuplist = [], buylist = [], date_end } = home;
         return (
             <View style={styles.container}>
                 <StatusBar
@@ -174,11 +175,9 @@ export default class Home extends PureComponent {
                         this.setState({
                             isModalVisible: true
                         });
+                        StatusBar.setBackgroundColor("rgba(0,0,0,0.3)");
                     }}
-                    data={data}
-                    username={"张某某"}
-                    lv={2}
-                    repositoryNum={2333.4}
+                    data={home}
                 />
                 <Visible visible={growuplist.length}>
                     <View style={styles.list}>{this.has(growuplist[0])}</View>
@@ -195,15 +194,15 @@ export default class Home extends PureComponent {
                         </View>
                         <Text style={styles.countDownText}>
                             周期剩余时间:
-                            <Text style={{ color: "#fa4f75" }}>{timeDown}</Text>
+                            <Text style={{ color: "#fa4f75" }}>{date_end}</Text>
                         </Text>
                     </View>
                     <DataView
-                        // injectData={true}
-                        // dataSource={data.list}
-                        // refreshing={false}
-                        // isLoadingMore={false}
-                        getData={this.getData}
+                        injectData={true}
+                        dataSource={buylist}
+                        refreshing={false}
+                        isLoadingMore={false}
+                        getData={getHome}
                         isPulldownLoadMore={false}
                         renderItem={this.renderItemT}
                     />
@@ -221,6 +220,7 @@ export default class Home extends PureComponent {
                             this.setState({
                                 isModalVisible: false
                             });
+                            StatusBar.setBackgroundColor("transparent");
                         }}
                     >
                         <View style={styles.modalContainer}>

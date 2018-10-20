@@ -12,18 +12,18 @@ const emailIcon = require("./img/email.png");
 const orderIcon = require("./img/order.png");
 const transferIcon = require("./img/transfer.png");
 const User = ({ requestShowNotif, data }) => {
-    const { jingtaiMoney = 0, dongtaiMoney = 0, user_id, level } = data;
+    const { jingtai_money = 0, dongtai_money = 0, user_id, level } = data;
     const detailList = [
         [
             {
                 label: "花园仓库",
-                value: jingtaiMoney,
+                value: jingtai_money,
                 routeName: "GardenWarehouse"
             },
             { type: "border", label: "1", style: { alignSelf: "flex-end" } },
             {
                 label: "奖励仓库",
-                value: dongtaiMoney,
+                value: dongtai_money,
                 routeName: "AwardWarehouse"
             }
         ],
@@ -77,7 +77,7 @@ const User = ({ requestShowNotif, data }) => {
                         >
                             <Text style={styles.repositoryNumText}>
                                 仓库数量:
-                                {jingtaiMoney + dongtaiMoney}
+                                {jingtai_money + dongtai_money}
                             </Text>
                         </View>
                     </View>

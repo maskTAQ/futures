@@ -81,6 +81,7 @@ export default class SellRedPacket extends PureComponent {
                             <Input
                                 style={alertStyle.input}
                                 value={password}
+                                secureTextEntry={true}
                                 onChangeText={password => {
                                     this.setState({
                                         password

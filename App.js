@@ -17,14 +17,15 @@ import { reduxifyNavigator } from "react-navigation-redux-helpers";
 import { connect } from "react-redux";
 
 
-import { iconSource,Storage } from 'commons';
+import { iconSource, Storage } from 'commons';
 import { Tip } from 'components';
 import store from "store/index.js";
-import { back,login } from "actions";
+import { back, login, navigate } from "actions";
 import sage from "effects/index.js";
 
 //import Loading from "./loading";
 import Router from "./src/Router";
+
 //注册页面返回句柄
 Page.registerReturnEventlistener(back);
 Page.setLeftIconSource(iconSource.left);
@@ -55,7 +56,19 @@ export default class App extends Component {
     }
     //自动登录
     Storage.getJson('userInfo')
-    .then(login)
+      .then(userInfo => {
+        if (userInfo) {
+          login(userInfo, { loading: false })
+          // .catch(()=>{
+          //   navigate({ routeName: 'Login' })
+          // })
+        } else {
+          navigate({ routeName: 'Login' })
+        }
+      })
+      .catch(e => {
+        navigate({ routeName: 'Login' })
+      })
   }
 
   componentWillUnmount() {
@@ -87,7 +100,7 @@ export default class App extends Component {
   handleBack = () => {
     const { nav } = store.getState();
     const routeName = nav.routes[nav.index].routeName;
-    if (routeName === "TabNavigator") {
+    if (["TabNavigator",'Login'].includes(routeName)) {
       if (this.lastBack && new Date().getTime() - this.lastBack < 2000) {
         BackHandler.exitApp();
       } else {

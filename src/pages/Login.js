@@ -3,15 +3,24 @@ import { View, StatusBar } from "react-native";
 
 import { Icon, Input, Button } from "components";
 import { login as styles } from "./styles";
-import { iconSource, isPassword, Tip } from "commons";
+import { iconSource, Tip, Storage, rules } from "commons";
 import { navigate } from "actions";
 import { login } from "actions";
 
 export default class Login extends PureComponent {
     state = {
-        account: "H12169799",
-        password: "1"
+        account: "",
+        password: ""
     };
+    UNSAFE_componentWillMount() {
+        Storage.getJson("userInfo").then(res => {
+            if (res) {
+                this.setState({
+                    ...res
+                });
+            }
+        });
+    }
     render() {
         const { account, password } = this.state;
         return (
@@ -34,7 +43,9 @@ export default class Login extends PureComponent {
                             style={styles.input}
                             value={account}
                             onChangeText={account => {
-                                this.setState({ account });
+                                this.setState({
+                                    account: rules.removeChinese(account)
+                                });
                             }}
                         />
                         <Icon
@@ -60,9 +71,9 @@ export default class Login extends PureComponent {
                         style={styles.submit}
                         textStyle={styles.submitText}
                         onPress={() => {
-                            if (!isPassword(password)) {
+                            if (!rules.isPassword(password)) {
                                 Tip.fail("密码只能是数字与字母组合!");
-                            } else if (!isPassword(account)) {
+                            } else if (!rules.isPassword(account)) {
                                 Tip.fail("账号只能是数字与字母组合!");
                             } else {
                                 login({ account, password });

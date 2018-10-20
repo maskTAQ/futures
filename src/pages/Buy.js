@@ -16,7 +16,8 @@ export default class Buy extends PureComponent {
     static propTypes = {
         navigation: PropTypes.object,
         user: PropTypes.object,
-        wallet: PropTypes.object
+        wallet: PropTypes.object,
+        dispatch: PropTypes.func
     };
     state = {
         a: "",
@@ -114,6 +115,7 @@ export default class Buy extends PureComponent {
                             <Input
                                 style={alertStyle.input}
                                 value={password}
+                                secureTextEntry={true}
                                 onChangeText={password => {
                                     this.setState({
                                         password
@@ -138,6 +140,13 @@ export default class Buy extends PureComponent {
                                                 () => {
                                                     buyFlower({ type }).then(
                                                         res => {
+                                                            //更新购买列表
+                                                            this.props.dispatch(
+                                                                {
+                                                                    type:
+                                                                        "getOrderBuyFlowerList"
+                                                                }
+                                                            );
                                                             Tip.success(
                                                                 "发布成功"
                                                             );

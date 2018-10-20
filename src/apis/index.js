@@ -2,8 +2,8 @@ import { Platform } from "react-native";
 
 import { post } from "./base";
 
-const login = params => {
-    return post("/Api/checkLogin", params);
+const login = (params, config) => {
+    return post("/Api/checkLogin", params, config);
 };
 const logout = () => {
     return post("/Api/LogOut");
@@ -143,6 +143,15 @@ const sellFlower = params => {
 const setPush = params => {
     return post("/Api/smsNotice", params);
 };
+
+//获取 通知状态
+const getNoticeState = () => {
+    return post("/Api/smsNoticeState");
+};
+//设置 通知状态
+const setNoticeState = params => {
+    return post("/Api/smsNotice", params);
+};
 export { host } from "./base";
 export {
     login,
@@ -180,5 +189,7 @@ export {
     sellFlower,
     logout,
     getBanckInfo,
-    setPush
+    setPush,
+    getNoticeState,
+    setNoticeState
 };

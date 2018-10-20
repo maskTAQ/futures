@@ -575,9 +575,36 @@ const wallet = {
 const inviteList = {
     container: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: "#f2f2f2"
+    },
+    header: {
+        height: scale(60),
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingLeft: scale(15),
+        paddingRight: scale(15),
+        backgroundColor: "#fff"
+    },
+    headerLeft: {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    headerLabelText: {
+        marginLeft: scale(10),
+        fontSize: scale(15),
+        color: "#FD4C73"
+    },
+    residueText: {
+        fontSize: scale(13),
+        color: "#8E8E8E"
+    },
+    list: {
+        marginTop: scale(15),
+        flex: 1,
         paddingLeft: scale(10),
-        paddingRight: scale(10)
+        paddingRight: scale(10),
+        backgroundColor: "#fff"
     },
     item: {
         //flex:1,
@@ -611,7 +638,8 @@ const inviteList = {
         alignItems: "center"
     },
     usernameText: {
-        width: scale(40),
+        //width: scale(40),
+        marginRight: scale(10),
         fontSize: scale(16),
         color: "#333",
         fontFamily: "PingFangSC-Regular"
@@ -998,7 +1026,7 @@ const alert = {
         flexDirection: "row"
     },
     submit: {
-        flex: 1,
+        width: "100%",
         height: scale(40),
         justifyContent: "center",
         alignItems: "center",
@@ -1208,6 +1236,7 @@ const orderDetail = {
         borderColor: "#D6D6D6"
     },
     alertContainer: {
+        flex: 1,
         alignItems: "center"
     },
     successIcon: {
@@ -1238,11 +1267,12 @@ const orderDetail = {
 
 const login = {
     container: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
+        // position: "absolute",
+        // top: 0,
+        // left: 0,
+        // width: "100%",
+        // height: "100%",
+        flex: 1,
         paddingLeft: scale(15),
         paddingRight: scale(15),
         backgroundColor: "#fa4f75"
@@ -1312,12 +1342,12 @@ const login = {
 
 const forgetPassword = {
     container: {
-        //flex: 1,
-        position: "absolute",
-        top: 0,
-        right: 0,
-        left: 0,
-        bottom: 0,
+        flex: 1,
+        // position: "absolute",
+        // top: 0,
+        // right: 0,
+        // left: 0,
+        // bottom: 0,
         paddingTop: scale(15),
         paddingLeft: scale(15),
         paddingRight: scale(15),
@@ -1346,11 +1376,11 @@ const forgetPassword = {
         color: "#fff"
     },
     buttonBox: {
-        flex: 1,
-        justifyContent: "flex-end"
+        // flex: 1,
+        // justifyContent: "flex-end"
     },
     submit: {
-        marginBottom: scale(150),
+        marginTop: scale(50),
         height: scale(40),
         justifyContent: "center",
         alignItems: "center",
@@ -1529,6 +1559,20 @@ const share = {
         color: "#fff"
     }
 };
+
+const welcome = {
+    container: {
+        position: "relative",
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#fff"
+    },
+    slogan: {
+        position: "absolute",
+        bottom: scale(19)
+    }
+};
 export {
     home,
     mine,
@@ -1547,5 +1591,6 @@ export {
     forgetPassword,
     orderSellFlowerList,
     sellRedPacket,
-    share
+    share,
+    welcome
 };

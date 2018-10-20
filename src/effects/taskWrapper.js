@@ -5,15 +5,21 @@ const actionWrapper = function(params) {
     // console.log(JSON.stringify({ type: `${type}/${status}`, status, ...other }));
     return { type: `${type}/${status}`, status, ...other };
 };
-const taskWrapper = ({ module, field, type, saveDataToRedux, params = {} }) =>
+const taskWrapper = ({
+    module,
+    field,
+    type,
+    saveDataToRedux,
+    params = {},
+    config
+}) =>
     function* taskWrappe() {
         try {
             yield put(
                 actionWrapper({ module, field, type, status: "request" })
             );
-            const res = yield call(saveDataToRedux, params, {
-                handleCatch: false
-            });
+            //console.log(confif,'confif --')
+            const res = yield call(saveDataToRedux, params, config);
             yield put(actionWrapper({ module, field, type, payload: res }));
         } catch (e) {
             //登录失败

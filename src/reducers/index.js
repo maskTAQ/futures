@@ -8,7 +8,7 @@ const setIsLogin = v => (isLogin = v);
 //redux中存储的内容
 const modules = [
     "user:main",
-    "data:team.orderSellFlowerList.orderBuyFlowerList.wallet.inviteList.bankInfo"
+    "data:home.team.orderSellFlowerList.orderBuyFlowerList.wallet.inviteList.bankInfo.noticeState"
 ];
 
 //redux中存储的内容 逻辑部分
@@ -16,7 +16,7 @@ const preloadedStateForLoadong = {};
 const preloadedState = {
     loading: preloadedStateForLoadong,
     nav: AppNavigator.router.getStateForAction(
-        AppNavigator.router.getActionForPathAndParams("Login")
+        AppNavigator.router.getActionForPathAndParams("Welcome")
     )
 };
 

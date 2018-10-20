@@ -6,18 +6,23 @@ import PropTypes from "prop-types";
 import { inviteList as styles } from "./styles";
 import { Page, DataView, Text, Icon, Button } from "components";
 import { iconSource } from "commons";
-import { getInviteList } from "actions";
-import { inviteSure } from "apis";
+import { getInviteList, getMyWallet } from "actions";
+import { inviteSure, host } from "apis";
 
 const Item = ({ item }) => {
-    const { account, level, state, date } = item;
+    const { user_id, level, state, date, icon } = item;
     return (
         <View style={styles.item}>
-            <Icon source={iconSource.defaultPortrait} size={44} />
+            <Icon
+                source={
+                    icon ? { uri: host + icon } : iconSource.defaultPortrait
+                }
+                size={44}
+            />
             <View style={styles.itemContent}>
                 <View style={[styles.itemContentTop, styles.itemContentItem]}>
                     <View style={styles.username}>
-                        <Text style={styles.usernameText}>{account}</Text>
+                        <Text style={styles.usernameText}>{user_id}</Text>
                         <View style={styles.lv}>
                             <Text style={styles.lvText}>v{level}</Text>
                         </View>
@@ -32,7 +37,12 @@ const Item = ({ item }) => {
             {!Number(state) ? (
                 <Button
                     onPress={() => {
-                        inviteSure(item).then(getInviteList);
+                        inviteSure({ invite_id: item.id }).then(() => {
+                            //获取列表数据
+                            getInviteList();
+                            //获取邀请码数据
+                            getMyWallet();
+                        });
                     }}
                     style={styles.agree}
                     textStyle={styles.agreeText}
@@ -50,11 +60,12 @@ Item.propTypes = {
 };
 
 @connect(({ data, loading }) => {
-    return { inviteList: data.inviteList, loading };
+    return { inviteList: data.inviteList, loading, wallet: data.wallet };
 })
 export default class InviteList extends PureComponent {
     static propTypes = {
         inviteList: PropTypes.object,
+        wallet: PropTypes.object,
         loading: PropTypes.object
     };
     state = {
@@ -64,20 +75,42 @@ export default class InviteList extends PureComponent {
         if (!this.props.inviteList) {
             getInviteList();
         }
+        if (!this.props.wallet) {
+            getMyWallet();
+        }
     }
     render() {
         const { list } = this.props.inviteList || { list: [] };
+        const { invite_money: all_invite_money = 0 } = this.props.wallet || {};
         return (
             <Page title="邀请列表">
                 <View style={styles.container}>
-                    <DataView
-                        injectData={true}
-                        dataSource={list}
-                        getData={getInviteList}
-                        refreshing={this.props.loading.data.inviteList.loading}
-                        isPulldownLoadMore={false}
-                        renderItem={Item}
-                    />
+                    <View style={styles.header}>
+                        <View style={styles.headerLeft}>
+                            <Icon
+                                source={iconSource.invitationcode}
+                                size={20}
+                            />
+                            <Text style={styles.headerLabelText}>
+                                剩余邀请码
+                            </Text>
+                        </View>
+                        <Text style={styles.residueText}>
+                            {all_invite_money}
+                        </Text>
+                    </View>
+                    <View style={styles.list}>
+                        <DataView
+                            injectData={true}
+                            dataSource={list}
+                            getData={getInviteList}
+                            refreshing={
+                                this.props.loading.data.inviteList.loading
+                            }
+                            isPulldownLoadMore={false}
+                            renderItem={Item}
+                        />
+                    </View>
                 </View>
             </Page>
         );

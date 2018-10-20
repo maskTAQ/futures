@@ -1,8 +1,10 @@
 import Axios from "axios";
 import qs from "qs";
+
+import { navigate } from "actions";
 import { Tip, Storage } from "commons";
 
-const host = "http://pig.bateersoft.cc"; //http://123.207.84.39/index.php
+const host = "http://123.207.84.39"; //http://123.207.84.39/index.php http://pig.bateersoft.cc/index.php
 /**
  * 请求拦截器
  * */
@@ -49,7 +51,7 @@ const logError = ({ url, params, res, error }) => {
 const requestWrapper = (method, url, param = {}) => {
     const params =
         method === "post" ? { data: qs.stringify(param) } : { params: param };
-    console.log();
+
     return Axios.request({
         baseURL: host,
         url,
@@ -65,9 +67,19 @@ const base = (type, url, params, config) => {
     return new Promise((resolve, reject) => {
         requestWrapper(type, url, params)
             .then(res => {
-                const { code, data, msg } = res.data;
-                console.log(data, url);
+                let resData = res.data;
+                try {
+                    resData = eval("(" + res.data + ")");
+                } catch (e) {
+                    //
+                }
+                const { code, data, msg } = resData;
+                console.log(res, url);
                 Tip.dismiss();
+                if (Number(code) === 401) {
+                    Tip.fail(msg);
+                    return navigate({ routeName: "Login" });
+                }
                 if (Number(code) === 200) {
                     return resolve(data);
                 } else {
@@ -75,7 +87,8 @@ const base = (type, url, params, config) => {
                         logError({
                             url,
                             params,
-                            res: res.data
+                            res: res.data,
+                            error: msg
                         });
                         Tip.fail(msg);
                         return reject("已处理错误:" + msg);
@@ -84,7 +97,7 @@ const base = (type, url, params, config) => {
                 }
             })
             .catch(e => {
-                console.log(e, url);
+                console.log(e);
                 logError({
                     url,
                     params,

@@ -83,11 +83,17 @@ export default class ForgetPassword extends PureComponent {
                             textStyle={styles.submitText}
                             onPress={() => {
                                 const {
+                                    account,
                                     password,
                                     passwordT,
                                     tjaccount
                                 } = this.state;
 
+                                if (!isPassword(account)) {
+                                    return Tip.fail(
+                                        "账号只能是数字与字母组合!"
+                                    );
+                                }
                                 if (!isPassword(tjaccount)) {
                                     return Tip.fail(
                                         "推荐人id只能是数字与字母组合!"

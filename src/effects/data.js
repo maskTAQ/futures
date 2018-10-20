@@ -7,21 +7,37 @@ import {
     getOrderBuyFlowerList,
     getMyWallet,
     getInviteList,
-    getBanckInfo
+    getBanckInfo,
+    getNoticeState,
+    getHome
 } from "apis";
 
 export default function*() {
     while (true) {
         //监听登录注销action
         const { type, payload } = yield take([
+            "getHome",
             "getTeam",
             "getOrderSellFlowerList",
             "getOrderBuyFlowerList",
             "getMyWallet",
             "getInviteList",
-            "getBanckInfo"
+            "getBanckInfo",
+            "getNoticeState"
         ]);
         switch (type) {
+            case "getHome": {
+                yield fork(
+                    taskWrapper({
+                        module: "data",
+                        field: "home",
+                        type,
+                        saveDataToRedux: getHome,
+                        params: payload
+                    })
+                );
+                break;
+            }
             case "getTeam": {
                 yield fork(
                     taskWrapper({
@@ -35,7 +51,6 @@ export default function*() {
                 break;
             }
             case "getOrderSellFlowerList": {
-                console.log(getOrderSellFlowerList, "getOrderSellFlowerList");
                 yield fork(
                     taskWrapper({
                         module: "data",
@@ -91,6 +106,18 @@ export default function*() {
                         field: "bankInfo",
                         type,
                         saveDataToRedux: getBanckInfo,
+                        params: payload
+                    })
+                );
+                break;
+            }
+            case "getNoticeState": {
+                yield fork(
+                    taskWrapper({
+                        module: "data",
+                        field: "noticeState",
+                        type,
+                        saveDataToRedux: getNoticeState,
                         params: payload
                     })
                 );

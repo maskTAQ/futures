@@ -32,7 +32,9 @@ import {
     OrderBuyFlowerList,
     LoginPassword,
     SellRedPacket,
-    Share
+    Share,
+    Welcome,
+    Exit
 } from "pages";
 
 YellowBox.ignoreWarnings([
@@ -140,7 +142,9 @@ const AppRouteConfigs = {
     SellOrderDetail,
     LoginPassword,
     SellRedPacket,
-    Share
+    Share,
+    Welcome,
+    Exit
 };
 // 创建一级导航
 const StackNavigator = createStackNavigator(AppRouteConfigs, {

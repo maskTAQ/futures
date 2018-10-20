@@ -29,5 +29,7 @@ export default {
     add: require("images/add.png"),
     complaint: require("images/complaint.png"),
     codebg: require("images/codebg.png"),
-    dot: require("images/dot.png")
+    dot: require("images/dot.png"),
+    welcome: require("images/welcome.png"),
+    slogan: require("images/slogan.png")
 };
