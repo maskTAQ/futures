@@ -2,6 +2,7 @@ export default {
     defaultPortrait: require("images/portrait.png"),
     vipIcon: require("images/vip.png"),
     close: require("images/close.png"),
+    closeSwiper: require("images/closeSwiper.png"),
     show: require("images/show.png"),
     hide: require("images/hide.png"),
     line: require("images/line.png"),
@@ -32,5 +33,8 @@ export default {
     dot: require("images/dot.png"),
     welcome: require("images/welcome.png"),
     slogan: require("images/slogan.png"),
-    exit: require("images/exit.png")
+    exit: require("images/exit.png"),
+    flower: require("images/flower.png"),
+    jingtai: require("images/repo.png"),
+    dongtai: require("images/money.png")
 };

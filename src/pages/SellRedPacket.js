@@ -6,14 +6,17 @@ import { connect } from "react-redux";
 import { sellRedPacket as styles, alert as alertStyle } from "./styles";
 import { Page, Text, Input, Button, Alert } from "components";
 import { Tip } from "commons";
+import { getMyWallet, navigate, getHome } from "actions";
+
 import { sellFlower, tradePassword } from "apis";
 
 @connect(({ data, user }) => {
-    return { user: user.main };
+    return { user: user.main, wallet: data.wallet };
 })
 export default class SellRedPacket extends PureComponent {
     static propTypes = {
         navigation: PropTypes.object,
+        wallet: PropTypes.object,
         user: PropTypes.object
     };
     state = {
@@ -21,6 +24,11 @@ export default class SellRedPacket extends PureComponent {
         number: "",
         isVerifyVisible: false
     };
+    UNSAFE_componentWillMount() {
+        //if (!this.props.wallet) {
+        getMyWallet();
+        // }
+    }
     render() {
         const { number, isVerifyVisible, password } = this.state;
         const {
@@ -29,6 +37,8 @@ export default class SellRedPacket extends PureComponent {
             //type,
             typeValue
         } = this.props.navigation.state.params;
+        const { dongtai_money = 0, jingtai_money = 0 } =
+            this.props.wallet || {};
         return (
             <Page title={title}>
                 <View style={styles.container}>
@@ -42,7 +52,10 @@ export default class SellRedPacket extends PureComponent {
                             });
                         }}
                     />
-                    <Text style={styles.balanceText}>当前余额:0</Text>
+                    <Text style={styles.balanceText}>
+                        当前余额:
+                        {typeValue === 1 ? jingtai_money : dongtai_money}
+                    </Text>
                     {hint.map(item => (
                         <Text style={styles.hintText} key={item}>
                             {item}
@@ -52,7 +65,6 @@ export default class SellRedPacket extends PureComponent {
                         style={styles.submit}
                         textStyle={styles.submitStyle}
                         onPress={() => {
-                            console.log(isNaN(number), number > 0);
                             if (!isNaN(number) && number > 0) {
                                 this.setState({
                                     isVerifyVisible: true
@@ -69,7 +81,8 @@ export default class SellRedPacket extends PureComponent {
                     visible={isVerifyVisible}
                     requestClose={() => {
                         this.setState({
-                            isVerifyVisible: false
+                            isVerifyVisible: false,
+                            password: ""
                         });
                     }}
                 >
@@ -108,6 +121,12 @@ export default class SellRedPacket extends PureComponent {
                                                         type: typeValue,
                                                         number
                                                     }).then(res => {
+                                                        getMyWallet();
+                                                        getHome();
+                                                        navigate({
+                                                            routeName:
+                                                                "OrderSellFlowerList"
+                                                        });
                                                         Tip.success("出售成功");
                                                     });
                                                 }
@@ -125,7 +144,8 @@ export default class SellRedPacket extends PureComponent {
                                 textStyle={alertStyle.cancelText}
                                 onPress={() => {
                                     this.setState({
-                                        isVerifyVisible: false
+                                        isVerifyVisible: false,
+                                        password: ""
                                     });
                                 }}
                             >

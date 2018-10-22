@@ -13,7 +13,7 @@ import { NavigationActions } from "react-navigation";
 
 import styles from "./style";
 import { Button, Icon } from "components";
-//import { navigate } from "actions";
+import { Tip } from "commons";
 
 const publishIcon = require("./img/publish.png");
 const activePublishIcon = require("./img/active_publish.png");
@@ -32,7 +32,7 @@ const list = [
             type: "dongtai",
             title: "出售静态红包",
             hint: ["规则：200元起200的倍数"],
-            typeValue: 2
+            typeValue: 1
         }
     },
     {
@@ -48,23 +48,25 @@ const list = [
                 "规则：单日内V1 2000元内  V2 5000元内  V3 10000元内"
             ]
         }
-    },
-    {
-        icon: require("./img/repeat.png"),
-        label: "订单复购",
-        routeName: "Buy",
-        params: {
-            money: "2000",
-            name: "桔柑花",
-            percent: "20",
-            queuing_money: "2",
-            state: "0",
-            type: "1"
-        }
     }
+    // {
+    //     icon: require("./img/repeat.png"),
+    //     label: "订单复购",
+    //     routeName: "Buy",
+    //     params: {
+    //         money: "2000",
+    //         name: "桔柑花",
+    //         percent: "20",
+    //         queuing_money: "2",
+    //         state: "0",
+    //         type: "1"
+    //     }
+    // }
 ];
 
-@connect()
+@connect(({ data }) => {
+    return { home: data.home };
+})
 export default class Tabbar extends Component {
     static propTypes = {
         navigation: PropTypes.object,
@@ -73,7 +75,8 @@ export default class Tabbar extends Component {
         inactiveTintColor: PropTypes.string,
         renderIcon: PropTypes.func,
         getLabelText: PropTypes.func,
-        dispatch: PropTypes.func
+        dispatch: PropTypes.func,
+        home: PropTypes.object
     };
     state = {
         isModalVisible: false
@@ -196,14 +199,37 @@ export default class Tabbar extends Component {
                                             <Button
                                                 onPress={() => {
                                                     this.requestModalClose();
-                                                    this.props.dispatch(
-                                                        NavigationActions.navigate(
-                                                            {
-                                                                routeName,
-                                                                params
-                                                            }
-                                                        )
+                                                    console.log(
+                                                        this.props.home,
+                                                        "[[]"
                                                     );
+                                                    if (
+                                                        this.props.home
+                                                            .bankstate !== "1"
+                                                    ) {
+                                                        Tip.fail(
+                                                            "请先认证银行卡信息"
+                                                        );
+                                                        this.props.dispatch(
+                                                            NavigationActions.navigate(
+                                                                {
+                                                                    routeName:
+                                                                        "AccountInfo",
+                                                                    params
+                                                                }
+                                                            )
+                                                        );
+                                                    } else {
+                                                        this.props.dispatch(
+                                                            NavigationActions.navigate(
+                                                                {
+                                                                    routeName,
+                                                                    params
+                                                                }
+                                                            )
+                                                        );
+                                                    }
+
                                                     // navigate({routeName})
                                                 }}
                                                 style={styles.item}

@@ -28,9 +28,9 @@ export default function*() {
                                     Storage.set("Token", res.access_token);
                                     navigate({ routeName: "TabNavigator" });
 
-                                    // ['getMyWallet'].forEach(type=>{
-                                    //     //store.dispatch({type});
-                                    // });
+                                    ["getHome", "getMyWallet"].forEach(type => {
+                                        store.dispatch({ type });
+                                    });
                                     // if (other.preRouteParamsAction) {
                                     //     setTimeout(() => {
                                     //         // 如果是重定向来的登录页则返回到重定向的页面 否则跳转到tab页
@@ -44,7 +44,7 @@ export default function*() {
                                     return { account: params.account, ...res };
                                 })
                                 .catch(e => {
-                                    console.log(e, "e");
+                                    Storage.remove("userInfo");
                                     if (e.includes("待推荐人同意")) {
                                         navigate({
                                             routeName: "Exit"
@@ -57,7 +57,7 @@ export default function*() {
                                         if (
                                             routes[index].routeName !== "Login"
                                         ) {
-                                            navigate({ routeName: "Login" });
+                                            store.dispatch({ type: "logout" });
                                         }
                                     }
                                 });

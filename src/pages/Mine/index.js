@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 
 import { Header, Text, Button } from "components";
 import { mine as styles } from "../styles";
-import { navigate, getMyWallet } from "actions";
-import { logout } from "apis";
+import { navigate, getMyWallet, getNoticeState } from "actions";
+import { logout, setNoticeState } from "apis";
 import UserHeader from "./Header";
 
 const list = [
@@ -24,23 +24,32 @@ const list = [
 ];
 
 @connect(({ data, user }) => {
-    return { wallet: data.wallet, user: user.main };
+    return {
+        wallet: data.wallet,
+        user: user.main,
+        noticeState: data.noticeState
+    };
 })
 export default class Mine extends PureComponent {
     static propTypes = {
         wallet: PropTypes.object,
         user: PropTypes.object,
-        dispatch: PropTypes.func
+        dispatch: PropTypes.func,
+        noticeState: PropTypes.object
     };
     UNSAFE_componentWillMount() {
-        if (!this.props.wallet) {
-            getMyWallet();
-        }
+        // if (!this.props.wallet) {
+        getMyWallet();
+        // }
+        // if (!this.props.noticeState) {
+        getNoticeState();
+        //å }
     }
     render() {
         const {
             wallet: { total_money = 0 } = {},
-            user: { account, level } = {}
+            user: { account, level } = {},
+            noticeState: { sms_notice } = {}
         } = this.props;
         return (
             <ScrollView>
@@ -84,13 +93,33 @@ export default class Mine extends PureComponent {
                                                     </Text>
                                                     {Component && (
                                                         <Component
-                                                            value={true}
+                                                            value={
+                                                                !!Number(
+                                                                    sms_notice
+                                                                )
+                                                            }
                                                             //_thumbColor="red"
                                                             thumbTintColor="#fff"
                                                             trackColor={{
                                                                 false:
                                                                     "#e3e3e3",
                                                                 true: "#fa4f75"
+                                                            }}
+                                                            onValueChange={v => {
+                                                                console.log(
+                                                                    sms_notice,
+                                                                    v,
+                                                                    "=="
+                                                                );
+                                                                setNoticeState({
+                                                                    sms_notice: String(
+                                                                        Number(
+                                                                            v
+                                                                        )
+                                                                    )
+                                                                }).then(
+                                                                    getNoticeState
+                                                                );
                                                             }}
                                                         />
                                                     )}
@@ -109,7 +138,6 @@ export default class Mine extends PureComponent {
                                     this.props.dispatch({
                                         type: "logout"
                                     });
-                                    navigate({ routeName: "Login" });
                                 });
                             }}
                         >

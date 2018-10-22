@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { changeDealPassword as styles } from "./styles";
 import { Page, Text, Input, Button } from "components";
 import { updatePassword } from "apis";
-import { Tip } from "commons";
+import { Tip, rules } from "commons";
 
 const inputList = [
     {
@@ -60,12 +60,25 @@ export default class ChangeDealPassword extends PureComponent {
                         style={styles.submit}
                         textStyle={styles.submitStyle}
                         onPress={() => {
-                            const { old_password, new_password } = this.state;
-                            console.log(this.state);
-                            updatePassword({
+                            const {
                                 old_password,
                                 new_password,
-                                type: "1"
+                                new_passwordT
+                            } = this.state;
+                            if (!rules.isPassword(old_password)) {
+                                return Tip.fail("旧密码只能是数字与字母组合!");
+                            }
+                            if (!rules.isPassword(old_password)) {
+                                return Tip.fail("新密码只能是数字与字母组合!");
+                            }
+                            if (new_password !== new_passwordT) {
+                                return Tip.fail("俩次输入的密码一致");
+                            }
+
+                            return updatePassword({
+                                old_password,
+                                new_password,
+                                type_password: "1"
                             }).then(() => {
                                 Tip.success("交易密码修改成功");
                             });

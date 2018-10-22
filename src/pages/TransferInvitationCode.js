@@ -7,6 +7,7 @@ import { transferInvitationCode as styles } from "./styles";
 import { Page, Text, Input, Button, Icon } from "components";
 import { iconSource, Tip } from "commons";
 import { inviteMoney } from "apis";
+import { back, getMyWallet } from "actions";
 
 const list = [
     {
@@ -77,6 +78,8 @@ export default class TransferInvitationCode extends PureComponent {
                             onPress={() => {
                                 inviteMoney({ account, invite_money }).then(
                                     res => {
+                                        back();
+                                        getMyWallet();
                                         Tip.success("邀请名额转发成功！");
                                     }
                                 );

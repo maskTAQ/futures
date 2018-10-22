@@ -42,7 +42,7 @@ const getListByState = (state, data) => {
                 },
                 {
                     label: "采购数额：",
-                    value: "4000.00"
+                    value: assign_money
                 },
                 {
                     label: "匹配时间：",
@@ -86,7 +86,7 @@ const getListByState = (state, data) => {
                 },
                 {
                     label: "采购数额：",
-                    value: "4000.00"
+                    value: assign_money
                 },
                 {
                     label: "匹配时间：",
@@ -113,7 +113,7 @@ const getListByState = (state, data) => {
                 },
                 {
                     label: "采购数额：",
-                    value: "4000.00"
+                    value: assign_money
                 },
                 {
                     label: "匹配时间：",
@@ -159,14 +159,20 @@ export default class BuyOrderDetail extends PureComponent {
         return label;
     }
     upVoucher = () => {
-        const { number } = this.props.navigation.state.params;
+        const { or_number } = this.props.navigation.state.params;
         const options = {
             title: "上传打款凭证",
             cancelButtonTitle: "取消",
             takePhotoButtonTitle: "拍照",
             chooseFromLibraryButtonTitle: "从相册选取",
             mediaType: "photo",
-            quality: 0.1
+            quality: 0.1,
+            permissionDenied: {
+                title: "没有权限",
+                text: "请在设置中允许清沐家园的相关权限,以便提高更好的使用体验",
+                reTryTitle: "重试",
+                okTitle: "我知道了"
+            }
         };
         ImagePicker.showImagePicker(options, response => {
             const { didCancel, error, uri } = response;
@@ -180,8 +186,8 @@ export default class BuyOrderDetail extends PureComponent {
                         .then(content => {
                             Tip.loading(`图片上传中`);
                             orderBuyUpdateVoucher({
-                                number,
-                                voucher: "我是base64"
+                                number: or_number,
+                                voucher: "data:image/png;base64," + content
                             })
                                 .then(res => {
                                     Tip.success("图片上传成功");
@@ -219,6 +225,10 @@ export default class BuyOrderDetail extends PureComponent {
             assign_mobile,
             type
         } = this.props.navigation.state.params;
+        console.log(
+            this.props.navigation.state.params,
+            "this.props.navigation.state.params"
+        );
         if (state === "0" || state === "3" || state === "4") {
             return null;
         }
@@ -333,7 +343,7 @@ export default class BuyOrderDetail extends PureComponent {
         const { voucherImgList } = this.state;
         const {
             state,
-            number,
+            or_number,
             voucher = []
         } = this.props.navigation.state.params;
         if (state === "0" || state === "3" || state === "4") {
@@ -385,6 +395,7 @@ export default class BuyOrderDetail extends PureComponent {
                         </Visible>
                         <Visible show={state === "2"}>
                             {(voucher || []).map(uri => {
+                                console.log(uri, "uri");
                                 return (
                                     <View style={styles.voucherItem} key={uri}>
                                         <Image
@@ -402,7 +413,9 @@ export default class BuyOrderDetail extends PureComponent {
                             style={styles.submit}
                             textStyle={styles.submitStyle}
                             onPress={() => {
-                                orderBuySureCollection({ number }).then(res => {
+                                orderBuySureCollection({
+                                    number: or_number
+                                }).then(res => {
                                     Tip.success("确认收款成功!");
                                     getOrderBuyFlowerList();
                                     back();
@@ -428,7 +441,8 @@ export default class BuyOrderDetail extends PureComponent {
             date,
             percent,
             number,
-            type
+            type,
+            or_number
         } = this.props.navigation.state.params;
         return (
             <Page title="采收订单详情">
@@ -460,8 +474,9 @@ export default class BuyOrderDetail extends PureComponent {
 
                         <View style={styles.bottom}>
                             {this.renderList()}
-                            <Visible show={state === "4"}>
-                                {/*
+
+                            {/*
+                                     <Visible show={state === "4"}>
                                     <Button
                                     onPress={() => {
                                         this.setState({
@@ -476,8 +491,9 @@ export default class BuyOrderDetail extends PureComponent {
                                 >
                                     复投
                                 </Button>
+                                </Visible>
                                     */}
-                            </Visible>
+
                             {this.renderUser()}
                             {this.renderVoucher()}
                         </View>
@@ -487,18 +503,20 @@ export default class BuyOrderDetail extends PureComponent {
                         title={comfirm.content}
                         onOk={() => {
                             if (comfirm.content === "是否投诉") {
-                                orderComplaint({ number }).then(res => {
-                                    this.setState({
-                                        comfirm: {
-                                            visible: false,
-                                            content: ""
-                                        },
-                                        alert: {
-                                            visible: true,
-                                            content: "投诉成功"
-                                        }
-                                    });
-                                });
+                                orderComplaint({ number: or_number }).then(
+                                    res => {
+                                        this.setState({
+                                            comfirm: {
+                                                visible: false,
+                                                content: ""
+                                            },
+                                            alert: {
+                                                visible: true,
+                                                content: "投诉成功"
+                                            }
+                                        });
+                                    }
+                                );
                             } else {
                                 orderBuyRepetition({ number }).then(res => {
                                     this.setState({

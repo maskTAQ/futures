@@ -59,10 +59,7 @@ const getOrderSellFlowerList = () => {
     });
 };
 const getorderSellFlowerInfo = params => {
-    return post("/Api/orderSellFlowerInfo", {
-        ...params,
-        voucher: true
-    });
+    return post("/Api/orderSellFlowerInfo", params);
 };
 
 const orderSellSureCollection = params => {

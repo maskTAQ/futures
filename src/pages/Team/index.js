@@ -24,9 +24,9 @@ export default class Team extends PureComponent {
     };
 
     UNSAFE_componentWillMount() {
-        if (!this.props.team) {
-            getTeam();
-        }
+        //if (!this.props.team) {
+        getTeam();
+        //}
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
         if (this.props.team !== nextProps.team && nextProps.team) {
@@ -55,8 +55,8 @@ export default class Team extends PureComponent {
     };
     render() {
         const { searchValue, data = [] } = this.state;
-        console.log(this.props, "team");
         const { total = 0 } = this.props.team || {};
+        console.log(data, "data");
         return (
             <View style={styles.container}>
                 <Search

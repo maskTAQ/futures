@@ -1195,7 +1195,7 @@ const orderDetail = {
     },
     complaint: {
         position: "absolute",
-        width: scale(25),
+        //width: scale(25),
         height: scale(40),
         top: scale(-15),
         right: 20,
@@ -1262,6 +1262,21 @@ const orderDetail = {
     submitText: {
         fontSize: scale(16),
         color: "#fff"
+    },
+    swiperContainer: {
+        flex: 1,
+        position: "relative"
+    },
+    swiper: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    close: {
+        position: "absolute",
+        top: 20,
+        right: 20,
+        zIndex: 2
     }
 };
 
@@ -1571,6 +1586,26 @@ const welcome = {
     slogan: {
         position: "absolute",
         bottom: scale(19)
+    },
+    exitBg: {
+        width: "100%",
+        height: "100%"
+    },
+    exit: {
+        position: "absolute",
+        top: scale(20),
+        right: scale(20),
+        zIndex: 1,
+        width: scale(65),
+        height: scale(35),
+        borderRadius: scale(6),
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#f94f75"
+    },
+    exitText: {
+        fontSize: scale(15),
+        color: "#fff"
     }
 };
 export {

@@ -1,6 +1,9 @@
 import React, { PureComponent } from "react";
-import { View, ScrollView, Image } from "react-native";
+import { View, ScrollView, Image, Modal, Dimensions } from "react-native";
 import PropTypes from "prop-types";
+import _ from "lodash";
+import Swiper from "react-native-swiper";
+import update from "immutability-helper";
 
 import { orderDetail as styles, alert as alertStyle } from "./styles";
 import { Page, Text, Button, Icon, Comfirm, Alert, Visible } from "components";
@@ -13,19 +16,29 @@ import {
 import { iconSource, Tip } from "commons";
 import { back } from "actions";
 
+const { width: screenWidth } = Dimensions.get("window");
 const tabs = [
     { label: "匹配中", value: "0" },
-    { label: "代付款", value: "1" },
+    { label: "待付款", value: "1" },
     { label: "待确认", value: "2" },
     { label: "成长中", value: "3" },
     { label: "已完成", value: "4" }
 ];
+const getLabelByValue = value => {
+    const label = "";
+    for (let i = 0; i < tabs.length; i++) {
+        if (String(tabs[i].value) === value) {
+            return tabs[i].label;
+        }
+    }
+    return label;
+};
 const getListByState = (state, data) => {
     const {
-        number,
+        or_number,
+        assign_money,
         date,
         statenoice,
-        buy_money,
         predictmatchdate,
         growup_endtime
     } = data;
@@ -34,11 +47,11 @@ const getListByState = (state, data) => {
             return [
                 {
                     label: "转让编号：",
-                    value: number
+                    value: or_number
                 },
                 {
                     label: "转让数额：",
-                    value: "4000.00"
+                    value: assign_money
                 },
                 // {
                 //     label: "匹配时间：",
@@ -46,7 +59,7 @@ const getListByState = (state, data) => {
                 // },
                 {
                     label: "匹配状态： ",
-                    value: statenoice
+                    value: getLabelByValue(state)
                 },
                 {
                     label: "预计匹配时间：",
@@ -59,11 +72,11 @@ const getListByState = (state, data) => {
             return [
                 {
                     label: "转让编号：",
-                    value: number
+                    value: or_number
                 },
                 {
                     label: "转让数额：",
-                    value: buy_money
+                    value: assign_money
                 },
                 {
                     label: "当前状态： ",
@@ -78,11 +91,11 @@ const getListByState = (state, data) => {
             return [
                 {
                     label: "转让编号：",
-                    value: number
+                    value: or_number
                 },
                 {
                     label: "转让数额：",
-                    value: "4000.00"
+                    value: assign_money
                 },
                 {
                     label: "匹配时间：",
@@ -105,11 +118,11 @@ const getListByState = (state, data) => {
             return [
                 {
                     label: "转让编号：",
-                    value: number
+                    value: or_number
                 },
                 {
                     label: "转让数额：",
-                    value: "4000.00"
+                    value: assign_money
                 },
                 {
                     label: "匹配时间：",
@@ -142,6 +155,11 @@ export default class SellOrderDetail extends PureComponent {
         alert: {
             visible: false,
             content: ""
+        },
+        swiper: {
+            visible: false,
+            data: [],
+            size: []
         }
     };
     getLabelByValue(value) {
@@ -156,14 +174,14 @@ export default class SellOrderDetail extends PureComponent {
     renderUser() {
         const {
             state,
-            user_id,
+            assign_account,
             buy_money,
             matchdate,
-            pay_endtime,
+            assign_endtime,
             assign_bank_name,
             assign_bank_card,
-            assign_phone,
-            type
+            assign_mobile,
+            assign_logo
         } = this.props.navigation.state.params;
         if (state === "0" || state === "3" || state === "4") {
             return null;
@@ -172,12 +190,12 @@ export default class SellOrderDetail extends PureComponent {
             <View style={{ marginTop: 30 }}>
                 <Text style={styles.itemLabelText}>转让用户：</Text>
                 <View style={styles.header}>
-                    <Icon source={iconSource[type]} size={60} />
+                    <Icon source={{ uri: host + assign_logo }} size={60} />
                     <View style={styles.headerContent}>
                         <View style={styles.headerTop}>
                             <Text style={styles.productNameText}>
                                 ID:
-                                {user_id}
+                                {assign_account}
                             </Text>
                         </View>
                         <View style={styles.headerBottom}>
@@ -196,7 +214,7 @@ export default class SellOrderDetail extends PureComponent {
                     {this.renderList([
                         {
                             label: "付款倒计时：",
-                            value: pay_endtime,
+                            value: assign_endtime,
                             valueStyle: {
                                 color: "#FD4C73"
                             }
@@ -212,12 +230,12 @@ export default class SellOrderDetail extends PureComponent {
                         },
                         {
                             label: "收款人电话：",
-                            value: assign_phone
+                            value: assign_mobile
                         },
                         state === "1"
                             ? {
                                   label: "收款确认：",
-                                  value: "代付款",
+                                  value: "待付款",
                                   valueStyle: {
                                       color: "#00B415"
                                   },
@@ -241,6 +259,7 @@ export default class SellOrderDetail extends PureComponent {
         );
     }
     renderList = data => {
+        console.log(this.props.navigation.state.params, "[");
         const { state } = this.props.navigation.state.params;
         return (data
             ? data
@@ -309,17 +328,30 @@ export default class SellOrderDetail extends PureComponent {
                         <Visible show={state === "1" || state === "2"}>
                             {voucher.map(uri => {
                                 return (
-                                    <View style={styles.voucherItem} key={uri}>
+                                    <Button
+                                        onPress={() => {
+                                            console.log(voucher);
+                                            this.setState({
+                                                swiper: {
+                                                    visible: true,
+                                                    data: voucher,
+                                                    size: []
+                                                }
+                                            });
+                                        }}
+                                        style={styles.voucherItem}
+                                        key={uri}
+                                    >
                                         <Image
                                             source={{ uri: host + uri }}
                                             style={styles.voucherItemImg}
                                             resizeMode="stretch"
                                         />
-                                    </View>
+                                    </Button>
                                 );
                             })}
                         </Visible>
-                        <Visible show={state === "1"}>
+                        <Visible show={state === "1" && voucher.length === 0}>
                             <View
                                 style={{
                                     alignItems: "center",
@@ -363,23 +395,23 @@ export default class SellOrderDetail extends PureComponent {
     render() {
         const {
             alert: { visible, content },
+            swiper,
             comfirm
         } = this.state;
         const {
             name,
             money,
             state,
-            date,
-            percent,
+            matchdate,
             number,
-            type
+            icon
         } = this.props.navigation.state.params;
         return (
             <Page title="转让订单详情">
                 <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
                     <View style={styles.container}>
                         <View style={styles.header}>
-                            <Icon source={iconSource[type]} size={60} />
+                            <Icon source={icon} size={60} />
                             <View style={styles.headerContent}>
                                 <View style={styles.headerTop}>
                                     <Text style={styles.productNameText}>
@@ -392,11 +424,7 @@ export default class SellOrderDetail extends PureComponent {
                                 <View style={styles.headerBottom}>
                                     <Text style={styles.productTimeText}>
                                         排单时间：
-                                        {date}
-                                    </Text>
-                                    <Text style={styles.productScheduleText}>
-                                        {percent}
-                                        %成长值
+                                        {matchdate}
                                     </Text>
                                 </View>
                             </View>
@@ -489,6 +517,77 @@ export default class SellOrderDetail extends PureComponent {
                             </Button>
                         </View>
                     </Alert>
+                    <Visible show={swiper.visible && swiper.data.length}>
+                        <Modal>
+                            <View style={styles.swiperContainer}>
+                                <Button
+                                    onPress={() => {
+                                        this.setState(
+                                            update(this.state, {
+                                                swiper: {
+                                                    visible: {
+                                                        $set: false
+                                                    }
+                                                }
+                                            })
+                                        );
+                                    }}
+                                    style={styles.close}
+                                >
+                                    <Icon
+                                        source={iconSource.closeSwiper}
+                                        size={20}
+                                    />
+                                </Button>
+                                <Swiper key={swiper.data.length}>
+                                    {swiper.data.map((uri, i) => {
+                                        const src = host + uri;
+                                        Image.getSize(src, (width, height) => {
+                                            const nextSize = _.cloneDeep(
+                                                this.state.swiper.size
+                                            );
+                                            if (
+                                                (nextSize[i] || {}).src !== src
+                                            ) {
+                                                const radioWidth =
+                                                    screenWidth - 40;
+                                                const radio =
+                                                    width / radioWidth;
+                                                const radioHeight =
+                                                    height * radio;
+                                                nextSize[i] = {
+                                                    width: radioWidth,
+                                                    height: radioHeight,
+                                                    src
+                                                };
+                                                this.setState(
+                                                    update(this.state, {
+                                                        swiper: {
+                                                            size: {
+                                                                $set: nextSize
+                                                            }
+                                                        }
+                                                    })
+                                                );
+                                            }
+                                        });
+
+                                        return (
+                                            <View
+                                                style={styles.swiper}
+                                                key={uri}
+                                            >
+                                                <Image
+                                                    style={swiper.size[i]}
+                                                    source={{ uri: src }}
+                                                />
+                                            </View>
+                                        );
+                                    })}
+                                </Swiper>
+                            </View>
+                        </Modal>
+                    </Visible>
                 </ScrollView>
             </Page>
         );

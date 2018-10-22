@@ -10,6 +10,7 @@ import {
 import { Page, Text, Input, Button, Icon, Alert } from "components";
 import { iconSource, Tip } from "commons";
 import { queuingMoney } from "apis";
+import { back, getMyWallet } from "actions";
 
 const list = [
     {
@@ -83,7 +84,8 @@ export default class TransferManure extends PureComponent {
                                 // });
                                 queuingMoney({ account, queuing_money }).then(
                                     res => {
-                                        console.log(res, "res");
+                                        back();
+                                        getMyWallet();
                                         Tip.success("排单币转发成功！");
                                     }
                                 );

@@ -13,12 +13,16 @@ import ScrollableTabView from "react-native-scrollable-tab-view";
 const tabs = [
     { label: "全部", value: "all" },
     { label: "匹配中", value: "0" },
-    { label: "代付款", value: "1" },
+    { label: "待付款", value: "1" },
     { label: "待确认", value: "2" },
     //{ label: '成长值', value: '3' },
     { label: "已完成", value: "4" }
 ];
-
+const iconMap = {
+    0: iconSource.flower,
+    1: iconSource.jingtai,
+    2: iconSource.dongtai
+};
 @connect(({ data, loading }) => ({
     orderSellFlowerList: data.orderSellFlowerList,
     loading
@@ -42,19 +46,20 @@ export default class OrderSellFlowerList extends PureComponent {
         }
         return label;
     }
-    renderItem = ({
-        item: { state, name, money, number, date, percent, type }
-    }) => {
+    renderItem = ({ item: { state, name, money, number, date, type } }) => {
         return (
             <Button
                 style={styles.item}
                 onPress={() => {
-                    getorderSellFlowerInfo({ number, state }).then(res => {
-                        navigate({ routeName: "SellOrderDetail", params: res });
+                    getorderSellFlowerInfo({ number }).then(res => {
+                        navigate({
+                            routeName: "SellOrderDetail",
+                            params: { ...res, icon: iconMap[type] }
+                        });
                     });
                 }}
             >
-                <Icon source={iconSource[type]} size={60} />
+                <Icon source={iconMap[type]} size={60} />
                 <View style={styles.itemContent}>
                     <View style={styles.itemTop}>
                         <Text style={styles.itemTitleText}>
@@ -74,10 +79,6 @@ export default class OrderSellFlowerList extends PureComponent {
                         <Text style={styles.text}>
                             拍单时间
                             {date}
-                        </Text>
-                        <Text style={styles.text}>
-                            {percent}
-                            %成长值
                         </Text>
                     </View>
                 </View>

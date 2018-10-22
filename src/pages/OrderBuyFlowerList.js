@@ -39,22 +39,27 @@ export default class OrderBuyFlowerList extends PureComponent {
         return label;
     }
     renderItem = ({
-        item: { state, name, money, number, date, percent, type }
+        item: { state, name, or_money, number, or_number, date, percent, type }
     }) => {
         return (
             <Button
                 style={styles.item}
                 onPress={() => {
-                    getorderBuyFlowerInfo({ number, state }).then(res => {
-                        navigate({ routeName: "BuyOrderDetail", params: res });
-                    });
+                    getorderBuyFlowerInfo({ number: or_number, state }).then(
+                        res => {
+                            navigate({
+                                routeName: "BuyOrderDetail",
+                                params: res
+                            });
+                        }
+                    );
                 }}
             >
                 <Icon source={iconSource[type]} style={styles.icon} />
                 <View style={styles.itemContent}>
                     <View style={styles.itemTop}>
                         <Text style={styles.itemTitleText}>
-                            {name}|{money}
+                            {name}|{or_money}
                         </Text>
                         <Text style={styles.stateText}>
                             {this.getLabelByValue(state)}
