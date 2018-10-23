@@ -34,10 +34,12 @@ export default class ChooseBuyFlower extends PureComponent {
                             onPress={() => {
                                 console.log(this.state);
                                 if (this.props.home.bankstate !== "1") {
-                                    Tip.fail("请先认证银行卡信息");
-                                    navigate({
-                                        routeName: "AccountInfo"
-                                    });
+                                    Tip.fail("收款信息未认证,请先认证收款信息");
+                                    setTimeout(() => {
+                                        navigate({
+                                            routeName: "AccountInfo"
+                                        });
+                                    }, 1000);
                                 } else {
                                     navigate({
                                         routeName: "Buy",

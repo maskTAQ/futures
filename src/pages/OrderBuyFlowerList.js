@@ -20,15 +20,32 @@ const tabs = [
     { label: "已完成", value: "4" }
 ];
 
-@connect(({ data, loading }) => ({
+@connect(({ data, loading, nav }) => ({
     orderBuyFlowerList: data.orderBuyFlowerList,
-    loading
+    loading,
+    nav
 }))
 export default class OrderBuyFlowerList extends PureComponent {
     static propTypes = {
         orderBuyFlowerList: PropTypes.object,
-        loading: PropTypes.object
+        loading: PropTypes.object,
+        nav: PropTypes.object
     };
+    UNSAFE_componentWillMount() {
+        getOrderBuyFlowerList();
+    }
+    // UNSAFE_componentWillReceiveProps(nextProps) {
+    //     const {index,routes} = this.props.nav;
+    //     const {index:nextIndex,routes:nextRoutes} = nextProps.nav;
+    //     console.log(routes.length,routes[index].routeName ,nextRoutes[nextIndex].routeName)
+    //     if(routes[index].routeName !== nextRoutes[nextIndex].routeName && nextRoutes[nextIndex].routeName === 'OrderBuyFlowerList'){
+
+    //         console.log('更新列表')
+    //     }
+    // }
+    // componentWillUnmount(){
+    //     console.log('卸载')
+    // }
     getLabelByValue(value) {
         const label = "";
         for (let i = 0; i < tabs.length; i++) {

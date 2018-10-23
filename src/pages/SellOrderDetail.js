@@ -14,9 +14,9 @@ import {
     orderComplaint
 } from "apis";
 import { iconSource, Tip } from "commons";
-import { back } from "actions";
+import { back, getOrderSellFlowerList } from "actions";
 
-const { width: screenWidth } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const tabs = [
     { label: "匹配中", value: "0" },
     { label: "待付款", value: "1" },
@@ -380,6 +380,7 @@ export default class SellOrderDetail extends PureComponent {
                                 orderSellSureCollection({ number }).then(
                                     res => {
                                         Tip.success("确认收款成功!");
+                                        getOrderSellFlowerList();
                                         back();
                                     }
                                 );
@@ -549,17 +550,36 @@ export default class SellOrderDetail extends PureComponent {
                                             if (
                                                 (nextSize[i] || {}).src !== src
                                             ) {
-                                                const radioWidth =
-                                                    screenWidth - 40;
-                                                const radio =
-                                                    width / radioWidth;
-                                                const radioHeight =
-                                                    height * radio;
-                                                nextSize[i] = {
-                                                    width: radioWidth,
-                                                    height: radioHeight,
-                                                    src
-                                                };
+                                                console.log(
+                                                    width,
+                                                    height,
+                                                    "width > height"
+                                                );
+                                                if (width > height) {
+                                                    const radioWidth =
+                                                        screenWidth - 40;
+                                                    const radio =
+                                                        width / radioWidth;
+                                                    const radioHeight =
+                                                        height / radio;
+                                                    nextSize[i] = {
+                                                        width: radioWidth,
+                                                        height: radioHeight,
+                                                        src
+                                                    };
+                                                } else {
+                                                    const radioHeight =
+                                                        screenHeight - 40;
+                                                    const radio =
+                                                        height / radioHeight;
+                                                    const radioWidth =
+                                                        width / radio;
+                                                    nextSize[i] = {
+                                                        width: radioWidth,
+                                                        height: radioHeight,
+                                                        src
+                                                    };
+                                                }
                                                 this.setState(
                                                     update(this.state, {
                                                         swiper: {

@@ -25,7 +25,7 @@ const list = [
         routeName: "ChooseBuyFlower"
     },
     {
-        icon: require("./img/repo.png"),
+        icon: require("./img/money.png"),
         label: "动态出售",
         routeName: "SellRedPacket",
         params: {
@@ -36,7 +36,7 @@ const list = [
         }
     },
     {
-        icon: require("./img/money.png"),
+        icon: require("./img/repo.png"),
         label: "静态出售",
         routeName: "SellRedPacket",
         params: {
@@ -208,17 +208,19 @@ export default class Tabbar extends Component {
                                                             .bankstate !== "1"
                                                     ) {
                                                         Tip.fail(
-                                                            "请先认证银行卡信息"
+                                                            "收款信息未认证,请先认证收款信息"
                                                         );
-                                                        this.props.dispatch(
-                                                            NavigationActions.navigate(
-                                                                {
-                                                                    routeName:
-                                                                        "AccountInfo",
-                                                                    params
-                                                                }
-                                                            )
-                                                        );
+                                                        setTimeout(() => {
+                                                            this.props.dispatch(
+                                                                NavigationActions.navigate(
+                                                                    {
+                                                                        routeName:
+                                                                            "AccountInfo",
+                                                                        params
+                                                                    }
+                                                                )
+                                                            );
+                                                        }, 1000);
                                                     } else {
                                                         this.props.dispatch(
                                                             NavigationActions.navigate(

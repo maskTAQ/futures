@@ -43,7 +43,13 @@ export default class Home extends PureComponent {
                 console.log(e);
             });
     }
-    TimeDown = endDate => {
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.home && nextProps.home.date_end) {
+            this.TimeDown(nextProps.home.date_end);
+        }
+    }
+    TimeDown = endDateStr => {
+        const endDate = new Date(endDateStr);
         //当前时间
         const nowDate = new Date();
         //相差的总秒数
@@ -63,7 +69,7 @@ export default class Home extends PureComponent {
         this.setState({
             timeDown: `${hours}:${minutes}:${seconds}`
         });
-        setTimeout(() => {
+        this.timeout = setTimeout(() => {
             this.TimeDown(endDate);
         }, 1000);
     };
@@ -86,7 +92,7 @@ export default class Home extends PureComponent {
                     <View style={styles.itemContent}>
                         <View style={styles.itemTop}>
                             <Text style={styles.itemTitleText}>{name}</Text>
-                            <Text style={styles.statusText}>{percent}%</Text>
+                            <Text style={styles.statusText}>{percent}</Text>
                         </View>
                         <View style={styles.itemCenter}>
                             <Text style={styles.itemTitleText}>成长中</Text>
@@ -105,7 +111,7 @@ export default class Home extends PureComponent {
         );
     };
     renderItemT = ({ item }) => {
-        const { percent, money, state, name, type } = item;
+        const { money, state, name, type } = item;
         return (
             <View style={styles.item}>
                 <Icon source={iconSource[type]} size={68} />
@@ -119,9 +125,8 @@ export default class Home extends PureComponent {
                             disabledTextStyle={{ color: "#999" }}
                             textStyle={styles.buyButtonText}
                             onPress={() => {
-                                console.log(this.state);
                                 if (this.props.home.bankstate !== "1") {
-                                    Tip.fail("请先认证银行卡信息");
+                                    Tip.fail("收款信息未认证,请先认证收款信息");
                                     navigate({
                                         routeName: "AccountInfo"
                                     });
@@ -139,19 +144,20 @@ export default class Home extends PureComponent {
                     <View style={styles.itemCenter}>
                         <Text style={styles.itemTitleText}>{money}</Text>
                     </View>
-                    <Text style={styles.itemDetail}>
-                        预计每个生长周期收入
-                        {percent}
-                    </Text>
+                    {/*
+                         <Text style={styles.itemDetail}>
+                         预计每个生长周期收入
+                         {percent}
+                     </Text>
+                        */}
                 </View>
             </View>
         );
     };
     render() {
-        const { isModalVisible, notif } = this.state;
+        const { isModalVisible, notif, timeDown } = this.state;
         const { home = {} } = this.props;
-        const { growuplist = [], buylist = [], date_end } = home;
-        console.log(growuplist, "growuplist");
+        const { growuplist = [], buylist = [] } = home;
         return (
             <View style={styles.container}>
                 <StatusBar
@@ -181,7 +187,9 @@ export default class Home extends PureComponent {
                     data={home}
                 />
                 <Visible show={growuplist.length}>
-                    <View style={styles.list}>{this.has(growuplist[0])}</View>
+                    <View style={styles.hasList}>
+                        {this.has(growuplist[0])}
+                    </View>
                 </Visible>
 
                 <View style={styles.store}>
@@ -195,18 +203,23 @@ export default class Home extends PureComponent {
                         </View>
                         <Text style={styles.countDownText}>
                             周期剩余时间:
-                            <Text style={{ color: "#fa4f75" }}>{date_end}</Text>
+                            <Text style={{ color: "#fa4f75" }}>{timeDown}</Text>
                         </Text>
                     </View>
-                    <DataView
-                        injectData={true}
-                        dataSource={buylist}
-                        refreshing={false}
-                        isLoadingMore={false}
-                        getData={getHome}
-                        isPulldownLoadMore={false}
-                        renderItem={this.renderItemT}
-                    />
+                    <View style={styles.list}>
+                        <DataView
+                            injectData={true}
+                            dataSource={buylist}
+                            refreshing={false}
+                            isLoadingMore={false}
+                            getData={getHome}
+                            isPulldownLoadMore={false}
+                            ItemSeparatorComponent={() => (
+                                <View style={styles.itemBorder} />
+                            )}
+                            renderItem={this.renderItemT}
+                        />
+                    </View>
                 </View>
                 <Modal
                     animationType="none"

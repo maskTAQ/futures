@@ -114,7 +114,8 @@ export default class SellRedPacket extends PureComponent {
                                         .then(res => {
                                             this.setState(
                                                 {
-                                                    isVerifyVisible: false
+                                                    isVerifyVisible: false,
+                                                    password: ""
                                                 },
                                                 () => {
                                                     sellFlower({

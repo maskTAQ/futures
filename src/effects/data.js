@@ -1,5 +1,6 @@
 import { take, fork } from "redux-saga/effects";
 import taskWrapper from "./taskWrapper";
+import { Tip } from "commons";
 
 import {
     getTeamMember,
@@ -68,7 +69,15 @@ export default function*() {
                         module: "data",
                         field: "orderBuyFlowerList",
                         type,
-                        saveDataToRedux: getOrderBuyFlowerList,
+                        saveDataToRedux: () => {
+                            return getOrderBuyFlowerList({
+                                handleCatch: false
+                            }).catch(e => {
+                                Tip.fail(
+                                    "更新订单列表失败,请下拉刷新来获取最新的订单的状态"
+                                );
+                            });
+                        },
                         params: payload
                     })
                 );

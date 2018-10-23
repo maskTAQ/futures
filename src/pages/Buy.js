@@ -7,7 +7,7 @@ import { buy as styles, alert as alertStyle } from "./styles";
 import { Page, Text, Button, Icon, Alert, Input } from "components";
 import { iconSource, Tip } from "commons";
 import { tradePassword, buyFlower } from "apis";
-import { getMyWallet } from "actions";
+import { getMyWallet, getOrderBuyFlowerList, navigate } from "actions";
 
 @connect(({ data, user }) => {
     return { user: user.main, wallet: data.wallet };
@@ -136,18 +136,18 @@ export default class Buy extends PureComponent {
                                         .then(res => {
                                             this.setState(
                                                 {
-                                                    isVerifyVisible: false
+                                                    isVerifyVisible: false,
+                                                    password: ""
                                                 },
                                                 () => {
                                                     buyFlower({ type }).then(
                                                         res => {
                                                             //更新购买列表
-                                                            this.props.dispatch(
-                                                                {
-                                                                    type:
-                                                                        "getOrderBuyFlowerList"
-                                                                }
-                                                            );
+                                                            getOrderBuyFlowerList();
+                                                            navigate({
+                                                                routeName:
+                                                                    "OrderBuyFlowerList"
+                                                            });
                                                             Tip.success(
                                                                 "发布成功"
                                                             );
@@ -168,7 +168,8 @@ export default class Buy extends PureComponent {
                                 textStyle={alertStyle.cancelText}
                                 onPress={() => {
                                     this.setState({
-                                        isVerifyVisible: false
+                                        isVerifyVisible: false,
+                                        password: ""
                                     });
                                 }}
                             >

@@ -21,7 +21,7 @@ export default class Icon extends Component {
     };
     state = {
         //当图片资源为网络资源时的state
-        pending: true,
+        pending: false,
         status: "" //emua {'success','error'}
     };
     render() {
@@ -54,18 +54,18 @@ export default class Icon extends Component {
                         ]}
                         resizeMode="contain"
                         //tintColor={color}
-                        onError={() => {
-                            this.setState({
-                                pending: false,
-                                status: "error"
-                            });
-                        }}
-                        onLoad={() => {
-                            this.setState({
-                                pending: false,
-                                status: "success"
-                            });
-                        }}
+                        // onError={() => {
+                        //     this.setState({
+                        //         pending: false,
+                        //         status: "error"
+                        //     });
+                        // }}
+                        // onLoad={() => {
+                        //     this.setState({
+                        //         pending: false,
+                        //         status: "success"
+                        //     });
+                        // }}
                     />
                 </View>
             </View>

@@ -32,10 +32,11 @@ export default class OrderSellFlowerList extends PureComponent {
         orderSellFlowerList: PropTypes.object,
         loading: PropTypes.object
     };
+
     UNSAFE_componentWillMount() {
-        if (!this.props.orderSellFlowerList) {
-            getOrderSellFlowerList();
-        }
+        //if (!this.props.orderSellFlowerList) {
+        getOrderSellFlowerList();
+        //}
     }
     getLabelByValue(value) {
         const label = "";

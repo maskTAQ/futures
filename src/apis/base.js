@@ -71,10 +71,21 @@ const base = (type, url, params, config) => {
                 try {
                     resData = eval("(" + res.data + ")");
                 } catch (e) {
-                    //
+                    try {
+                        resData = eval(
+                            "(" +
+                                res.data
+                                    .replace(/\\/gm, "")
+                                    .replace(/,""/gm, "") +
+                                ")"
+                        );
+                    } catch (e) {
+                        //
+                    }
                 }
+
                 const { code, data, msg } = resData;
-                console.log(params, resData, url);
+                console.log(res.data, url);
                 Tip.dismiss();
                 if (Number(code) === 401) {
                     Tip.fail(msg);

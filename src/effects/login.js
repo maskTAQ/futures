@@ -28,7 +28,11 @@ export default function*() {
                                     Storage.set("Token", res.access_token);
                                     navigate({ routeName: "TabNavigator" });
 
-                                    ["getHome", "getMyWallet"].forEach(type => {
+                                    [
+                                        "getHome",
+                                        "getMyWallet",
+                                        "getNoticeState"
+                                    ].forEach(type => {
                                         store.dispatch({ type });
                                     });
                                     // if (other.preRouteParamsAction) {

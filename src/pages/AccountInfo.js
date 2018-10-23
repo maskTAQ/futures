@@ -45,6 +45,13 @@ const inputList = [
                 secureTextEntry: true
             },
             key: "traders_password"
+        },
+        {
+            placeholder: "确认交易密码",
+            props: {
+                secureTextEntry: true
+            },
+            key: "traders_passwordT"
         }
     ]
     // [
@@ -93,7 +100,10 @@ export default class AccountInfo extends PureComponent {
                                 {group
                                     .filter(({ placeholder }) => {
                                         return !(
-                                            placeholder === "交易密码" &&
+                                            [
+                                                "确认交易密码",
+                                                "交易密码"
+                                            ].includes(placeholder) &&
                                             bankstate === "1"
                                         );
                                     })
@@ -132,25 +142,30 @@ export default class AccountInfo extends PureComponent {
                                 bankpayee_name,
                                 bank_phone,
                                 alipay_account,
-                                traders_password
+                                traders_password,
+                                traders_passwordT
                             } = this.state;
-                            if (bankstate === "1") {
-                                this.setState({
-                                    isVerifyVisible: true
-                                });
+                            if (traders_passwordT !== traders_password) {
+                                Tip.fail("俩次输入的交易密码不一致!");
                             } else {
-                                collectionInfo({
-                                    bank_card_number,
-                                    bank_name,
-                                    bankpayee_name,
-                                    bank_phone,
-                                    alipay_account,
-                                    traders_password
-                                }).then(() => {
-                                    getHome();
-                                    setTimeout(getBanckInfo, 1000);
-                                    Tip.success("账户信息修改成功");
-                                });
+                                if (bankstate === "1") {
+                                    this.setState({
+                                        isVerifyVisible: true
+                                    });
+                                } else {
+                                    collectionInfo({
+                                        bank_card_number,
+                                        bank_name,
+                                        bankpayee_name,
+                                        bank_phone,
+                                        alipay_account,
+                                        traders_password
+                                    }).then(() => {
+                                        getHome();
+                                        setTimeout(getBanckInfo, 1000);
+                                        Tip.success("账户信息修改成功");
+                                    });
+                                }
                             }
                         }}
                     >

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { inviteList as styles } from "./styles";
 import { Page, DataView, Text, Icon, Button } from "components";
 import { iconSource } from "commons";
-import { getInviteList, getMyWallet } from "actions";
+import { getInviteList, getMyWallet, getTeam } from "actions";
 import { inviteSure, host } from "apis";
 
 const Item = ({ item }) => {
@@ -42,6 +42,8 @@ const Item = ({ item }) => {
                             getInviteList();
                             //获取邀请码数据
                             getMyWallet();
+                            //更新团队
+                            getTeam();
                         });
                     }}
                     style={styles.agree}
@@ -72,12 +74,12 @@ export default class InviteList extends PureComponent {
         isModalVisible: false
     };
     UNSAFE_componentWillMount() {
-        if (!this.props.inviteList) {
-            getInviteList();
-        }
-        if (!this.props.wallet) {
-            getMyWallet();
-        }
+        //f (!this.props.inviteList) {
+        getInviteList();
+        //}
+        //if (!this.props.wallet) {
+        getMyWallet();
+        //}
     }
     render() {
         const { list } = this.props.inviteList || { list: [] };

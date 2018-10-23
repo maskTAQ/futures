@@ -1,22 +1,23 @@
 import React, { PureComponent } from "react";
-import { View, ScrollView } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import _ from "lodash";
 import PropTypes from "prop-types";
 
-import { Text, Icon, Button } from "components";
+import { Text, Icon, Button, RefreshContainer } from "components";
 import { navigate, getTeam } from "actions";
 import { team as styles } from "../styles";
 import Tree from "./Tree";
 import Search from "./Search";
 import { iconSource } from "commons";
 
-@connect(({ data }) => {
-    return { team: data.team };
+@connect(({ data, loading }) => {
+    return { team: data.team, loading };
 })
 export default class Team extends PureComponent {
     static propTypes = {
-        team: PropTypes.object
+        team: PropTypes.object,
+        loading: PropTypes.object
     };
     state = {
         data: [],
@@ -56,7 +57,6 @@ export default class Team extends PureComponent {
     render() {
         const { searchValue, data = [] } = this.state;
         const { total = 0 } = this.props.team || {};
-        console.log(data, "data");
         return (
             <View style={styles.container}>
                 <Search
@@ -93,14 +93,17 @@ export default class Team extends PureComponent {
                     当前团队总人数：
                     <Text style={styles.numText}>{total}</Text> 人
                 </Text>
-                <ScrollView>
+                <RefreshContainer
+                    requestRefresh={getTeam}
+                    refreshing={this.props.loading.data.team.loading}
+                >
                     <Tree
                         data={data}
                         requestTreeNodeVisibleChange={
                             this.onTreeNodeVisibleChange
                         }
                     />
-                </ScrollView>
+                </RefreshContainer>
             </View>
         );
     }

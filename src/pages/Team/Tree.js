@@ -9,7 +9,14 @@ import { iconSource, scale } from "commons";
 const styles = teamStyles.tree;
 
 const TreeNode = ({ item, depth, requestTreeNodeVisibleChange }) => {
-    const { showChildren = true, team = [], user_id, level, freeze } = item;
+    const {
+        showChildren = true,
+        team = [],
+        user_id,
+        level,
+        state,
+        verify
+    } = item;
     return (
         <View style={styles.treeNode} key={user_id + level}>
             <View style={styles.treeNodeContent}>
@@ -54,9 +61,14 @@ const TreeNode = ({ item, depth, requestTreeNodeVisibleChange }) => {
                     <View style={styles.lv}>
                         <Text style={styles.lvText}>v{level}</Text>
                     </View>
-                    <Icon source={iconSource.vipIcon} style={styles.vipIcon} />
+                    <Visible show={Number(verify) === 1}>
+                        <Icon
+                            source={iconSource.vipIcon}
+                            style={styles.vipIcon}
+                        />
+                    </Visible>
                 </View>
-                <Visible show={freeze}>
+                <Visible show={Number(state) === 1}>
                     <View style={styles.treeNodeRight}>
                         <Text style={styles.freezeText}>冻结</Text>
                     </View>

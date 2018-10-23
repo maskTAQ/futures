@@ -21,6 +21,7 @@
     "react-native-fs": "^2.11.18",
     "react-native-image-picker": "^0.27.1",
     "react-native-scrollable-tab-view": "^0.8.0",
+    "react-native-swiper": "^1.5.13",
     "react-navigation": "~2.3.1",
     "react-navigation-redux-helpers": "~2.0.2",
     "react-redux": "^5.0.7",

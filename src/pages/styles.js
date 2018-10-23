@@ -159,19 +159,26 @@ const home = {
         lineHeight: scale(20),
         color: "#999"
     },
-
-    list: {
+    hasList: {
         marginTop: scale(6),
-        height: scale(76),
+        paddingLeft: scale(16),
+        paddingRight: scale(16),
         backgroundColor: "#fff"
+    },
+    list: {
+        flex: 1,
+        paddingLeft: scale(16),
+        paddingRight: scale(16)
+    },
+    itemBorder: {
+        height: 1,
+        backgroundColor: "#f7f7f7"
     },
     item: {
         height: scale(76),
         flexDirection: "row",
         paddingTop: scale(4),
-        paddingBottom: scale(4),
-        paddingLeft: scale(16),
-        paddingRight: scale(16)
+        paddingBottom: scale(4)
     },
     itemContent: {
         flex: 1,
@@ -197,7 +204,8 @@ const home = {
     itemCenter: {
         flex: 1,
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignItems: "center"
     },
     itemTitleText: {
         fontSize: scale(16),

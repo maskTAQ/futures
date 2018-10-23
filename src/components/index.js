@@ -15,3 +15,4 @@ export { default as Text } from "./text";
 export { default as Visible } from "./Visible";
 export { default as Comfirm } from "./Comfirm";
 export { default as Tip } from "./Tip";
+export { default as RefreshContainer } from "./RefreshContainer";

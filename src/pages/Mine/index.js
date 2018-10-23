@@ -8,6 +8,7 @@ import { mine as styles } from "../styles";
 import { navigate, getMyWallet, getNoticeState } from "actions";
 import { logout, setNoticeState } from "apis";
 import UserHeader from "./Header";
+import { Tip } from "commons";
 
 const list = [
     [
@@ -27,7 +28,8 @@ const list = [
     return {
         wallet: data.wallet,
         user: user.main,
-        noticeState: data.noticeState
+        noticeState: data.noticeState,
+        home: data.home
     };
 })
 export default class Mine extends PureComponent {
@@ -35,7 +37,8 @@ export default class Mine extends PureComponent {
         wallet: PropTypes.object,
         user: PropTypes.object,
         dispatch: PropTypes.func,
-        noticeState: PropTypes.object
+        noticeState: PropTypes.object,
+        home: PropTypes.object
     };
     UNSAFE_componentWillMount() {
         // if (!this.props.wallet) {
@@ -80,7 +83,35 @@ export default class Mine extends PureComponent {
                                                         backgroundColor: "#fff"
                                                     }}
                                                     onPress={() => {
-                                                        console.log(12121);
+                                                        if (
+                                                            routeName ===
+                                                            "ChangeDealPassword"
+                                                        ) {
+                                                            if (
+                                                                this.props.home
+                                                                    .bankstate !==
+                                                                "1"
+                                                            ) {
+                                                                Tip.fail(
+                                                                    "收款信息未认证,请先认证收款信息"
+                                                                );
+                                                                setTimeout(
+                                                                    () => {
+                                                                        navigate(
+                                                                            {
+                                                                                routeName:
+                                                                                    "AccountInfo"
+                                                                            }
+                                                                        );
+                                                                    },
+                                                                    1000
+                                                                );
+                                                            } else {
+                                                                navigate({
+                                                                    routeName
+                                                                });
+                                                            }
+                                                        }
                                                         navigate({
                                                             routeName
                                                         });

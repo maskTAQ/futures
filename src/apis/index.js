@@ -29,11 +29,11 @@ const userInfo = () => {
     return post("/Api/userInfo");
 };
 const getTeamMember = () => {
-    return post("/Api/teamMember");
+    return post("/Api/teamMember", null, { loading: false });
 };
 
-const getOrderBuyFlowerList = () => {
-    return post("/Api/orderBuyFlowerList", null, { loading: false });
+const getOrderBuyFlowerList = config => {
+    return post("/Api/orderBuyFlowerList", null, { loading: false, ...config });
 };
 const getorderBuyFlowerInfo = params => {
     return post("/Api/orderBuyFlowerInfo", {
