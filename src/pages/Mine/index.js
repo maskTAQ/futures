@@ -52,7 +52,8 @@ export default class Mine extends PureComponent {
         const {
             wallet: { total_money = 0 } = {},
             user: { account, level } = {},
-            noticeState: { sms_notice } = {}
+            noticeState: { sms_notice } = {},
+            home = {}
         } = this.props;
         return (
             <ScrollView>
@@ -67,6 +68,10 @@ export default class Mine extends PureComponent {
                         account={account}
                         total_money={total_money}
                         level={level}
+                        logo={home.logo}
+                        bankstate={
+                            this.props.home ? this.props.home.bankstate : "0"
+                        }
                     />
                     <View style={styles.list}>
                         {list.map((group, i) => {
@@ -111,10 +116,11 @@ export default class Mine extends PureComponent {
                                                                     routeName
                                                                 });
                                                             }
+                                                        } else {
+                                                            navigate({
+                                                                routeName
+                                                            });
                                                         }
-                                                        navigate({
-                                                            routeName
-                                                        });
                                                     }}
                                                 >
                                                     <Text

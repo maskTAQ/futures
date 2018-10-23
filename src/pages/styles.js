@@ -761,7 +761,7 @@ const changeDealPassword = {
         borderColor: "#F2F2F2"
     },
     itemLabelText: {
-        //width: scale(86),
+        width: scale(86),
         marginRight: scale(6),
         fontSize: scale(16),
         color: "#333"

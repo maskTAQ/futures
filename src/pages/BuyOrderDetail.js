@@ -223,12 +223,9 @@ export default class BuyOrderDetail extends PureComponent {
             assign_bank_name,
             assign_bank_card,
             assign_mobile,
-            type
+            assign_logo,
+            alipay_account
         } = this.props.navigation.state.params;
-        console.log(
-            this.props.navigation.state.params,
-            "this.props.navigation.state.params"
-        );
         if (state === "0" || state === "3" || state === "4") {
             return null;
         }
@@ -236,7 +233,7 @@ export default class BuyOrderDetail extends PureComponent {
             <View style={{ marginTop: 30 }}>
                 <Text style={styles.itemLabelText}>转让用户：</Text>
                 <View style={styles.header}>
-                    <Icon source={iconSource[type]} size={60} />
+                    <Icon source={{ uri: host + assign_logo }} size={60} />
                     <View style={styles.headerContent}>
                         <View style={styles.headerTop}>
                             <Text style={styles.productNameText}>
@@ -273,6 +270,10 @@ export default class BuyOrderDetail extends PureComponent {
                         {
                             label: "银行账户： ",
                             value: assign_bank_card
+                        },
+                        {
+                            label: "支付宝：",
+                            value: alipay_account
                         },
                         {
                             label: "收款人电话：",

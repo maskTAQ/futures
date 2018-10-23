@@ -3,16 +3,17 @@ import { View } from "react-native";
 import PropTypes from "prop-types";
 
 import { home as homeStyles } from "../styles";
-import { Icon, Button, Text } from "components";
+import { Icon, Button, Text, Visible } from "components";
 import { iconSource } from "commons";
 import { navigate } from "actions";
+import { host } from "apis";
 
 const styles = homeStyles.user;
 const emailIcon = require("./img/email.png");
 const orderIcon = require("./img/order.png");
 const transferIcon = require("./img/transfer.png");
-const User = ({ requestShowNotif, data }) => {
-    const { jingtai_money = 0, dongtai_money = 0, user_id, level } = data;
+const User = ({ requestShowNotif, data, bankstate }) => {
+    const { jingtai_money = 0, dongtai_money = 0, user_id, level, logo } = data;
     const detailList = [
         [
             {
@@ -45,7 +46,14 @@ const User = ({ requestShowNotif, data }) => {
         <View style={styles.container}>
             <View style={styles.box}>
                 <View style={styles.header}>
-                    <Icon source={iconSource.defaultPortrait} size={44} />
+                    <Icon
+                        source={
+                            logo
+                                ? { uri: host + logo }
+                                : iconSource.defaultPortrait
+                        }
+                        size={44}
+                    />
                     <View style={styles.headerContent}>
                         <View
                             style={[
@@ -60,7 +68,12 @@ const User = ({ requestShowNotif, data }) => {
                                 <View style={styles.lv}>
                                     <Text style={styles.lvText}>v{level}</Text>
                                 </View>
-                                <Icon source={iconSource.vipIcon} size={14} />
+                                <Visible show={bankstate === "1"}>
+                                    <Icon
+                                        source={iconSource.vipIcon}
+                                        size={14}
+                                    />
+                                </Visible>
                             </View>
                             <Button onPress={requestShowNotif}>
                                 <Icon
@@ -157,7 +170,8 @@ const User = ({ requestShowNotif, data }) => {
 };
 User.propTypes = {
     data: PropTypes.object,
-    requestShowNotif: PropTypes.func
+    requestShowNotif: PropTypes.func,
+    bankstate: PropTypes.string
 };
 
 export default User;

@@ -181,7 +181,8 @@ export default class SellOrderDetail extends PureComponent {
             assign_bank_name,
             assign_bank_card,
             assign_mobile,
-            assign_logo
+            assign_logo,
+            alipay_account
         } = this.props.navigation.state.params;
         if (state === "0" || state === "3" || state === "4") {
             return null;
@@ -227,6 +228,10 @@ export default class SellOrderDetail extends PureComponent {
                         {
                             label: "银行账户： ",
                             value: assign_bank_card
+                        },
+                        {
+                            label: "支付宝：",
+                            value: alipay_account
                         },
                         {
                             label: "收款人电话：",

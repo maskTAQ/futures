@@ -9,20 +9,36 @@ import { navigate, getMyWallet } from "actions";
 import Card from "./Card";
 import { iconSource } from "commons";
 
-@connect(({ data }) => {
-    return { wallet: data.wallet };
+@connect(({ data, nav }) => {
+    return { wallet: data.wallet, nav };
 })
 export default class Wallet extends PureComponent {
     static propTypes = {
-        wallet: PropTypes.object
+        wallet: PropTypes.object,
+        nav: PropTypes.object
     };
     state = {
         isModalVisible: false
     };
+
     UNSAFE_componentWillMount() {
         //if (!this.props.wallet) {
         getMyWallet();
         // }
+    }
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        const { index, routes } = nextProps.nav;
+        const { index: prevIndex, routes: prevRutes } = this.props.nav;
+        if (routes[index].routeName === "TabNavigator") {
+            // const { index, routes } = nextProps.nav;
+            if (
+                routes[index].index === 1 &&
+                (prevRutes[prevIndex].routeName !== "TabNavigator" ||
+                    prevRutes[prevIndex].index !== 1)
+            ) {
+                getMyWallet();
+            }
+        }
     }
     renderItem = ({ content }) => {
         return <View style={styles.item} />;

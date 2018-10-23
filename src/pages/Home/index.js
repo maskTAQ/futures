@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import moment from "moment";
 
 import { home as styles } from "../styles";
 import { DataView, Icon, Text, Button, Visible } from "components";
@@ -48,29 +49,21 @@ export default class Home extends PureComponent {
             this.TimeDown(nextProps.home.date_end);
         }
     }
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
+    }
     TimeDown = endDateStr => {
-        const endDate = new Date(endDateStr);
+        const end = moment(endDateStr);
+
         //当前时间
-        const nowDate = new Date();
+        const start = moment();
         //相差的总秒数
-        const totalSeconds = parseInt((endDate - nowDate) / 1000);
-        //天数
-        //const days = Math.floor(totalSeconds / (60 * 60 * 24));
-        //取模（余数）
-        let modulo = totalSeconds % (60 * 60 * 24);
-        //小时数
-        const hours = Math.floor(modulo / (60 * 60));
-        modulo = modulo % (60 * 60);
-        //分钟
-        const minutes = Math.floor(modulo / 60);
-        //秒
-        const seconds = modulo % 60;
-        //延迟一秒执行自己
         this.setState({
-            timeDown: `${hours}:${minutes}:${seconds}`
+            timeDown: moment(end - start).format("HH时mm分ss秒")
         });
+        clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
-            this.TimeDown(endDate);
+            this.TimeDown(endDateStr);
         }, 1000);
     };
     has = item => {
@@ -127,9 +120,11 @@ export default class Home extends PureComponent {
                             onPress={() => {
                                 if (this.props.home.bankstate !== "1") {
                                     Tip.fail("收款信息未认证,请先认证收款信息");
-                                    navigate({
-                                        routeName: "AccountInfo"
-                                    });
+                                    setTimeout(() => {
+                                        navigate({
+                                            routeName: "AccountInfo"
+                                        });
+                                    }, 1000);
                                 } else {
                                     navigate({
                                         routeName: "Buy",
@@ -184,6 +179,9 @@ export default class Home extends PureComponent {
                         });
                         StatusBar.setBackgroundColor("rgba(0,0,0,0.3)");
                     }}
+                    bankstate={
+                        this.props.home ? this.props.home.bankstate : "0"
+                    }
                     data={home}
                 />
                 <Visible show={growuplist.length}>

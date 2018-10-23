@@ -8,6 +8,7 @@ import { Text, Icon, Button, RefreshContainer } from "components";
 import { navigate, getTeam } from "actions";
 import { team as styles } from "../styles";
 import Tree from "./Tree";
+import List from "./list";
 import Search from "./Search";
 import { iconSource } from "commons";
 
@@ -54,14 +55,36 @@ export default class Team extends PureComponent {
         };
         isMatchNode(nextData);
     };
+    matchMember() {
+        const { searchValue, data = [] } = this.state;
+
+        const result = [];
+        const match = data => {
+            data.forEach(item => {
+                const { user_id, team } = item;
+                if (user_id.includes(searchValue)) {
+                    result.push(item);
+                }
+                if (team) {
+                    match(team);
+                }
+            });
+        };
+        match(data);
+        console.log(result, "data");
+        return result;
+    }
     render() {
         const { searchValue, data = [] } = this.state;
         const { total = 0 } = this.props.team || {};
+
+        console.log(searchValue, "searchValue");
         return (
             <View style={styles.container}>
                 <Search
                     value={searchValue}
                     onChangeSearch={searchValue => {
+                        console.log(searchValue, "searchValue");
                         this.setState({
                             searchValue
                         });
@@ -97,12 +120,16 @@ export default class Team extends PureComponent {
                     requestRefresh={getTeam}
                     refreshing={this.props.loading.data.team.loading}
                 >
-                    <Tree
-                        data={data}
-                        requestTreeNodeVisibleChange={
-                            this.onTreeNodeVisibleChange
-                        }
-                    />
+                    {searchValue ? (
+                        <List data={this.matchMember()} />
+                    ) : (
+                        <Tree
+                            data={data}
+                            requestTreeNodeVisibleChange={
+                                this.onTreeNodeVisibleChange
+                            }
+                        />
+                    )}
                 </RefreshContainer>
             </View>
         );

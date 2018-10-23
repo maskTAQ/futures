@@ -84,6 +84,7 @@ export default class InviteList extends PureComponent {
     render() {
         const { list } = this.props.inviteList || { list: [] };
         const { invite_money: all_invite_money = 0 } = this.props.wallet || {};
+
         return (
             <Page title="邀请列表">
                 <View style={styles.container}>

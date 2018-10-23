@@ -169,7 +169,7 @@ export default class AccountInfo extends PureComponent {
                             }
                         }}
                     >
-                        完成
+                        {bankstate === "1" ? "修改" : "完成"}
                     </Button>
                     <Alert
                         visible={isVerifyVisible}

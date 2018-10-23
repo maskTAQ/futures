@@ -47,12 +47,14 @@ export default class OrderSellFlowerList extends PureComponent {
         }
         return label;
     }
-    renderItem = ({ item: { state, name, money, number, date, type } }) => {
+    renderItem = ({
+        item: { state, name, money, number, or_number, date, type }
+    }) => {
         return (
             <Button
                 style={styles.item}
                 onPress={() => {
-                    getorderSellFlowerInfo({ number }).then(res => {
+                    getorderSellFlowerInfo({ number: or_number }).then(res => {
                         navigate({
                             routeName: "SellOrderDetail",
                             params: { ...res, icon: iconMap[type] }

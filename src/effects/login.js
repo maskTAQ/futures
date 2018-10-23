@@ -31,7 +31,8 @@ export default function*() {
                                     [
                                         "getHome",
                                         "getMyWallet",
-                                        "getNoticeState"
+                                        "getNoticeState",
+                                        "getTeam"
                                     ].forEach(type => {
                                         store.dispatch({ type });
                                     });
