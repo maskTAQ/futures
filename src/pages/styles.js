@@ -1205,7 +1205,7 @@ const orderDetail = {
         position: "absolute",
         //width: scale(25),
         height: scale(40),
-        top: scale(-15),
+        top: scale(2),
         right: 20,
         zIndex: 1
     },

@@ -1,9 +1,11 @@
 import React, { PureComponent } from "react";
-import { View, ScrollView, Image } from "react-native";
+import { View, ScrollView, Image, Modal, Dimensions } from "react-native";
 import PropTypes from "prop-types";
 import ImagePicker from "react-native-image-picker";
 import update from "immutability-helper";
 import RNFS from "react-native-fs";
+import _ from "lodash";
+import Swiper from "react-native-swiper";
 
 import { orderDetail as styles, alert as alertStyle } from "./styles";
 import { Page, Text, Button, Icon, Comfirm, Alert, Visible } from "components";
@@ -17,6 +19,7 @@ import {
 import { iconSource, Tip } from "commons";
 import { back, getOrderBuyFlowerList } from "actions";
 
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const tabs = [
     { label: "匹配中", value: "0" },
     { label: "代付款", value: "1" },
@@ -146,6 +149,11 @@ export default class BuyOrderDetail extends PureComponent {
         alert: {
             visible: false,
             content: ""
+        },
+        swiper: {
+            visible: false,
+            data: [],
+            size: []
         },
         voucherImgList: []
     };
@@ -396,15 +404,26 @@ export default class BuyOrderDetail extends PureComponent {
                         </Visible>
                         <Visible show={state === "2"}>
                             {(voucher || []).map(uri => {
-                                console.log(uri, "uri");
                                 return (
-                                    <View style={styles.voucherItem} key={uri}>
+                                    <Button
+                                        onPress={() => {
+                                            this.setState({
+                                                swiper: {
+                                                    visible: true,
+                                                    data: voucher,
+                                                    size: []
+                                                }
+                                            });
+                                        }}
+                                        style={styles.voucherItem}
+                                        key={uri}
+                                    >
                                         <Image
                                             source={{ uri: host + uri }}
                                             style={styles.voucherItemImg}
                                             resizeMode="stretch"
                                         />
-                                    </View>
+                                    </Button>
                                 );
                             })}
                         </Visible>
@@ -433,7 +452,8 @@ export default class BuyOrderDetail extends PureComponent {
     render() {
         const {
             alert: { visible, content },
-            comfirm
+            comfirm,
+            swiper
         } = this.state;
         const {
             name,
@@ -582,6 +602,91 @@ export default class BuyOrderDetail extends PureComponent {
                             </Button>
                         </View>
                     </Alert>
+                    <Visible show={swiper.visible && swiper.data.length}>
+                        <Modal>
+                            <View style={styles.swiperContainer}>
+                                <Button
+                                    onPress={() => {
+                                        this.setState(
+                                            update(this.state, {
+                                                swiper: {
+                                                    visible: {
+                                                        $set: false
+                                                    }
+                                                }
+                                            })
+                                        );
+                                    }}
+                                    style={styles.close}
+                                >
+                                    <Icon
+                                        source={iconSource.closeSwiper}
+                                        size={20}
+                                    />
+                                </Button>
+                                <Swiper key={swiper.data.length}>
+                                    {swiper.data.map((uri, i) => {
+                                        const src = host + uri;
+                                        Image.getSize(src, (width, height) => {
+                                            const nextSize = _.cloneDeep(
+                                                this.state.swiper.size
+                                            );
+                                            if (
+                                                (nextSize[i] || {}).src !== src
+                                            ) {
+                                                if (width > height) {
+                                                    const radioWidth =
+                                                        screenWidth - 40;
+                                                    const radio =
+                                                        width / radioWidth;
+                                                    const radioHeight =
+                                                        height / radio;
+                                                    nextSize[i] = {
+                                                        width: radioWidth,
+                                                        height: radioHeight,
+                                                        src
+                                                    };
+                                                } else {
+                                                    const radioHeight =
+                                                        screenHeight - 80;
+                                                    const radio =
+                                                        height / radioHeight;
+                                                    const radioWidth =
+                                                        width / radio;
+                                                    nextSize[i] = {
+                                                        width: radioWidth,
+                                                        height: radioHeight,
+                                                        src
+                                                    };
+                                                }
+                                                this.setState(
+                                                    update(this.state, {
+                                                        swiper: {
+                                                            size: {
+                                                                $set: nextSize
+                                                            }
+                                                        }
+                                                    })
+                                                );
+                                            }
+                                        });
+
+                                        return (
+                                            <View
+                                                style={styles.swiper}
+                                                key={uri}
+                                            >
+                                                <Image
+                                                    style={swiper.size[i]}
+                                                    source={{ uri: src }}
+                                                />
+                                            </View>
+                                        );
+                                    })}
+                                </Swiper>
+                            </View>
+                        </Modal>
+                    </Visible>
                 </ScrollView>
             </Page>
         );

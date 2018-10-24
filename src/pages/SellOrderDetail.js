@@ -264,7 +264,6 @@ export default class SellOrderDetail extends PureComponent {
         );
     }
     renderList = data => {
-        console.log(this.props.navigation.state.params, "[");
         const { state } = this.props.navigation.state.params;
         return (data
             ? data
@@ -335,7 +334,6 @@ export default class SellOrderDetail extends PureComponent {
                                 return (
                                     <Button
                                         onPress={() => {
-                                            console.log(voucher);
                                             this.setState({
                                                 swiper: {
                                                     visible: true,
@@ -555,11 +553,6 @@ export default class SellOrderDetail extends PureComponent {
                                             if (
                                                 (nextSize[i] || {}).src !== src
                                             ) {
-                                                console.log(
-                                                    width,
-                                                    height,
-                                                    "width > height"
-                                                );
                                                 if (width > height) {
                                                     const radioWidth =
                                                         screenWidth - 40;
@@ -574,7 +567,7 @@ export default class SellOrderDetail extends PureComponent {
                                                     };
                                                 } else {
                                                     const radioHeight =
-                                                        screenHeight - 40;
+                                                        screenHeight - 80;
                                                     const radio =
                                                         height / radioHeight;
                                                     const radioWidth =
