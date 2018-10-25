@@ -97,7 +97,7 @@ export default class Login extends PureComponent {
                                 navigate({ routeName: "Register" });
                             }}
                         >
-                            注册
+                            注册账号
                         </Button>
                     </View>
                 </View>

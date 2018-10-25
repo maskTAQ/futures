@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { home as styles } from "./styles";
 import { DataView, Icon, Text, Button, Page } from "components";
-import { iconSource, Tip } from "commons";
+import { iconSource, Tip, scale } from "commons";
 import { navigate, getHome } from "actions";
 
 @connect(({ data, loading }) => {
@@ -18,46 +18,42 @@ export default class ChooseBuyFlower extends PureComponent {
     };
 
     renderItem = ({ item }) => {
-        const { percent, money, state, name, type } = item;
+        const { money, state, name, type } = item;
         return (
-            <View style={styles.item}>
+            <View
+                style={[
+                    styles.item,
+                    { paddingLeft: scale(8), paddingRight: scale(8) }
+                ]}
+            >
                 <Icon source={iconSource[type]} size={68} />
-                <View style={styles.itemContent}>
-                    <View style={styles.itemTop}>
-                        <Text style={styles.itemTitleText}>{name}</Text>
-                        <Button
-                            style={styles.buyButton}
-                            disabled={!state}
-                            disabledButtonStyle={{ backgroundColor: "#e3e3e3" }}
-                            disabledTextStyle={{ color: "#999" }}
-                            textStyle={styles.buyButtonText}
-                            onPress={() => {
-                                console.log(this.state);
-                                if (this.props.home.bankstate !== "1") {
-                                    Tip.fail("收款信息未认证,请先认证收款信息");
-                                    setTimeout(() => {
-                                        navigate({
-                                            routeName: "AccountInfo"
-                                        });
-                                    }, 1000);
-                                } else {
+                <View style={styles.itemBox}>
+                    <Text style={styles.itemTitleText}>{name}</Text>
+                    <Text style={styles.itemTitleText}>{money}</Text>
+                    <Button
+                        style={styles.buyButton}
+                        disabled={!state}
+                        disabledButtonStyle={{ backgroundColor: "#e3e3e3" }}
+                        disabledTextStyle={{ color: "#999" }}
+                        textStyle={styles.buyButtonText}
+                        onPress={() => {
+                            if (this.props.home.bankstate !== "1") {
+                                Tip.fail("收款信息未认证,请先认证收款信息");
+                                setTimeout(() => {
                                     navigate({
-                                        routeName: "Buy",
-                                        params: item
+                                        routeName: "AccountInfo"
                                     });
-                                }
-                            }}
-                        >
-                            {state ? "申请种植" : "不可采收"}
-                        </Button>
-                    </View>
-                    <View style={styles.itemCenter}>
-                        <Text style={styles.itemTitleText}>{money}</Text>
-                    </View>
-                    <Text style={styles.itemDetail}>
-                        预计每个生长周期收入
-                        {percent}
-                    </Text>
+                                }, 1000);
+                            } else {
+                                navigate({
+                                    routeName: "Buy",
+                                    params: item
+                                });
+                            }
+                        }}
+                    >
+                        {state ? "申请种植" : "不可采收"}
+                    </Button>
                 </View>
             </View>
         );
@@ -73,10 +69,10 @@ export default class ChooseBuyFlower extends PureComponent {
                             <Text style={styles.storeTitleText}>购买花卉</Text>
                         </View>
                         <Text style={styles.countDownText}>
-                            终止倒计时：
+                            周期剩余时间：
                             <Text style={{ color: "#fa4f75" }}>
                                 {home.date_end}
-                            </Text>{" "}
+                            </Text>
                         </Text>
                     </View>
                     <DataView

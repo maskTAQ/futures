@@ -37,8 +37,8 @@ const list = [
 ];
 export default class ForgetPassword extends PureComponent {
     state = {
-        mobile: "13500000000",
-        account: "H66455429"
+        mobile: "",
+        account: ""
     };
     render() {
         const { mobile, account } = this.state;

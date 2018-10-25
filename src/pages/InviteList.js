@@ -49,10 +49,10 @@ const Item = ({ item }) => {
                     style={styles.agree}
                     textStyle={styles.agreeText}
                 >
-                    同意
+                    激活
                 </Button>
             ) : (
-                <Text style={styles.hasArgee}>已经同意</Text>
+                <Text style={styles.hasArgee}>已经激活</Text>
             )}
         </View>
     );

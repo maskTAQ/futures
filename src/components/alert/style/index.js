@@ -28,10 +28,10 @@ export default (theme = {}) => {
         },
         close: {
             position: "absolute",
-            top: -12,
-            right: -12,
-            width: 25,
-            height: 25,
+            top: -15,
+            right: -15,
+            width: 40,
+            height: 40,
             zIndex: 1
         }
     };

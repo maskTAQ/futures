@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { changeDealPassword as styles, alert as alertStyle } from "./styles";
-import { Page, Text, Input, Button, Alert } from "components";
+import { Page, Text, Input, Button, Alert, Visible } from "components";
 import { collectionInfo, tradePassword } from "apis";
 import { Tip } from "commons";
 import { getBanckInfo, getHome } from "actions";
@@ -122,6 +122,7 @@ export default class AccountInfo extends PureComponent {
                                                             [key]: v
                                                         });
                                                     }}
+                                                    editable={bankstate === "0"}
                                                     style={styles.itemInput}
                                                     {...props}
                                                 />
@@ -131,46 +132,47 @@ export default class AccountInfo extends PureComponent {
                             </View>
                         );
                     })}
-
-                    <Button
-                        style={styles.submit}
-                        textStyle={styles.submitStyle}
-                        onPress={() => {
-                            const {
-                                bank_card_number,
-                                bank_name,
-                                bankpayee_name,
-                                bank_phone,
-                                alipay_account,
-                                traders_password,
-                                traders_passwordT
-                            } = this.state;
-                            if (traders_passwordT !== traders_password) {
-                                Tip.fail("俩次输入的交易密码不一致!");
-                            } else {
-                                if (bankstate === "1") {
-                                    this.setState({
-                                        isVerifyVisible: true
-                                    });
+                    <Visible show={bankstate === "0"}>
+                        <Button
+                            style={styles.submit}
+                            textStyle={styles.submitStyle}
+                            onPress={() => {
+                                const {
+                                    bank_card_number,
+                                    bank_name,
+                                    bankpayee_name,
+                                    bank_phone,
+                                    alipay_account,
+                                    traders_password,
+                                    traders_passwordT
+                                } = this.state;
+                                if (traders_passwordT !== traders_password) {
+                                    Tip.fail("俩次输入的交易密码不一致!");
                                 } else {
-                                    collectionInfo({
-                                        bank_card_number,
-                                        bank_name,
-                                        bankpayee_name,
-                                        bank_phone,
-                                        alipay_account,
-                                        traders_password
-                                    }).then(() => {
-                                        getHome();
-                                        setTimeout(getBanckInfo, 1000);
-                                        Tip.success("账户信息修改成功");
-                                    });
+                                    if (bankstate === "1") {
+                                        this.setState({
+                                            isVerifyVisible: true
+                                        });
+                                    } else {
+                                        collectionInfo({
+                                            bank_card_number,
+                                            bank_name,
+                                            bankpayee_name,
+                                            bank_phone,
+                                            alipay_account,
+                                            traders_password
+                                        }).then(() => {
+                                            getHome();
+                                            setTimeout(getBanckInfo, 1000);
+                                            Tip.success("账户信息修改成功");
+                                        });
+                                    }
                                 }
-                            }
-                        }}
-                    >
-                        {bankstate === "1" ? "修改" : "完成"}
-                    </Button>
+                            }}
+                        >
+                            {bankstate === "1" ? "修改" : "完成"}
+                        </Button>
+                    </Visible>
                     <Alert
                         visible={isVerifyVisible}
                         requestClose={() => {

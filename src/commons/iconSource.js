@@ -23,6 +23,7 @@ export default {
     bi: require("images/bi.png"),
     success: require("images/success.png"),
     logo: require("images/logo.png"),
+    logo1: require("images/logo1.png"),
     l: require("images/l.png"),
     password: require("images/password.png"),
     username: require("images/username.png"),

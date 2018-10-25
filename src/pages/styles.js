@@ -185,6 +185,14 @@ const home = {
         paddingLeft: scale(11),
         paddingTop: scale(2)
     },
+    itemBox: {
+        flex: 1,
+        //height: scale(24),
+        flexDirection: "row",
+        paddingLeft: scale(11),
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
     itemTop: {
         //flex: 1,
         height: scale(24),
@@ -193,6 +201,7 @@ const home = {
     },
     buyButton: {
         width: scale(64),
+        height: scale(24),
         justifyContent: "center",
         alignItems: "center",
         borderRadius: scale(32),
@@ -808,6 +817,15 @@ const about = {
         paddingTop: scale(10),
         paddingLeft: scale(15),
         paddingRight: scale(15)
+    },
+    logoBox: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    logoIcon: {
+        width: scale(86),
+        height: scale(195)
     },
     content: {
         flex: 1,

@@ -19,7 +19,7 @@ const list = [
     [{ label: "消息推送", Component: Switch }],
     [
         { label: "求助反馈", routeName: "Feedback" },
-        { label: "关于", routeName: "About" },
+        { label: "检测升级", routeName: "About" },
         { label: "应用分享", routeName: "Share" }
     ]
 ];

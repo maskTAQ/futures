@@ -29,7 +29,7 @@ const Alert = (
                     <Visible show={showClose}>
                         <TouchableWithoutFeedback onPress={requestClose}>
                             <View style={styles.close}>
-                                <Icon source={closeIcon} size={25} />
+                                <Icon source={closeIcon} size={40} />
                             </View>
                         </TouchableWithoutFeedback>
                     </Visible>

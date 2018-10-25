@@ -57,10 +57,19 @@ export default class Home extends PureComponent {
 
         //当前时间
         const start = moment();
-        //相差的总秒数
-        this.setState({
-            timeDown: moment(end - start).format("HH时mm分ss秒")
-        });
+        if (this.hasDate) {
+            this.setState({
+                timeDown: moment(end - start).format("HH时mm分ss秒"),
+                hasDate: moment(moment(this.hasDate) - start).format(
+                    "HH时mm分ss秒"
+                )
+            });
+        } else {
+            this.setState({
+                timeDown: moment(end - start).format("HH时mm分ss秒")
+            });
+        }
+
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
             this.TimeDown(endDateStr);
@@ -71,6 +80,8 @@ export default class Home extends PureComponent {
             return null;
         }
         const { percent, name, type, date } = item;
+        const { hasDate } = this.state;
+        this.hasDate = date;
 
         return (
             <TouchableWithoutFeedback
@@ -96,7 +107,7 @@ export default class Home extends PureComponent {
                         </View>
                         <Text style={styles.itemDetail}>
                             成长时间：
-                            {date}
+                            {hasDate}
                         </Text>
                     </View>
                 </View>
@@ -108,43 +119,33 @@ export default class Home extends PureComponent {
         return (
             <View style={styles.item}>
                 <Icon source={iconSource[type]} size={68} />
-                <View style={styles.itemContent}>
-                    <View style={styles.itemTop}>
-                        <Text style={styles.itemTitleText}>{name}</Text>
-                        <Button
-                            style={styles.buyButton}
-                            disabled={!state}
-                            disabledButtonStyle={{ backgroundColor: "#e3e3e3" }}
-                            disabledTextStyle={{ color: "#999" }}
-                            textStyle={styles.buyButtonText}
-                            onPress={() => {
-                                if (this.props.home.bankstate !== "1") {
-                                    Tip.fail("收款信息未认证,请先认证收款信息");
-                                    setTimeout(() => {
-                                        navigate({
-                                            routeName: "AccountInfo"
-                                        });
-                                    }, 1000);
-                                } else {
+                <View style={styles.itemBox}>
+                    <Text style={styles.itemTitleText}>{name}</Text>
+                    <Text style={styles.itemTitleText}>{money}</Text>
+                    <Button
+                        style={styles.buyButton}
+                        disabled={!state}
+                        disabledButtonStyle={{ backgroundColor: "#e3e3e3" }}
+                        disabledTextStyle={{ color: "#999" }}
+                        textStyle={styles.buyButtonText}
+                        onPress={() => {
+                            if (this.props.home.bankstate !== "1") {
+                                Tip.fail("收款信息未认证,请先认证收款信息");
+                                setTimeout(() => {
                                     navigate({
-                                        routeName: "Buy",
-                                        params: item
+                                        routeName: "AccountInfo"
                                     });
-                                }
-                            }}
-                        >
-                            {state ? "申请种植" : "不可采收"}
-                        </Button>
-                    </View>
-                    <View style={styles.itemCenter}>
-                        <Text style={styles.itemTitleText}>{money}</Text>
-                    </View>
-                    {/*
-                         <Text style={styles.itemDetail}>
-                         预计每个生长周期收入
-                         {percent}
-                     </Text>
-                        */}
+                                }, 1000);
+                            } else {
+                                navigate({
+                                    routeName: "Buy",
+                                    params: item
+                                });
+                            }
+                        }}
+                    >
+                        {state ? "申请种植" : "不可采收"}
+                    </Button>
                 </View>
             </View>
         );

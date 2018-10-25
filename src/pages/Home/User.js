@@ -89,7 +89,7 @@ const User = ({ requestShowNotif, data, bankstate }) => {
                             ]}
                         >
                             <Text style={styles.repositoryNumText}>
-                                仓库数量:
+                                仓库总数:
                                 {jingtai_money + dongtai_money}
                             </Text>
                         </View>

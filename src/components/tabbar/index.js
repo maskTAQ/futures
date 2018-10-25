@@ -25,8 +25,8 @@ const list = [
         routeName: "ChooseBuyFlower"
     },
     {
-        icon: require("./img/money.png"),
-        label: "动态出售",
+        icon: require("./img/repo.png"),
+        label: "静态出售",
         routeName: "SellRedPacket",
         params: {
             type: "dongtai",
@@ -36,17 +36,14 @@ const list = [
         }
     },
     {
-        icon: require("./img/repo.png"),
-        label: "静态出售",
+        icon: require("./img/money.png"),
+        label: "动态出售",
         routeName: "SellRedPacket",
         params: {
             type: "jingtai",
             typeValue: 2,
             title: "出售动态红包",
-            hint: [
-                "您是V1用户 本日还可提现2000元内 ",
-                "规则：单日内V1 2000元内  V2 5000元内  V3 10000元内"
-            ]
+            hint: ["规则：500元起500的倍数"]
         }
     }
     // {

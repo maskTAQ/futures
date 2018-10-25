@@ -16,6 +16,14 @@ const tabs = [
     { label: "匹配中", value: "0" },
     { label: "待付款", value: "1" },
     { label: "待确认", value: "2" },
+    //{ label: "成长中", value: "3" },
+    { label: "已完成", value: "4" }
+];
+const allTabs = [
+    { label: "全部", value: "all" },
+    { label: "匹配中", value: "0" },
+    { label: "待付款", value: "1" },
+    { label: "待确认", value: "2" },
     { label: "成长中", value: "3" },
     { label: "已完成", value: "4" }
 ];
@@ -48,9 +56,9 @@ export default class OrderBuyFlowerList extends PureComponent {
     // }
     getLabelByValue(value) {
         const label = "";
-        for (let i = 0; i < tabs.length; i++) {
-            if (tabs[i].value === value) {
-                return tabs[i].label;
+        for (let i = 0; i < allTabs.length; i++) {
+            if (allTabs[i].value === value) {
+                return allTabs[i].label;
             }
         }
         return label;
@@ -76,7 +84,7 @@ export default class OrderBuyFlowerList extends PureComponent {
                 <View style={styles.itemContent}>
                     <View style={styles.itemTop}>
                         <Text style={styles.itemTitleText}>
-                            {name}|{or_money}
+                            {name} {or_money}
                         </Text>
                         <Text style={styles.stateText}>
                             {this.getLabelByValue(state)}
@@ -84,18 +92,18 @@ export default class OrderBuyFlowerList extends PureComponent {
                     </View>
                     <View style={styles.textBox}>
                         <Text style={styles.text}>
-                            采收编号:
+                            订单编号:
                             {number}
                         </Text>
                     </View>
                     <View style={styles.textBox}>
                         <Text style={styles.text}>
-                            拍单时间
+                            申请时间
                             {date}
                         </Text>
                         <Text style={styles.text}>
                             {percent}
-                            %成长值
+                            成长值
                         </Text>
                     </View>
                 </View>
@@ -118,8 +126,15 @@ export default class OrderBuyFlowerList extends PureComponent {
                     >
                         {tabs.map(({ label, value }) => {
                             const data = (orderBuyFlowerList.list || []).filter(
-                                ({ state }) =>
-                                    value === state || value === "all"
+                                ({ state }) => {
+                                    if (value === "4") {
+                                        return state === "3" || state === "4";
+                                    } else {
+                                        return (
+                                            value === state || value === "all"
+                                        );
+                                    }
+                                }
                             );
                             return (
                                 <DataView

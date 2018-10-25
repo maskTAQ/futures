@@ -44,7 +44,7 @@ const UserHeader = ({
                     ]}
                 >
                     <Text style={styles.repositoryNumText}>
-                        仓库数量:
+                        仓库总数:
                         {total_money}
                     </Text>
                 </View>

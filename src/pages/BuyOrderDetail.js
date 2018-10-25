@@ -1,11 +1,19 @@
 import React, { PureComponent } from "react";
-import { View, ScrollView, Image, Modal, Dimensions } from "react-native";
+import {
+    View,
+    ScrollView,
+    Image,
+    Modal,
+    Dimensions,
+    Linking
+} from "react-native";
 import PropTypes from "prop-types";
 import ImagePicker from "react-native-image-picker";
 import update from "immutability-helper";
 import RNFS from "react-native-fs";
 import _ from "lodash";
 import Swiper from "react-native-swiper";
+import moment from "moment";
 
 import { orderDetail as styles, alert as alertStyle } from "./styles";
 import { Page, Text, Button, Icon, Comfirm, Alert, Visible } from "components";
@@ -22,29 +30,29 @@ import { back, getOrderBuyFlowerList } from "actions";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const tabs = [
     { label: "匹配中", value: "0" },
-    { label: "代付款", value: "1" },
+    { label: "待付款", value: "1" },
     { label: "待确认", value: "2" },
     { label: "成长中", value: "3" },
     { label: "已完成", value: "4" }
 ];
-const getListByState = (state, data) => {
+const getListByState = (state, data, timeDown) => {
     const {
         number,
         date,
         statenoice,
         assign_money,
-        predictmatchdate,
-        growup_endtime
+        predictmatchdate
+        // growup_endtime
     } = data;
     switch (state) {
         case "0":
             return [
                 {
-                    label: "采收编号：",
+                    label: "申请编号：",
                     value: number
                 },
                 {
-                    label: "采购数额：",
+                    label: "订单金额：",
                     value: assign_money
                 },
                 {
@@ -65,11 +73,11 @@ const getListByState = (state, data) => {
         case "2":
             return [
                 {
-                    label: "采收编号：",
+                    label: "申请编号：",
                     value: number
                 },
                 {
-                    label: "采购数额：",
+                    label: "订单金额：",
                     value: assign_money
                 },
                 {
@@ -77,22 +85,22 @@ const getListByState = (state, data) => {
                     value: statenoice
                 },
                 {
-                    label: "匹配时间：",
+                    label: "付款时间：",
                     value: date
                 }
             ];
         case "3":
             return [
                 {
-                    label: "采收编号：",
+                    label: "申请编号：",
                     value: number
                 },
                 {
-                    label: "采购数额：",
+                    label: "订单金额：",
                     value: assign_money
                 },
                 {
-                    label: "匹配时间：",
+                    label: "收款时间：",
                     value: date
                 },
                 {
@@ -101,7 +109,7 @@ const getListByState = (state, data) => {
                 },
                 {
                     label: "成长中倒计时：",
-                    value: growup_endtime,
+                    value: timeDown,
                     valueStyle: {
                         color: "#FF0000"
                     }
@@ -111,15 +119,15 @@ const getListByState = (state, data) => {
         default:
             return [
                 {
-                    label: "采收编号：",
+                    label: "申请编号：",
                     value: number
                 },
                 {
-                    label: "采购数额：",
+                    label: "订单金额：",
                     value: assign_money
                 },
                 {
-                    label: "匹配时间：",
+                    label: "完成时间：",
                     value: date
                 },
                 {
@@ -128,8 +136,7 @@ const getListByState = (state, data) => {
                 },
                 {
                     label: "成长中倒计时：",
-                    value:
-                        "恭喜成长周期已到，您可以进入花园仓库中查收。或选择复投马上开始重新生长。",
+                    value: "恭喜成长周期已到，您可以进入花园仓库中查收。",
                     valueStyle: {
                         color: "#FF0000"
                     }
@@ -157,6 +164,9 @@ export default class BuyOrderDetail extends PureComponent {
         },
         voucherImgList: []
     };
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
+    }
     getLabelByValue(value) {
         const label = "";
         for (let i = 0; i < tabs.length; i++) {
@@ -221,6 +231,24 @@ export default class BuyOrderDetail extends PureComponent {
             }
         });
     };
+    TimeDown = endDateStr => {
+        const end = moment(endDateStr);
+
+        //当前时间
+        const start = moment();
+        console.log(
+            moment(end - start).format("HH时mm分ss秒"),
+            'moment(end - start).format("HH时mm分ss秒")'
+        );
+        this.setState({
+            timeDown: moment(end - start).format("HH时mm分ss秒")
+        });
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+            this.TimeDown(endDateStr);
+        }, 1000);
+    };
     renderUser() {
         const {
             state,
@@ -228,14 +256,20 @@ export default class BuyOrderDetail extends PureComponent {
             assign_money,
             matchdate,
             assign_endtime,
+            assign_bank_user,
             assign_bank_name,
             assign_bank_card,
             assign_mobile,
             assign_logo,
             alipay_account
         } = this.props.navigation.state.params;
+        const { timeDown } = this.state;
         if (state === "0" || state === "3" || state === "4") {
             return null;
+        }
+        if (state === "2" && assign_endtime && !this.startTimedown) {
+            this.startTimedown = true;
+            this.TimeDown(assign_endtime);
         }
         return (
             <View style={{ marginTop: 30 }}>
@@ -265,12 +299,16 @@ export default class BuyOrderDetail extends PureComponent {
                     {this.renderList([
                         {
                             label: "付款倒计时：",
-                            value: assign_endtime,
+                            value: timeDown,
                             valueStyle: {
                                 color: "#FD4C73"
                             }
                         },
-                        "收款信息：",
+
+                        {
+                            label: "收款姓名：",
+                            value: assign_bank_user
+                        },
                         {
                             label: "开户银行：",
                             value: assign_bank_name
@@ -290,7 +328,7 @@ export default class BuyOrderDetail extends PureComponent {
                         state === "1"
                             ? {
                                   label: "收款确认：",
-                                  value: "代付款",
+                                  value: "待付款",
                                   valueStyle: {
                                       color: "#00B415"
                                   },
@@ -314,39 +352,72 @@ export default class BuyOrderDetail extends PureComponent {
         );
     }
     renderList = data => {
-        const { state } = this.props.navigation.state.params;
-        return (data
-            ? data
-            : getListByState(state, this.props.navigation.state.params)
-        ).map(item => {
-            if (typeof item === "string") {
-                return (
-                    <View style={styles.item} key={item}>
-                        <Text style={styles.itemLabelText}>{item}</Text>
-                    </View>
-                );
-            } else {
-                const { label, value, labelStyle, valueStyle } = item;
-                return (
-                    <View style={styles.item} key={label}>
-                        <Text style={[styles.itemLabelText, labelStyle]}>
-                            {label}
-                        </Text>
-                        <Text
-                            style={[
-                                styles.itemValueText,
-                                label === "成长中倒计时：" && {
-                                    color: "#FF0000"
-                                },
-                                valueStyle
-                            ]}
-                        >
-                            {value}
-                        </Text>
-                    </View>
-                );
+        const { timeDown } = this.state;
+        const {
+            params,
+            params: { state, growup_endtime }
+        } = this.props.navigation.state;
+        if (state === "3" && growup_endtime && !this.startTimedown) {
+            this.startTimedown = true;
+            this.TimeDown(growup_endtime);
+        }
+
+        return (data ? data : getListByState(state, params, timeDown)).map(
+            item => {
+                if (typeof item === "string") {
+                    return (
+                        <View style={styles.item} key={item}>
+                            <Text style={styles.itemLabelText}>{item}</Text>
+                        </View>
+                    );
+                } else {
+                    const { label, value, labelStyle, valueStyle } = item;
+                    if (label.includes("电话")) {
+                        return (
+                            <Button
+                                onPress={() => {
+                                    Linking.openURL("tel:" + 13696526122);
+                                }}
+                                style={styles.item}
+                                key={label}
+                            >
+                                <Text
+                                    style={[styles.itemLabelText, labelStyle]}
+                                >
+                                    {label}
+                                </Text>
+                                <Text
+                                    style={[styles.itemValueText, valueStyle]}
+                                >
+                                    {value}
+                                </Text>
+                            </Button>
+                        );
+                    } else {
+                        return (
+                            <View style={styles.item} key={label}>
+                                <Text
+                                    style={[styles.itemLabelText, labelStyle]}
+                                >
+                                    {label}
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.itemValueText,
+                                        label === "成长中倒计时：" && {
+                                            color: "#FF0000"
+                                        },
+                                        valueStyle
+                                    ]}
+                                >
+                                    {value}
+                                </Text>
+                            </View>
+                        );
+                    }
+                }
             }
-        });
+        );
     };
     renderVoucher() {
         const { voucherImgList } = this.state;
@@ -361,23 +432,25 @@ export default class BuyOrderDetail extends PureComponent {
         return (
             <Visible show={state !== "0"}>
                 <View style={styles.voucher}>
-                    <Button
-                        onPress={() => {
-                            this.setState({
-                                comfirm: {
-                                    visible: true,
-                                    content: "是否投诉"
-                                }
-                            });
-                        }}
-                        style={styles.complaint}
-                    >
-                        <Icon
-                            source={iconSource.complaint}
-                            style={styles.complaintIcon}
-                        />
-                        <Text style={styles.complaintText}>投诉</Text>
-                    </Button>
+                    <Visible show={state !== "1"}>
+                        <Button
+                            onPress={() => {
+                                this.setState({
+                                    comfirm: {
+                                        visible: true,
+                                        content: "是否投诉"
+                                    }
+                                });
+                            }}
+                            style={styles.complaint}
+                        >
+                            <Icon
+                                source={iconSource.complaint}
+                                style={styles.complaintIcon}
+                            />
+                            <Text style={styles.complaintText}>订单投诉</Text>
+                        </Button>
+                    </Visible>
                     <Text style={styles.voucherTitleText}>上传打款凭证：</Text>
                     <View style={styles.voucherContent}>
                         <Visible show={state === "1"}>
@@ -433,13 +506,17 @@ export default class BuyOrderDetail extends PureComponent {
                             style={styles.submit}
                             textStyle={styles.submitStyle}
                             onPress={() => {
-                                orderBuySureCollection({
-                                    number: or_number
-                                }).then(res => {
-                                    Tip.success("确认收款成功!");
-                                    getOrderBuyFlowerList();
-                                    back();
-                                });
+                                if (voucherImgList.length) {
+                                    orderBuySureCollection({
+                                        number: or_number
+                                    }).then(res => {
+                                        Tip.success("确认收款成功!");
+                                        getOrderBuyFlowerList();
+                                        back();
+                                    });
+                                } else {
+                                    Tip.fail("请先上传凭证!");
+                                }
                             }}
                         >
                             确认收款
@@ -466,7 +543,7 @@ export default class BuyOrderDetail extends PureComponent {
             or_number
         } = this.props.navigation.state.params;
         return (
-            <Page title="采收订单详情">
+            <Page title="申请订单详情">
                 <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
                     <View style={styles.container}>
                         <View style={styles.header}>
@@ -474,7 +551,7 @@ export default class BuyOrderDetail extends PureComponent {
                             <View style={styles.headerContent}>
                                 <View style={styles.headerTop}>
                                     <Text style={styles.productNameText}>
-                                        {name} | {money}
+                                        {name} {money}
                                     </Text>
                                     <Text style={styles.productStatusText}>
                                         {this.getLabelByValue(state)}
@@ -482,12 +559,12 @@ export default class BuyOrderDetail extends PureComponent {
                                 </View>
                                 <View style={styles.headerBottom}>
                                     <Text style={styles.productTimeText}>
-                                        排单时间：
+                                        申请时间：
                                         {date}
                                     </Text>
                                     <Text style={styles.productScheduleText}>
                                         {percent}
-                                        %成长值
+                                        成长值
                                     </Text>
                                 </View>
                             </View>
