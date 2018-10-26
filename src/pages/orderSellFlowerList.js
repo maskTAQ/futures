@@ -13,7 +13,7 @@ import ScrollableTabView from "react-native-scrollable-tab-view";
 const tabs = [
     { label: "全部", value: "all" },
     { label: "匹配中", value: "0" },
-    { label: "待付款", value: "1" },
+    { label: "待收款", value: "1" },
     { label: "待确认", value: "2" },
     //{ label: '成长值', value: '3' },
     { label: "已完成", value: "4" }
@@ -66,7 +66,7 @@ export default class OrderSellFlowerList extends PureComponent {
                 <View style={styles.itemContent}>
                     <View style={styles.itemTop}>
                         <Text style={styles.itemTitleText}>
-                            {name}|{money}
+                            {name} {money}
                         </Text>
                         <Text style={styles.stateText}>
                             {this.getLabelByValue(state)}
@@ -74,13 +74,13 @@ export default class OrderSellFlowerList extends PureComponent {
                     </View>
                     <View style={styles.textBox}>
                         <Text style={styles.text}>
-                            采收编号:
+                            订单编号:
                             {number}
                         </Text>
                     </View>
                     <View style={styles.textBox}>
                         <Text style={styles.text}>
-                            拍单时间
+                            申请时间
                             {date}
                         </Text>
                     </View>

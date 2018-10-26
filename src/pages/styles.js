@@ -1225,7 +1225,8 @@ const orderDetail = {
         height: scale(40),
         top: scale(2),
         right: 20,
-        zIndex: 1
+        zIndex: 1,
+        alignItems: "center"
     },
     complaintIcon: {
         width: scale(25),

@@ -96,7 +96,6 @@ export default class Home extends PureComponent {
                     <View style={styles.itemContent}>
                         <View style={styles.itemTop}>
                             <Text style={styles.itemTitleText}>{name}</Text>
-                            <Text style={styles.statusText}>{percent}</Text>
                         </View>
                         <View style={styles.itemCenter}>
                             <Text style={styles.itemTitleText}>成长中</Text>

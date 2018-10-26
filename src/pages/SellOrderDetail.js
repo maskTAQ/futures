@@ -1,9 +1,18 @@
 import React, { PureComponent } from "react";
-import { View, ScrollView, Image, Modal, Dimensions } from "react-native";
+import {
+    View,
+    ScrollView,
+    Image,
+    Modal,
+    Dimensions,
+    Linking
+} from "react-native";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import Swiper from "react-native-swiper";
 import update from "immutability-helper";
+import moment from "moment";
+import { connect } from "react-redux";
 
 import { orderDetail as styles, alert as alertStyle } from "./styles";
 import { Page, Text, Button, Icon, Comfirm, Alert, Visible } from "components";
@@ -19,7 +28,7 @@ import { back, getOrderSellFlowerList } from "actions";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const tabs = [
     { label: "匹配中", value: "0" },
-    { label: "待付款", value: "1" },
+    { label: "待收款", value: "1" },
     { label: "待确认", value: "2" },
     { label: "成长中", value: "3" },
     { label: "已完成", value: "4" }
@@ -33,24 +42,25 @@ const getLabelByValue = value => {
     }
     return label;
 };
-const getListByState = (state, data) => {
+const getListByState = (state, data, timeDown) => {
     const {
         or_number,
         assign_money,
         date,
         statenoice,
-        predictmatchdate,
+        finishdate,
+        //predictmatchdate,
         growup_endtime
     } = data;
     switch (state) {
         case "0":
             return [
                 {
-                    label: "转让编号：",
+                    label: "订单编号：",
                     value: or_number
                 },
                 {
-                    label: "转让数额：",
+                    label: "订单金额：",
                     value: assign_money
                 },
                 // {
@@ -60,22 +70,22 @@ const getListByState = (state, data) => {
                 {
                     label: "匹配状态： ",
                     value: getLabelByValue(state)
-                },
-                {
-                    label: "预计匹配时间：",
-                    value: predictmatchdate
-                },
-                "如系统未能在上述时间范围内为您自动匹配，请您耐心等待，系统将尽快优先为您匹配，或者您也可以取消帮助。"
+                }
+                // {
+                //     label: "预计匹配时间：",
+                //     value: predictmatchdate
+                // },
+                // "如系统未能在上述时间范围内为您自动匹配，请您耐心等待，系统将尽快优先为您匹配，或者您也可以取消帮助。"
             ];
         case "1":
         case "2":
             return [
                 {
-                    label: "转让编号：",
+                    label: "订单编号：",
                     value: or_number
                 },
                 {
-                    label: "转让数额：",
+                    label: "订单金额：",
                     value: assign_money
                 },
                 {
@@ -90,11 +100,11 @@ const getListByState = (state, data) => {
         case "3":
             return [
                 {
-                    label: "转让编号：",
+                    label: "订单编号：",
                     value: or_number
                 },
                 {
-                    label: "转让数额：",
+                    label: "订单金额：",
                     value: assign_money
                 },
                 {
@@ -117,25 +127,24 @@ const getListByState = (state, data) => {
         default:
             return [
                 {
-                    label: "转让编号：",
+                    label: "订单编号：",
                     value: or_number
                 },
                 {
-                    label: "转让数额：",
+                    label: "订单金额：",
                     value: assign_money
                 },
                 {
-                    label: "匹配时间：",
-                    value: date
+                    label: "完成时间：",
+                    value: finishdate
                 },
                 {
                     label: "当前状态： ",
                     value: statenoice
                 },
                 {
-                    label: "成长中倒计时：",
-                    value:
-                        "恭喜成长周期已到，您可以进入花园仓库中查收。或选择复投马上开始重新生长。",
+                    label: "订单状态：",
+                    value: "订单已完成,请注意查收",
                     valueStyle: {
                         color: "#FF0000"
                     }
@@ -143,9 +152,13 @@ const getListByState = (state, data) => {
             ];
     }
 };
+@connect(({ data }) => ({
+    home: data.home
+}))
 export default class SellOrderDetail extends PureComponent {
     static propTypes = {
-        navigation: PropTypes.object
+        navigation: PropTypes.object,
+        home: PropTypes.object
     };
     state = {
         comfirm: {
@@ -162,6 +175,23 @@ export default class SellOrderDetail extends PureComponent {
             size: []
         }
     };
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
+    }
+    TimeDown = endDateStr => {
+        const end = moment(endDateStr);
+
+        //当前时间
+        const start = moment();
+        this.setState({
+            timeDown: moment(end - start).format("HH时mm分ss秒")
+        });
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+            this.TimeDown(endDateStr);
+        }, 1000);
+    };
     getLabelByValue(value) {
         const label = "";
         for (let i = 0; i < tabs.length; i++) {
@@ -172,20 +202,31 @@ export default class SellOrderDetail extends PureComponent {
         return label;
     }
     renderUser() {
+        const { timeDown } = this.state;
+        const { bankstate } = this.props.home;
         const {
             state,
             assign_account,
-            buy_money,
+            assign_money,
             matchdate,
             assign_endtime,
-            assign_bank_name,
-            assign_bank_card,
-            assign_mobile,
+            // assign_bank_name,
+            // assign_bank_card,
+            assign_phone,
             assign_logo,
-            alipay_account
+            //alipay_account,
+            assign_name
         } = this.props.navigation.state.params;
         if (state === "0" || state === "3" || state === "4") {
             return null;
+        }
+        if (
+            (state === "1" || state === "2") &&
+            assign_endtime &&
+            !this.startTimedown
+        ) {
+            this.startTimedown = true;
+            this.TimeDown(assign_endtime);
         }
         return (
             <View style={{ marginTop: 30 }}>
@@ -202,7 +243,7 @@ export default class SellOrderDetail extends PureComponent {
                         <View style={styles.headerBottom}>
                             <Text style={styles.productTimeText}>
                                 数额：
-                                {buy_money}
+                                {assign_money}
                             </Text>
                             <Text style={styles.productScheduleText}>
                                 匹配时间：
@@ -213,62 +254,79 @@ export default class SellOrderDetail extends PureComponent {
                 </View>
                 <View style={[styles.bottom]}>
                     {this.renderList([
-                        {
-                            label: "付款倒计时：",
-                            value: assign_endtime,
-                            valueStyle: {
-                                color: "#FD4C73"
-                            }
-                        },
-                        "收款信息：",
-                        {
-                            label: "开户银行：",
-                            value: assign_bank_name
-                        },
-                        {
-                            label: "银行账户： ",
-                            value: assign_bank_card
-                        },
-                        {
-                            label: "支付宝：",
-                            value: alipay_account
-                        },
-                        {
-                            label: "收款人电话：",
-                            value: assign_mobile
-                        },
                         state === "1"
                             ? {
-                                  label: "收款确认：",
-                                  value: "待付款",
+                                  label: "收款倒计时：",
+                                  value: timeDown,
                                   valueStyle: {
-                                      color: "#00B415"
-                                  },
-                                  labelStyle: {
-                                      color: "#00B415"
+                                      color: "#FD4C73"
                                   }
                               }
                             : {
-                                  label: "收款确认：",
-                                  value: "待确认",
+                                  label: "确认倒计时：",
+                                  value: timeDown,
                                   valueStyle: {
-                                      color: "#FF0000"
-                                  },
-                                  labelStyle: {
-                                      color: "#FF0000"
+                                      color: "#FD4C73"
                                   }
-                              }
+                              },
+
+                        ...(bankstate === "1"
+                            ? [
+                                  {
+                                      label: "用户姓名：",
+                                      value: assign_name
+                                  },
+                                  {
+                                      label: "会员电话：",
+                                      value: assign_phone
+                                  }
+                                  // state === "1"
+                                  //     ? {
+                                  //         label: "收款确认：",
+                                  //         value: "待付款",
+                                  //         valueStyle: {
+                                  //             color: "#00B415"
+                                  //         },
+                                  //         labelStyle: {
+                                  //             color: "#00B415"
+                                  //         }
+                                  //     }
+                                  //     : {
+                                  //         label: "收款确认：",
+                                  //         value: "待确认",
+                                  //         valueStyle: {
+                                  //             color: "#FF0000"
+                                  //         },
+                                  //         labelStyle: {
+                                  //             color: "#FF0000"
+                                  //         }
+                                  //     }
+                              ]
+                            : [])
+                        // {
+                        //     label: "开户银行：",
+                        //     value: assign_bank_name
+                        // },
+                        // {
+                        //     label: "银行账户： ",
+                        //     value: assign_bank_card
+                        // },
+                        // {
+                        //     label: "支付宝：",
+                        //     value: alipay_account
+                        // },
                     ])}
                 </View>
             </View>
         );
     }
     renderList = data => {
-        const { state } = this.props.navigation.state.params;
-        return (data
-            ? data
-            : getListByState(state, this.props.navigation.state.params)
-        ).map(item => {
+        const {
+            params,
+            params: { state }
+        } = this.props.navigation.state;
+
+        return (data ? data : getListByState(state, params)).map(item => {
             if (typeof item === "string") {
                 return (
                     <View style={styles.item} key={item}>
@@ -277,24 +335,43 @@ export default class SellOrderDetail extends PureComponent {
                 );
             } else {
                 const { label, value, labelStyle, valueStyle } = item;
-                return (
-                    <View style={styles.item} key={label}>
-                        <Text style={[styles.itemLabelText, labelStyle]}>
-                            {label}
-                        </Text>
-                        <Text
-                            style={[
-                                styles.itemValueText,
-                                label === "成长中倒计时：" && {
-                                    color: "#FF0000"
-                                },
-                                valueStyle
-                            ]}
+                if (label.includes("电话")) {
+                    return (
+                        <Button
+                            onPress={() => {
+                                Linking.openURL("tel:" + value);
+                            }}
+                            style={styles.item}
+                            key={label}
                         >
-                            {value}
-                        </Text>
-                    </View>
-                );
+                            <Text style={[styles.itemLabelText, labelStyle]}>
+                                {label}
+                            </Text>
+                            <Text style={[styles.itemValueText, valueStyle]}>
+                                {value}
+                            </Text>
+                        </Button>
+                    );
+                } else {
+                    return (
+                        <View style={styles.item} key={label}>
+                            <Text style={[styles.itemLabelText, labelStyle]}>
+                                {label}
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.itemValueText,
+                                    label === "成长中倒计时：" && {
+                                        color: "#FF0000"
+                                    },
+                                    valueStyle
+                                ]}
+                            >
+                                {value}
+                            </Text>
+                        </View>
+                    );
+                }
             }
         });
     };
@@ -304,7 +381,7 @@ export default class SellOrderDetail extends PureComponent {
             number,
             voucher = []
         } = this.props.navigation.state.params;
-        if (state === "0" || state === "3" || state === "4") {
+        if (state !== "2") {
             return null;
         }
         return (
@@ -325,9 +402,9 @@ export default class SellOrderDetail extends PureComponent {
                             source={iconSource.complaint}
                             style={styles.complaintIcon}
                         />
-                        <Text style={styles.complaintText}>投诉</Text>
+                        <Text style={styles.complaintText}>订单投诉</Text>
                     </Button>
-                    <Text style={styles.voucherTitleText}>上传打款凭证：</Text>
+                    <Text style={styles.voucherTitleText}>查看凭证：</Text>
                     <View style={styles.voucherContent}>
                         <Visible show={state === "1" || state === "2"}>
                             {voucher.map(uri => {
@@ -419,7 +496,7 @@ export default class SellOrderDetail extends PureComponent {
                             <View style={styles.headerContent}>
                                 <View style={styles.headerTop}>
                                     <Text style={styles.productNameText}>
-                                        {name} | {money}
+                                        {name} {money}
                                     </Text>
                                     <Text style={styles.productStatusText}>
                                         {this.getLabelByValue(state)}
@@ -427,7 +504,7 @@ export default class SellOrderDetail extends PureComponent {
                                 </View>
                                 <View style={styles.headerBottom}>
                                     <Text style={styles.productTimeText}>
-                                        排单时间：
+                                        申请时间：
                                         {matchdate}
                                     </Text>
                                 </View>

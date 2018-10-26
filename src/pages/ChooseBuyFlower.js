@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import moment from "moment";
 
 import { home as styles } from "./styles";
 import { DataView, Icon, Text, Button, Page } from "components";
@@ -16,7 +17,35 @@ export default class ChooseBuyFlower extends PureComponent {
         home: PropTypes.object,
         loading: PropTypes.object
     };
+    state = {
+        timeDown: ""
+    };
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
+    }
+    TimeDown = endDateStr => {
+        const end = moment(endDateStr);
 
+        //当前时间
+        const start = moment();
+        if (this.hasDate) {
+            this.setState({
+                timeDown: moment(end - start).format("HH时mm分ss秒"),
+                hasDate: moment(moment(this.hasDate) - start).format(
+                    "HH时mm分ss秒"
+                )
+            });
+        } else {
+            this.setState({
+                timeDown: moment(end - start).format("HH时mm分ss秒")
+            });
+        }
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+            this.TimeDown(endDateStr);
+        }, 1000);
+    };
     renderItem = ({ item }) => {
         const { money, state, name, type } = item;
         return (
@@ -61,6 +90,11 @@ export default class ChooseBuyFlower extends PureComponent {
     render() {
         const { home = {} } = this.props;
         const { buylist = [] } = home;
+        const { timeDown } = this.state;
+        if (home && home.date_end && !this.startTimedown) {
+            this.startTimedown = true;
+            this.TimeDown(home.date_end);
+        }
         return (
             <Page title="选择购买的花卉">
                 <View style={styles.store}>
@@ -70,9 +104,7 @@ export default class ChooseBuyFlower extends PureComponent {
                         </View>
                         <Text style={styles.countDownText}>
                             周期剩余时间：
-                            <Text style={{ color: "#fa4f75" }}>
-                                {home.date_end}
-                            </Text>
+                            <Text style={{ color: "#fa4f75" }}>{timeDown}</Text>
                         </Text>
                     </View>
                     <DataView

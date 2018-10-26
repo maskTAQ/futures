@@ -5,7 +5,8 @@ import {
     Image,
     Modal,
     Dimensions,
-    Linking
+    Linking,
+    Clipboard
 } from "react-native";
 import PropTypes from "prop-types";
 import ImagePicker from "react-native-image-picker";
@@ -41,7 +42,8 @@ const getListByState = (state, data, timeDown) => {
         date,
         statenoice,
         assign_money,
-        predictmatchdate
+        finishdate
+        //predictmatchdate
         // growup_endtime
     } = data;
     switch (state) {
@@ -56,18 +58,18 @@ const getListByState = (state, data, timeDown) => {
                     value: assign_money
                 },
                 {
-                    label: "匹配时间：",
+                    label: "申请时间：",
                     value: date
                 },
                 {
                     label: "当前状态： ",
                     value: statenoice
-                },
-                {
-                    label: "预计匹配时间：",
-                    value: predictmatchdate
-                },
-                "如系统未能在上述时间范围内为您自动匹配，请您耐心等待，系统将尽快优先为您匹配，或者您也可以取消帮助。"
+                }
+                // {
+                //     label: "预计匹配时间：",
+                //     value: predictmatchdate
+                // },
+                // "如系统未能在上述时间范围内为您自动匹配，请您耐心等待，系统将尽快优先为您匹配，或者您也可以取消帮助。"
             ];
         case "1":
         case "2":
@@ -85,7 +87,7 @@ const getListByState = (state, data, timeDown) => {
                     value: statenoice
                 },
                 {
-                    label: "付款时间：",
+                    label: "匹配时间：",
                     value: date
                 }
             ];
@@ -100,8 +102,8 @@ const getListByState = (state, data, timeDown) => {
                     value: assign_money
                 },
                 {
-                    label: "收款时间：",
-                    value: date
+                    label: "完成时间：",
+                    value: finishdate
                 },
                 {
                     label: "当前状态： ",
@@ -128,7 +130,7 @@ const getListByState = (state, data, timeDown) => {
                 },
                 {
                     label: "完成时间：",
-                    value: date
+                    value: finishdate
                 },
                 {
                     label: "当前状态： ",
@@ -236,10 +238,6 @@ export default class BuyOrderDetail extends PureComponent {
 
         //当前时间
         const start = moment();
-        console.log(
-            moment(end - start).format("HH时mm分ss秒"),
-            'moment(end - start).format("HH时mm分ss秒")'
-        );
         this.setState({
             timeDown: moment(end - start).format("HH时mm分ss秒")
         });
@@ -297,14 +295,21 @@ export default class BuyOrderDetail extends PureComponent {
                 </View>
                 <View style={[styles.bottom]}>
                     {this.renderList([
-                        {
-                            label: "付款倒计时：",
-                            value: timeDown,
-                            valueStyle: {
-                                color: "#FD4C73"
-                            }
-                        },
-
+                        state === "1"
+                            ? {
+                                  label: "付款倒计时：",
+                                  value: timeDown,
+                                  valueStyle: {
+                                      color: "#FD4C73"
+                                  }
+                              }
+                            : {
+                                  label: "确认倒计时：",
+                                  value: timeDown,
+                                  valueStyle: {
+                                      color: "#FD4C73"
+                                  }
+                              },
                         {
                             label: "收款姓名：",
                             value: assign_bank_user
@@ -314,7 +319,7 @@ export default class BuyOrderDetail extends PureComponent {
                             value: assign_bank_name
                         },
                         {
-                            label: "银行账户： ",
+                            label: "银行账户：",
                             value: assign_bank_card
                         },
                         {
@@ -324,28 +329,7 @@ export default class BuyOrderDetail extends PureComponent {
                         {
                             label: "收款人电话：",
                             value: assign_mobile
-                        },
-                        state === "1"
-                            ? {
-                                  label: "收款确认：",
-                                  value: "待付款",
-                                  valueStyle: {
-                                      color: "#00B415"
-                                  },
-                                  labelStyle: {
-                                      color: "#00B415"
-                                  }
-                              }
-                            : {
-                                  label: "收款确认：",
-                                  value: "待确认",
-                                  valueStyle: {
-                                      color: "#FF0000"
-                                  },
-                                  labelStyle: {
-                                      color: "#FF0000"
-                                  }
-                              }
+                        }
                     ])}
                 </View>
             </View>
@@ -355,11 +339,11 @@ export default class BuyOrderDetail extends PureComponent {
         const { timeDown } = this.state;
         const {
             params,
-            params: { state, growup_endtime }
+            params: { state, assign_endtime }
         } = this.props.navigation.state;
-        if (state === "3" && growup_endtime && !this.startTimedown) {
+        if (state === "3" && assign_endtime && !this.startTimedown) {
             this.startTimedown = true;
-            this.TimeDown(growup_endtime);
+            this.TimeDown(assign_endtime);
         }
 
         return (data ? data : getListByState(state, params, timeDown)).map(
@@ -372,11 +356,25 @@ export default class BuyOrderDetail extends PureComponent {
                     );
                 } else {
                     const { label, value, labelStyle, valueStyle } = item;
-                    if (label.includes("电话")) {
+                    if (
+                        label.includes("电话") ||
+                        ["银行账户：", "支付宝：", "收款姓名："].includes(label)
+                    ) {
                         return (
                             <Button
                                 onPress={() => {
-                                    Linking.openURL("tel:" + 13696526122);
+                                    if (
+                                        [
+                                            "银行账户：",
+                                            "支付宝：",
+                                            "收款姓名："
+                                        ].indexOf(label) > -1
+                                    ) {
+                                        Clipboard.setString(value);
+                                        Tip.success("复制成功");
+                                    } else {
+                                        Linking.openURL("tel:" + value);
+                                    }
                                 }}
                                 style={styles.item}
                                 key={label}
@@ -519,7 +517,7 @@ export default class BuyOrderDetail extends PureComponent {
                                 }
                             }}
                         >
-                            确认收款
+                            确认付款
                         </Button>
                     </Visible>
                 </View>

@@ -123,10 +123,12 @@ export default class ForgetPassword extends PureComponent {
 
                                 return userReg(this.state)
                                     .then(res => {
-                                        console.log(res, "res");
-                                        navigate({
-                                            routeName: "Login"
-                                        });
+                                        Tip.success("注册成功!");
+                                        setTimeout(() => {
+                                            navigate({
+                                                routeName: "Login"
+                                            });
+                                        }, 1000);
                                     })
                                     .catch(e => {
                                         console.log(e);
