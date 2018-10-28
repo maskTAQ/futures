@@ -15,7 +15,7 @@ const list = [
         key: "account"
     },
     {
-        placeholder: "转账邀请名额数:",
+        placeholder: "转让邀请码数量:",
         key: "invite_money"
     }
 ];

@@ -60,7 +60,7 @@ export default class Buy extends PureComponent {
                                 <View style={styles.productDesc}>
                                     <Text style={styles.productDescText}>
                                         预计每个生长周期收入
-                                        {percent}%
+                                        {percent}
                                     </Text>
                                     <Text style={styles.productDescText}>
                                         {money}

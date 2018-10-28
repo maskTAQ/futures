@@ -18,7 +18,7 @@ const list = [
         key: "account"
     },
     {
-        placeholder: "转账诚信币数:",
+        placeholder: "转让有机肥数量:",
         key: "queuing_money"
     }
 ];

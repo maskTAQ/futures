@@ -23,6 +23,7 @@ export default function*() {
                         saveDataToRedux: (params, config) => {
                             return login(params, config)
                                 .then(res => {
+                                    console.log(res, "logn res");
                                     Storage.setJson("userInfo", params);
                                     setIsLogin(true);
                                     Storage.set("Token", res.access_token);

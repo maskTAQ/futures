@@ -173,7 +173,8 @@ export default class SellOrderDetail extends PureComponent {
             visible: false,
             data: [],
             size: []
-        }
+        },
+        isComplaint: false
     };
     componentWillUnmount() {
         clearTimeout(this.timeout);
@@ -183,8 +184,15 @@ export default class SellOrderDetail extends PureComponent {
 
         //当前时间
         const start = moment();
+
+        if (end.unix() - start.unix() <= 0) {
+            this.setState({
+                timeDown: "订单超时请联系客服并投诉!"
+            });
+            return;
+        }
         this.setState({
-            timeDown: moment(end - start).format("HH时mm分ss秒")
+            timeDown: moment.duration(end - start, "ms").format("HH时-mm分ss秒")
         });
 
         clearTimeout(this.timeout);
@@ -376,18 +384,22 @@ export default class SellOrderDetail extends PureComponent {
         });
     };
     renderVoucher() {
+        const { isComplaint } = this.state;
         const {
             state,
             number,
-            voucher = []
+            voucher = [],
+            complaint
         } = this.props.navigation.state.params;
         if (state !== "2") {
             return null;
         }
+        const isComplaintVar = complaint === "1" || isComplaint;
         return (
             <Visible show={state !== "0"}>
                 <View style={styles.voucher}>
                     <Button
+                        disabled={isComplaintVar}
                         onPress={() => {
                             this.setState({
                                 comfirm: {
@@ -396,13 +408,16 @@ export default class SellOrderDetail extends PureComponent {
                                 }
                             });
                         }}
+                        disabledButtonStyle={{ backgroundColor: "#fff" }}
                         style={styles.complaint}
                     >
                         <Icon
                             source={iconSource.complaint}
                             style={styles.complaintIcon}
                         />
-                        <Text style={styles.complaintText}>订单投诉</Text>
+                        <Text style={styles.complaintText}>
+                            {isComplaintVar ? "已投诉" : "订单投诉"}
+                        </Text>
                     </Button>
                     <Text style={styles.voucherTitleText}>查看凭证：</Text>
                     <View style={styles.voucherContent}>
@@ -483,7 +498,7 @@ export default class SellOrderDetail extends PureComponent {
             name,
             money,
             state,
-            matchdate,
+            date,
             number,
             icon
         } = this.props.navigation.state.params;
@@ -505,7 +520,7 @@ export default class SellOrderDetail extends PureComponent {
                                 <View style={styles.headerBottom}>
                                     <Text style={styles.productTimeText}>
                                         申请时间：
-                                        {matchdate}
+                                        {date}
                                     </Text>
                                 </View>
                             </View>
@@ -531,7 +546,8 @@ export default class SellOrderDetail extends PureComponent {
                                         alert: {
                                             visible: true,
                                             content: "投诉成功"
-                                        }
+                                        },
+                                        isComplaint: true
                                     });
                                 });
                             } else {

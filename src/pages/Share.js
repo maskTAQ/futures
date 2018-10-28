@@ -101,7 +101,7 @@ export default class Share extends PureComponent {
                                     style={styles.copyContentText}
                                     numberOfLines={1}
                                 >
-                                    {`http://qr.liantu.com/api.php?text=${text}`}
+                                    {`text`}
                                 </Text>
                             </View>
                             <Button

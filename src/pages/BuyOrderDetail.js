@@ -28,6 +28,28 @@ import {
 import { iconSource, Tip } from "commons";
 import { back, getOrderBuyFlowerList } from "actions";
 
+moment.duration.fn.format = function() {
+    const units = [
+            { years: "年" },
+            { months: "个月" },
+            { weeks: "周" },
+            { days: "天" },
+            { hours: "小时" },
+            { minutes: "分钟" },
+            { seconds: "秒" }
+            //{ milliseconds : '微秒'}
+        ],
+        result = [];
+    for (let i = 0, len = units.length; i < len; i++) {
+        for (const prop in units[i]) {
+            const num = this._data[prop];
+            if (num > 0) {
+                result.push(num + units[i][prop]);
+            }
+        }
+    }
+    return result.join("");
+};
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const tabs = [
     { label: "匹配中", value: "0" },
@@ -105,10 +127,10 @@ const getListByState = (state, data, timeDown) => {
                     label: "完成时间：",
                     value: finishdate
                 },
-                {
-                    label: "当前状态： ",
-                    value: statenoice
-                },
+                // {
+                //     label: "当前状态： ",
+                //     value: statenoice
+                // },
                 {
                     label: "成长中倒计时：",
                     value: timeDown,
@@ -164,7 +186,8 @@ export default class BuyOrderDetail extends PureComponent {
             data: [],
             size: []
         },
-        voucherImgList: []
+        voucherImgList: [],
+        isComplaint: false
     };
     componentWillUnmount() {
         clearTimeout(this.timeout);
@@ -238,8 +261,15 @@ export default class BuyOrderDetail extends PureComponent {
 
         //当前时间
         const start = moment();
+
+        if (end.unix() - start.unix() <= 0) {
+            this.setState({
+                timeDown: "订单已完成 请注意查收!"
+            });
+            return;
+        }
         this.setState({
-            timeDown: moment(end - start).format("HH时mm分ss秒")
+            timeDown: moment.duration(end - start, "ms").format("HH时mm分ss秒")
         });
 
         clearTimeout(this.timeout);
@@ -265,7 +295,11 @@ export default class BuyOrderDetail extends PureComponent {
         if (state === "0" || state === "3" || state === "4") {
             return null;
         }
-        if (state === "2" && assign_endtime && !this.startTimedown) {
+        if (
+            ["1", "2"].includes(state) &&
+            assign_endtime &&
+            !this.startTimedown
+        ) {
             this.startTimedown = true;
             this.TimeDown(assign_endtime);
         }
@@ -339,11 +373,11 @@ export default class BuyOrderDetail extends PureComponent {
         const { timeDown } = this.state;
         const {
             params,
-            params: { state, assign_endtime }
+            params: { state, growup_endtime }
         } = this.props.navigation.state;
-        if (state === "3" && assign_endtime && !this.startTimedown) {
+        if (state === "3" && growup_endtime && !this.startTimedown) {
             this.startTimedown = true;
-            this.TimeDown(assign_endtime);
+            this.TimeDown(growup_endtime);
         }
 
         return (data ? data : getListByState(state, params, timeDown)).map(
@@ -418,20 +452,23 @@ export default class BuyOrderDetail extends PureComponent {
         );
     };
     renderVoucher() {
-        const { voucherImgList } = this.state;
+        const { voucherImgList, isComplaint } = this.state;
         const {
             state,
             or_number,
-            voucher = []
+            voucher = [],
+            complaint
         } = this.props.navigation.state.params;
         if (state === "0" || state === "3" || state === "4") {
             return null;
         }
+        const isComplaintVar = complaint === "1" || isComplaint;
         return (
             <Visible show={state !== "0"}>
                 <View style={styles.voucher}>
                     <Visible show={state !== "1"}>
                         <Button
+                            disabled={isComplaintVar}
                             onPress={() => {
                                 this.setState({
                                     comfirm: {
@@ -440,13 +477,16 @@ export default class BuyOrderDetail extends PureComponent {
                                     }
                                 });
                             }}
+                            disabledButtonStyle={{ backgroundColor: "#fff" }}
                             style={styles.complaint}
                         >
                             <Icon
                                 source={iconSource.complaint}
                                 style={styles.complaintIcon}
                             />
-                            <Text style={styles.complaintText}>订单投诉</Text>
+                            <Text style={styles.complaintText}>
+                                {isComplaintVar ? "已投诉" : "订单投诉"}
+                            </Text>
                         </Button>
                     </Visible>
                     <Text style={styles.voucherTitleText}>上传打款凭证：</Text>
@@ -609,7 +649,8 @@ export default class BuyOrderDetail extends PureComponent {
                                             alert: {
                                                 visible: true,
                                                 content: "投诉成功"
-                                            }
+                                            },
+                                            isComplaint: true
                                         });
                                     }
                                 );

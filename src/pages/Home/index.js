@@ -43,32 +43,76 @@ export default class Home extends PureComponent {
             .catch(e => {
                 console.log(e);
             });
+        // console.log(moment(),moment(moment('2018-10-26 22:17')-moment('2018-10-27 22:15')).format(
+        //     "HH时mm分ss秒"
+        // ),'12')
     }
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.home && nextProps.home.date_end) {
-            this.TimeDown(nextProps.home.date_end);
-        }
-    }
+    // UNSAFE_componentWillReceiveProps(nextProps) {
+    //     if (nextProps.home && nextProps.home.date_end) {
+    //         this.TimeDown(nextProps.home.date_end);
+    //     }
+    // }
     componentWillUnmount() {
         clearTimeout(this.timeout);
     }
+    // TimeDown = endDateStr => {
+    //     const end = moment(endDateStr);
+
+    //     //当前时间
+    //     const start = moment();
+    //     if (this.hasDate) {
+    //         this.setState({
+    //             timeDown: moment(end - start).format("HH时mm分ss秒"),
+    //             hasDate: moment(moment(this.hasDate) - start).format(
+    //                 "HH时mm分ss秒"
+    //             )
+    //         });
+    //     } else {
+    //         this.setState({
+    //             timeDown: moment(end - start).format("HH时mm分ss秒")
+    //         });
+    //     }
+
+    //     clearTimeout(this.timeout);
+    //     this.timeout = setTimeout(() => {
+    //         this.TimeDown(endDateStr);
+    //     }, 1000);
+    // };
     TimeDown = endDateStr => {
         const end = moment(endDateStr);
 
         //当前时间
         const start = moment();
+
         if (this.hasDate) {
+            const end = moment(this.hasDate);
+            if (end.unix() - start.unix() <= 0) {
+                this.setState({
+                    hasDate: "00时:00分:00秒"
+                });
+                return;
+            }
             this.setState({
-                timeDown: moment(end - start).format("HH时mm分ss秒"),
-                hasDate: moment(moment(this.hasDate) - start).format(
-                    "HH时mm分ss秒"
-                )
-            });
-        } else {
-            this.setState({
-                timeDown: moment(end - start).format("HH时mm分ss秒")
+                hasDate: moment
+                    .duration(end - start, "ms")
+                    .format("HH时mm分ss秒")
             });
         }
+
+        if (end.unix() - start.unix() <= 0) {
+            this.startTimedown = false;
+
+            this.setState({
+                timeDown:
+                    end.unix() - start.unix() < 60
+                        ? "00时:00分:00秒"
+                        : "正在进入下一周期"
+            });
+            return;
+        }
+        this.setState({
+            timeDown: moment.duration(end - start, "ms").format("HH时mm分ss秒")
+        });
 
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
@@ -123,7 +167,7 @@ export default class Home extends PureComponent {
                     <Text style={styles.itemTitleText}>{money}</Text>
                     <Button
                         style={styles.buyButton}
-                        disabled={!state}
+                        disabled={state === "0"}
                         disabledButtonStyle={{ backgroundColor: "#e3e3e3" }}
                         disabledTextStyle={{ color: "#999" }}
                         textStyle={styles.buyButtonText}
@@ -143,7 +187,7 @@ export default class Home extends PureComponent {
                             }
                         }}
                     >
-                        {state ? "申请种植" : "不可采收"}
+                        {state === "0" ? "不可采收" : "申请种植"}
                     </Button>
                 </View>
             </View>
@@ -153,6 +197,15 @@ export default class Home extends PureComponent {
         const { isModalVisible, notif, timeDown } = this.state;
         const { home = {} } = this.props;
         const { growuplist = [], buylist = [] } = home;
+        if (
+            this.props.home &&
+            this.props.home.date_end &&
+            !this.startTimedown
+        ) {
+            this.startTimedown = true;
+            this.TimeDown(this.props.home.date_end);
+        }
+
         return (
             <View style={styles.container}>
                 <StatusBar

@@ -4,7 +4,7 @@ import qs from "qs";
 import { navigate } from "actions";
 import { Tip, Storage } from "commons";
 
-const host = "http://123.207.84.39"; //http://123.207.84.39/index.php http://pig.bateersoft.cc/index.php
+const host = "https://qmjy1.com/index.php?s="; //http://123.207.84.39/index.php http://pig.bateersoft.cc/index.php
 /**
  * 请求拦截器
  * */
@@ -13,10 +13,11 @@ Axios.interceptors.request.use(
         return Storage.get("Token")
             .then(data => {
                 if (data) {
-                    config.headers["access_token"] = data;
+                    config.headers["Access-Token"] = data;
                 }
                 config.headers["Content-Type"] =
                     "application/x-www-form-urlencoded";
+                console.log(config, "config");
                 return config;
             })
             .catch(e => {
@@ -85,13 +86,14 @@ const base = (type, url, params, config) => {
                 }
 
                 const { code, data, msg } = resData;
-                console.log(res.data, url);
+                console.log(res.data, host + url);
                 Tip.dismiss();
                 if (Number(code) === 401) {
                     Tip.fail(msg);
                     return navigate({ routeName: "Login" });
                 }
                 if (Number(code) === 200) {
+                    console.log("213213");
                     return resolve(data);
                 } else {
                     if (handleCatch) {
@@ -116,8 +118,8 @@ const base = (type, url, params, config) => {
                 });
                 Tip.dismiss();
                 if (handleCatch) {
-                    // Tip.fail(`error:${String(e)}`);
-                    return resolve("已处理错误");
+                    Tip.fail(`${String(e)}`);
+                    return reject("已处理错误");
                 }
                 return reject(String(e));
             });

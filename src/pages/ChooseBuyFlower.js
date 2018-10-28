@@ -61,7 +61,7 @@ export default class ChooseBuyFlower extends PureComponent {
                     <Text style={styles.itemTitleText}>{money}</Text>
                     <Button
                         style={styles.buyButton}
-                        disabled={!state}
+                        disabled={state === "0"}
                         disabledButtonStyle={{ backgroundColor: "#e3e3e3" }}
                         disabledTextStyle={{ color: "#999" }}
                         textStyle={styles.buyButtonText}
@@ -81,7 +81,7 @@ export default class ChooseBuyFlower extends PureComponent {
                             }
                         }}
                     >
-                        {state ? "申请种植" : "不可采收"}
+                        {state === "0" ? "不可采收" : "申请种植"}
                     </Button>
                 </View>
             </View>
