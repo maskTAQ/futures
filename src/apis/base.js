@@ -64,9 +64,11 @@ const requestWrapper = (method, url, param = {}) => {
 const base = (type, url, params, config) => {
     const { handleCatch, loading } = config;
     loading && Tip.loading();
+
     return new Promise((resolve, reject) => {
         requestWrapper(type, url, params)
             .then(res => {
+                console.log(res, url, "ur;");
                 let resData = res.data;
                 try {
                     resData = eval("(" + res.data + ")");
@@ -87,7 +89,7 @@ const base = (type, url, params, config) => {
                 const { code, data, msg } = resData;
                 //console.log(res, host + url);
                 Tip.dismiss();
-                if (Number(code) === 401) {
+                if (Number(code) === 401 && url !== "/Api/checkUpdate") {
                     Tip.fail(msg);
                     return navigate({ routeName: "Login" });
                 }
