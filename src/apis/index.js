@@ -1,5 +1,6 @@
 import { Platform } from "react-native";
 
+import app from "src/app.js";
 import { post } from "./base";
 
 const login = (params, config) => {
@@ -112,11 +113,15 @@ const inviteSure = params => {
 };
 
 //检查更新
-const checkUpdate = () => {
-    return post("/Api/checkUpdate", {
-        model: Platform.select({ ios: "1", android: "2" }),
-        version: "1.0.0"
-    });
+const checkUpdate = config => {
+    return post(
+        "/Api/checkUpdate",
+        {
+            model: Platform.select({ ios: "1", android: "2" }),
+            version: app.version[Platform.OS]
+        },
+        config
+    );
 };
 //获取银行账户信息
 const getBanckInfo = () => {

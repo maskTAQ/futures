@@ -24,18 +24,20 @@ const Alert = (
                 translucent={true}
                 barStyle="light-content"
             />
-            <View style={styles.container}>
-                <View style={styles.box}>
-                    <Visible show={showClose}>
-                        <TouchableWithoutFeedback onPress={requestClose}>
-                            <View style={styles.close}>
-                                <Icon source={closeIcon} size={40} />
-                            </View>
-                        </TouchableWithoutFeedback>
-                    </Visible>
-                    {children}
+            <TouchableWithoutFeedback onPress={requestClose}>
+                <View style={styles.container}>
+                    <View style={styles.box}>
+                        <Visible show={showClose}>
+                            <TouchableWithoutFeedback onPress={requestClose}>
+                                <View style={styles.close}>
+                                    <Icon source={closeIcon} size={40} />
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </Visible>
+                        {children}
+                    </View>
                 </View>
-            </View>
+            </TouchableWithoutFeedback>
         </Modal>
     );
 };

@@ -4,7 +4,7 @@ import qs from "qs";
 import { navigate } from "actions";
 import { Tip, Storage } from "commons";
 
-const host = "https://qmjy1.com/index.php?s="; //http://123.207.84.39/index.php http://pig.bateersoft.cc/index.php
+const host = "http://qmjy1.com/index.php?s="; //http://123.207.84.39/index.php http://pig.bateersoft.cc/index.php https://qmjy1.com/index.php?s=
 /**
  * 请求拦截器
  * */
@@ -17,7 +17,6 @@ Axios.interceptors.request.use(
                 }
                 config.headers["Content-Type"] =
                     "application/x-www-form-urlencoded";
-                console.log(config, "config");
                 return config;
             })
             .catch(e => {
@@ -86,14 +85,13 @@ const base = (type, url, params, config) => {
                 }
 
                 const { code, data, msg } = resData;
-                console.log(res.data, host + url);
+                //console.log(res, host + url);
                 Tip.dismiss();
                 if (Number(code) === 401) {
                     Tip.fail(msg);
                     return navigate({ routeName: "Login" });
                 }
                 if (Number(code) === 200) {
-                    console.log("213213");
                     return resolve(data);
                 } else {
                     if (handleCatch) {

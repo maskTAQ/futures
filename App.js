@@ -9,20 +9,23 @@ import {
   BackHandler,
   View,
   ToastAndroid,
-  Platform
+  Platform,
+  Linking,
+  TouchableWithoutFeedback
 } from "react-native";
 import { Provider } from "react-redux";
-import { Page } from "components";
+import { Page, Icon, Text, Button } from "components";
 import { reduxifyNavigator } from "react-navigation-redux-helpers";
 import { connect } from "react-redux";
+import _ from 'lodash';
 
-
+import { orderDetail as styles, alert as alertStyle } from "./src/pages/styles";
 import { iconSource, Storage } from 'commons';
-import { Tip } from 'components';
+import { Tip, Alert } from 'components';
 import store from "store/index.js";
 import { back, login, navigate } from "actions";
 import sage from "effects/index.js";
-
+import { checkUpdate } from 'apis';
 //import Loading from "./loading";
 import Router from "./src/Router";
 
@@ -46,8 +49,31 @@ if (!__DEV__) {
 }
 
 export default class App extends Component {
+  state = {
+    alert: {
+      visible: false,
+      url: '',
+      version: '',
+      remark: ''
+    }
+  }
   UNSAFE_componentWillMount() {
     store.runSaga(sage);
+    checkUpdate({ handleCatch: false })
+      .then(data => {
+        const { url, version, remark } = data;
+        console.log('有更新')
+        const nextState = _.cloneDeep(this.state);
+        nextState.alert = {
+          visible: true,
+          url, version, remark
+        };
+        this.setState(nextState);
+        console.log(nextState, 'saddad')
+      })
+      .catch(e => {
+        //
+      })
   }
 
   componentDidMount() {
@@ -63,15 +89,15 @@ export default class App extends Component {
           //   navigate({ routeName: 'Login' })
           // })
         } else {
-          setTimeout(()=>{
+          setTimeout(() => {
             navigate({ routeName: 'Login' })
-          },2000);
+          }, 2000);
         }
       })
       .catch(e => {
-        setTimeout(()=>{
+        setTimeout(() => {
           navigate({ routeName: 'Login' })
-        },2000);
+        }, 2000);
       })
   }
 
@@ -104,7 +130,7 @@ export default class App extends Component {
   handleBack = () => {
     const { nav } = store.getState();
     const routeName = nav.routes[nav.index].routeName;
-    if (["TabNavigator",'Login'].includes(routeName)) {
+    if (["TabNavigator", 'Login'].includes(routeName)) {
       if (this.lastBack && new Date().getTime() - this.lastBack < 2000) {
         BackHandler.exitApp();
       } else {
@@ -121,11 +147,59 @@ export default class App extends Component {
   };
 
   render() {
+    const {
+      alert: { visible, version, url = 'https://www.baidu.com/' },
+
+    } = this.state;
+
     return (
       <Provider store={store}>
         <View style={{ flex: 1 }}>
           <AppWithNavigationState />
           <Tip />
+          <Alert
+            visible={visible}
+            showClose={false}
+            requestClose={() => {
+              this.setState({
+                alert: {
+                  visible: false,
+                  content: ""
+                }
+              });
+              // back();
+            }}
+          >
+            <TouchableWithoutFeedback>
+              <View style={alertStyle.container}>
+                <View style={styles.alertContainer}>
+                  <Icon
+                    source={iconSource.success}
+                    style={styles.successIcon}
+                  />
+                  <Text style={styles.successText}>
+                    有新版本,请更新
+                </Text>
+                </View>
+                <Button
+                  onPress={() => {
+                    this.setState({
+                      alert: {
+                        visible: false,
+                      }
+                    }, () => {
+                      Linking.openURL(url);
+                    });
+                    // back();
+                  }}
+                  style={alertStyle.submit}
+                  textStyle={[alertStyle.submitText, { fontSize: 16, }]}
+                >
+                  更新
+              </Button>
+              </View>
+            </TouchableWithoutFeedback>
+          </Alert>
         </View>
       </Provider>
     );
