@@ -1,10 +1,14 @@
 import Axios from "axios";
+import { Platform } from "react-native";
 import qs from "qs";
 
-import { navigate } from "actions";
+import { logout } from "actions";
 import { Tip, Storage } from "commons";
 
-const host = "http://qmjy1.com/index.php?s="; //http://123.207.84.39/index.php http://pig.bateersoft.cc/index.php https://qmjy1.com/index.php?s=
+const server = `http${
+    Platform.OS === "ios" ? "s" : ""
+}://qmjy1.com/index.php?s=`;
+const host = `http${Platform.OS === "ios" ? "s" : ""}://qmjy1.com`; //http://123.207.84.39/index.php http://pig.bateersoft.cc/index.php https://qmjy1.com/index.php?s=
 /**
  * 请求拦截器
  * */
@@ -53,7 +57,7 @@ const requestWrapper = (method, url, param = {}) => {
         method === "post" ? { data: qs.stringify(param) } : { params: param };
 
     return Axios.request({
-        baseURL: host,
+        baseURL: server,
         url,
         method,
         timeout: 60000,
@@ -68,7 +72,6 @@ const base = (type, url, params, config) => {
     return new Promise((resolve, reject) => {
         requestWrapper(type, url, params)
             .then(res => {
-                console.log(res, url, "ur;");
                 let resData = res.data;
                 try {
                     resData = eval("(" + res.data + ")");
@@ -85,13 +88,24 @@ const base = (type, url, params, config) => {
                         //
                     }
                 }
-
+                console.log(
+                    `
+                --     start    --
+                url:${server + url} 
+                params:${JSON.stringify(params)}
+                res:${JSON.stringify(res.data)}
+                parse res:${JSON.stringify(resData)}
+              
+                --      end     --
+                `,
+                    res
+                );
                 const { code, data, msg } = resData;
-                //console.log(res, host + url);
+                //console.log(res, server + url);
                 Tip.dismiss();
                 if (Number(code) === 401 && url !== "/Api/checkUpdate") {
                     Tip.fail(msg);
-                    return navigate({ routeName: "Login" });
+                    return logout();
                 }
                 if (Number(code) === 200) {
                     return resolve(data);
@@ -137,4 +151,4 @@ const get = (url, params = {}, { loading = true, handleCatch = true } = {}) => {
     return base("get", url, params, { loading, handleCatch });
 };
 
-export { post, get, host };
+export { post, get, server, host };
