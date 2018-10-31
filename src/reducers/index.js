@@ -70,7 +70,14 @@ const fillData = () => {
 const reducers = fillData();
 
 // 不需要登录页面
-const noAuthRoute = ["Quotation"];
+const noAuthRoute = [
+    "Register",
+    "Login",
+    "ForgetPassword",
+    "LoginPassword",
+    "Exit",
+    "Welcome"
+];
 // 判断是否需要重定向到登录页
 const isNeedRedirectToLogin = routeName =>
     !isLogin && routeName && !noAuthRoute.includes(routeName);
@@ -79,6 +86,7 @@ const reducer = combineReducers({
     ...reducers,
     nav: (state = preloadedState.nav, action) => {
         const { type, routeName, params = {} } = action;
+
         if (!type.includes("Navigation")) {
             return state;
         }

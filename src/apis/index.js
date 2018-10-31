@@ -17,7 +17,7 @@ const getHome = () => {
     return post("/Api/getHome", null, { loading: false });
 };
 const getCode = params => {
-    return post("/Api/getRegSMSCode ", params, { loading: false });
+    return post(`/Api/getSMSCode`, params, { loading: false });
 };
 const findPassword = params => {
     return post("/Api/findPassword", params);

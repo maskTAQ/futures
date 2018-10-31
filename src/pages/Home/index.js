@@ -83,7 +83,6 @@ export default class Home extends PureComponent {
 
         //当前时间
         const start = moment();
-        console.log(this.hasDate, "this.hasDate");
         if (this.hasDate) {
             const end = moment(this.hasDate);
             if (end.unix() - start.unix() <= 0) {

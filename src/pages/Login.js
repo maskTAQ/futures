@@ -21,6 +21,9 @@ export default class Login extends PureComponent {
             }
         });
     }
+    componentDidMount() {
+        console.log("登录页 卸载");
+    }
     render() {
         const { account, password } = this.state;
         return (

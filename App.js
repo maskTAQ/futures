@@ -11,7 +11,8 @@ import {
   ToastAndroid,
   Platform,
   Linking,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  StatusBar
 } from "react-native";
 import { Provider } from "react-redux";
 import { Page, Icon, Text, Button } from "components";
@@ -59,21 +60,7 @@ export default class App extends Component {
   }
   UNSAFE_componentWillMount() {
     store.runSaga(sage);
-    checkUpdate({ handleCatch: false })
-      .then(data => {
-        const { url, version, remark } = data;
-        console.log('有更新')
-        const nextState = _.cloneDeep(this.state);
-        nextState.alert = {
-          visible: true,
-          url, version, remark
-        };
-        this.setState(nextState);
-        console.log(nextState, 'saddad')
-      })
-      .catch(e => {
-        //
-      })
+
   }
 
   componentDidMount() {
@@ -99,6 +86,22 @@ export default class App extends Component {
           navigate({ routeName: 'Login' })
         }, 2000);
       })
+
+    setTimeout(() => {
+      checkUpdate({ handleCatch: false })
+        .then(data => {
+          const { url, version, remark } = data;
+          const nextState = _.cloneDeep(this.state);
+          nextState.alert = {
+            visible: true,
+            url, version, remark
+          };
+          this.setState(nextState);
+        })
+        .catch(e => {
+          //
+        })
+    }, 2000)
   }
 
   componentWillUnmount() {
@@ -171,7 +174,13 @@ export default class App extends Component {
             }}
           >
             <TouchableWithoutFeedback>
+
               <View style={alertStyle.container}>
+                <StatusBar
+                  backgroundColor="rgba(0,0,0,0.3)"
+                  translucent={true}
+                  barStyle="light-content"
+                />
                 <View style={styles.alertContainer}>
                   <Icon
                     source={iconSource.success}

@@ -77,7 +77,7 @@ export default class CodeButton extends Component {
         //在手机号不等于上次的手机号 或者 组件挂载时
         if (mobile !== this.props.mobile || !props) {
             switch (true) {
-                case /^1[3|4|5|8][0-9]\d{8}$/.test(mobile):
+                case /^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(mobile):
                     this.isThroughTheVerification = true;
                     return onValidateError("");
                 case !/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobile):
@@ -94,6 +94,7 @@ export default class CodeButton extends Component {
     getCode = () => {
         const { isCan } = this.state;
         const { mobile, requestGetCode } = this.props;
+        console.log(isCan, this.isThroughTheVerification, "isCan");
         if (isCan && this.isThroughTheVerification) {
             this.setState({ isRequestSmscode: true });
             requestGetCode(mobile)

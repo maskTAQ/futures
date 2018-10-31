@@ -466,7 +466,7 @@ export default class BuyOrderDetail extends PureComponent {
         return (
             <Visible show={state !== "0"}>
                 <View style={styles.voucher}>
-                    <Visible show={state !== "1"}>
+                    <Visible show={state === "3"}>
                         <Button
                             disabled={isComplaintVar}
                             onPress={() => {

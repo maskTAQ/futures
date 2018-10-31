@@ -118,7 +118,7 @@ export default class ForgetPassword extends PureComponent {
                                     return Tip.fail("请输入密码");
                                 }
                                 if (password !== passwordT) {
-                                    return Tip.fail("俩次输入的密码一致");
+                                    return Tip.fail("俩次输入的密码不一致");
                                 }
 
                                 return userReg(this.state)

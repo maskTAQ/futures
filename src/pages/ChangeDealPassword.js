@@ -72,7 +72,7 @@ export default class ChangeDealPassword extends PureComponent {
                                 return Tip.fail("新密码只能是数字与字母组合!");
                             }
                             if (new_password !== new_passwordT) {
-                                return Tip.fail("俩次输入的密码一致");
+                                return Tip.fail("俩次输入的密码不一致");
                             }
 
                             return updatePassword({

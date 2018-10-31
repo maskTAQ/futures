@@ -101,14 +101,12 @@ export default class Share extends PureComponent {
                                     style={styles.copyContentText}
                                     numberOfLines={1}
                                 >
-                                    {`text`}
+                                    {text}
                                 </Text>
                             </View>
                             <Button
                                 onPress={() => {
-                                    Clipboard.setString(
-                                        `http://qr.liantu.com/api.php?text=${text}`
-                                    );
+                                    Clipboard.setString(text);
                                     Tip.success("复制成功");
                                     // .then(res => {
                                     //     Tip.success('复制成功');

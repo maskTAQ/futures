@@ -42,6 +42,7 @@ export default class ForgetPassword extends PureComponent {
     };
     render() {
         const { mobile, account } = this.state;
+        console.log(mobile, "mobile");
         return (
             <Page title="找回密码">
                 <View style={styles.container}>
@@ -53,6 +54,9 @@ export default class ForgetPassword extends PureComponent {
                                     style={styles.input}
                                     value={this.state[key]}
                                     onChangeText={v => {
+                                        console.log({
+                                            [key]: v
+                                        });
                                         this.setState({
                                             [key]: v
                                         });
@@ -93,7 +97,7 @@ export default class ForgetPassword extends PureComponent {
                                     );
                                 }
                                 if (password !== passwordT) {
-                                    return Tip.fail("俩次输入的密码一致");
+                                    return Tip.fail("俩次输入的密码不一致");
                                 }
                                 if (!isPassword(password)) {
                                     return Tip.fail("请输入密码");

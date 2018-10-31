@@ -16,7 +16,9 @@ export default (theme = {}) => {
             color
         },
         pending: {
-            width: 90
+            width: 90,
+            alignItems: "center",
+            justifyContent: "center"
         },
         pendingColor
     };

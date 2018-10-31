@@ -32,7 +32,7 @@ export default class TransferManure extends PureComponent {
     };
     state = {
         account: "",
-        queuing_money: "0",
+        queuing_money: "",
         isEnough: true
     };
     render() {

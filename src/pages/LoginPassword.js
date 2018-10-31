@@ -73,15 +73,15 @@ export default class LoginPassword extends PureComponent {
                                 return Tip.fail("新密码只能是数字与字母组合!");
                             }
                             if (new_password !== new_passwordT) {
-                                return Tip.fail("俩次输入的密码一致");
+                                return Tip.fail("俩次输入的密码不一致");
                             }
 
                             return updatePassword({
                                 old_password,
                                 new_password,
-                                type_password: "1"
+                                type_password: "2"
                             }).then(() => {
-                                Tip.success("交易密码修改成功");
+                                Tip.success("登录修改成功");
                             });
                         }}
                     >
