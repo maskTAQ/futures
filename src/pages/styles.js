@@ -1635,6 +1635,39 @@ const welcome = {
         color: "#fff"
     }
 };
+const list = {
+    container: {
+        flex: 1,
+        backgroundColor: "#fff"
+    },
+    item: {
+        height: scale(60),
+        flexDirection: "row",
+        paddingLeft: scale(15),
+        paddingRight: scale(15),
+        borderBottomWidth: 1,
+        borderColor: "#F2F2F2"
+    },
+    itemLeft: {
+        flex: 1,
+        justifyContent: "space-around"
+    },
+    itemRight: {
+        justifyContent: "center"
+    },
+    itemDate: {
+        fontSize: scale(11),
+        color: "#AFAFAF"
+    },
+    itemLabel: {
+        fontSize: scale(15),
+        color: "#606060"
+    },
+    itemValue: {
+        fontSize: scale(11),
+        color: "#FD4C73"
+    }
+};
 export {
     home,
     mine,
@@ -1654,5 +1687,6 @@ export {
     orderSellFlowerList,
     sellRedPacket,
     share,
-    welcome
+    welcome,
+    list
 };

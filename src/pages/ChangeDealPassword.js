@@ -50,7 +50,7 @@ export default class ChangeDealPassword extends PureComponent {
                                                 [key]: v
                                             });
                                         }}
-                                        {...props}
+                                        //{...props}
                                     />
                                 </View>
                             );

@@ -34,7 +34,9 @@ import {
     SellRedPacket,
     Share,
     Welcome,
-    Exit
+    Exit,
+    TransferInvitationCodeList,
+    TransferManureList
 } from "pages";
 
 YellowBox.ignoreWarnings([
@@ -144,7 +146,9 @@ const AppRouteConfigs = {
     SellRedPacket,
     Share,
     Welcome,
-    Exit
+    Exit,
+    TransferInvitationCodeList,
+    TransferManureList
 };
 // 创建一级导航
 const StackNavigator = createStackNavigator(AppRouteConfigs, {

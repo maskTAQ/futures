@@ -51,7 +51,7 @@ export default class LoginPassword extends PureComponent {
                                                 [key]: v
                                             });
                                         }}
-                                        {...props}
+                                        //{...props}
                                     />
                                 </View>
                             );

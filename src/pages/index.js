@@ -26,3 +26,7 @@ export { default as SellRedPacket } from "./SellRedPacket";
 export { default as Share } from "./Share";
 export { default as Welcome } from "./Welcome";
 export { default as Exit } from "./Exit";
+export {
+    default as TransferInvitationCodeList
+} from "./TransferInvitationCodeList";
+export { default as TransferManureList } from "./TransferManureList";

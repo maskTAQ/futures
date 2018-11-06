@@ -6,6 +6,9 @@ import { post } from "./base";
 const login = (params, config) => {
     return post("/Api/checkLogin", params, config);
 };
+const autoLogin = config => {
+    return post("/Api/tokenLogin", null, config);
+};
 const logout = () => {
     return post("/Api/LogOut");
 };
@@ -107,6 +110,14 @@ const collectionInfo = params => {
 const getInviteList = params => {
     return post("/Api/inviteList", params, { loading: false });
 };
+//邀请码记录列表
+const inviteRecord = params => {
+    return post("Api/inviteRecord", params, { loading: false });
+};
+//排单币记录
+const queuingRecord = params => {
+    return post("Api/queuingRecord", params, { loading: false });
+};
 //同意邀请
 const inviteSure = params => {
     return post("/Api/inviteSure", params, { loading: false });
@@ -157,6 +168,7 @@ const setNoticeState = params => {
 export { host } from "./base";
 export {
     login,
+    autoLogin,
     getNotice,
     getHome,
     getCode,
@@ -193,5 +205,7 @@ export {
     getBanckInfo,
     setPush,
     getNoticeState,
-    setNoticeState
+    setNoticeState,
+    inviteRecord,
+    queuingRecord
 };

@@ -1,14 +1,16 @@
 import Axios from "axios";
-import { Platform } from "react-native";
+//import { Platform } from "react-native";
 import qs from "qs";
 
 import { logout } from "actions";
 import { Tip, Storage } from "commons";
 
-const server = `http${
-    Platform.OS === "ios" ? "s" : ""
-}://qmjy1.com/index.php?s=`;
-const host = `http${Platform.OS === "ios" ? "s" : ""}://qmjy1.com`; //http://123.207.84.39/index.php http://pig.bateersoft.cc/index.php https://qmjy1.com/index.php?s=
+const server = `http://pig.bateersoft.cc/index.php`;
+const host = `http://pig.bateersoft.cc`;
+// const server = `http${
+//     Platform.OS === "ios" ? "s" : ""
+// }://qmjy1.com/index.php?s=`;
+// const host = `http${Platform.OS === "ios" ? "s" : ""}://qmjy1.com`; //http://123.207.84.39/index.php http://pig.bateersoft.cc/index.php https://qmjy1.com/index.php?s=
 /**
  * 请求拦截器
  * */

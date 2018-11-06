@@ -90,23 +90,14 @@ export default class ChooseBuyFlower extends PureComponent {
     render() {
         const { home = {} } = this.props;
         const { buylist = [] } = home;
-        const { timeDown } = this.state;
-        if (home && home.date_end && !this.startTimedown) {
-            this.startTimedown = true;
-            this.TimeDown(home.date_end);
-        }
+        //const { timeDown } = this.state;
+        // if (home && home.date_end && !this.startTimedown) {
+        //     this.startTimedown = true;
+        //     this.TimeDown(home.date_end);
+        // }
         return (
             <Page title="选择购买的花卉">
                 <View style={styles.store}>
-                    <View style={styles.storeHeader}>
-                        <View style={styles.storeTitle}>
-                            <Text style={styles.storeTitleText}>购买花卉</Text>
-                        </View>
-                        <Text style={styles.countDownText}>
-                            周期剩余时间：
-                            <Text style={{ color: "#fa4f75" }}>{timeDown}</Text>
-                        </Text>
-                    </View>
                     <DataView
                         injectData={true}
                         dataSource={buylist}

@@ -7,7 +7,7 @@ import { transferInvitationCode as styles } from "./styles";
 import { Page, Text, Input, Button, Icon } from "components";
 import { iconSource, Tip } from "commons";
 import { inviteMoney } from "apis";
-import { back, getMyWallet } from "actions";
+import { back, getMyWallet, navigate } from "actions";
 
 const list = [
     {
@@ -35,7 +35,20 @@ export default class TransferInvitationCode extends PureComponent {
         const { account, invite_money } = this.state;
         const { invite_money: all_invite_money = 0 } = this.props.wallet || {};
         return (
-            <Page title="邀请名额">
+            <Page
+                title="邀请名额"
+                RightComponent={
+                    <Button
+                        onPress={() => {
+                            navigate({
+                                routeName: "TransferInvitationCodeList"
+                            });
+                        }}
+                    >
+                        记录
+                    </Button>
+                }
+            >
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <View style={styles.headerLeft}>

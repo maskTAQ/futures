@@ -10,7 +10,7 @@ import {
 import { Page, Text, Input, Button, Icon, Alert } from "components";
 import { iconSource, Tip } from "commons";
 import { queuingMoney } from "apis";
-import { back, getMyWallet } from "actions";
+import { back, getMyWallet, navigate } from "actions";
 
 const list = [
     {
@@ -41,7 +41,20 @@ export default class TransferManure extends PureComponent {
             queuing_money: all_queuing_money
         } = this.props.navigation.state.params;
         return (
-            <Page title="排单币(肥料)">
+            <Page
+                title="排单币(肥料)"
+                RightComponent={
+                    <Button
+                        onPress={() => {
+                            navigate({
+                                routeName: "TransferManureList"
+                            });
+                        }}
+                    >
+                        记录
+                    </Button>
+                }
+            >
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <View style={styles.headerLeft}>

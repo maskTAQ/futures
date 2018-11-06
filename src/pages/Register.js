@@ -94,10 +94,8 @@ export default class ForgetPassword extends PureComponent {
                                         "账号只能是数字与字母组合!"
                                     );
                                 }
-                                if (!isPassword(tjaccount)) {
-                                    return Tip.fail(
-                                        "推荐人id只能是数字与字母组合!"
-                                    );
+                                if (!tjaccount) {
+                                    return Tip.fail("请填写推荐人id!");
                                 }
                                 if (!isPassword(password)) {
                                     return Tip.fail(
